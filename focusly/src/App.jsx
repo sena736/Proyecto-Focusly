@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Login from "./pages/Login";
 import "./App.css";
 
 function App() {
@@ -96,9 +97,11 @@ function App() {
   const seconds = time % 60;
 
   return (
-    <div className="app">
+    <>
+    <Login/>
+    {/* <div className="app">
 
-      {/* BARRA LATERAL */}
+      {/* BARRA LATERAL *
       <aside className="sidebar">
 
         <h1 className="logo">Focusly</h1>
@@ -115,7 +118,7 @@ function App() {
 
       </aside>
 
-      {/* CONTENIDO PRINCIPAL */}
+      {/* CONTENIDO PRINCIPAL *
       <main className="main">
 
         <header>
@@ -123,7 +126,7 @@ function App() {
           <p>Organiza tus tareas y aprovecha mejor tu tiempo.</p>
         </header>
 
-        {/* ESTADÍSTICAS */}
+        {/* ESTADÍSTICAS *
         <section className="stats">
 
           <div className="card">
@@ -149,7 +152,7 @@ function App() {
 
         <div className="content">
 
-          {/* LISTA DE TAREAS */}
+          {/* LISTA DE TAREAS *
           <section className="tasks">
 
             <h2>Lista de tareas</h2>
@@ -217,7 +220,7 @@ function App() {
 
         </div>
 
-        {/* FRASE MOTIVADORA */}
+        {/* FRASE MOTIVADORA *
         <section className="quote">
 
           <h2>Frase del día</h2>
@@ -231,7 +234,8 @@ function App() {
 
       </main>
 
-    </div>
+    </div> */}
+</>
   );
 }
 
