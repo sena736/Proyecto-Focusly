@@ -30,3 +30,5 @@ function pomodoro () {
           </section>
     );
 }
+
+export default pomodoro;
