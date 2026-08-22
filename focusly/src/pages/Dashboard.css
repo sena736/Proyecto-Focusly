@@ -1,0 +1,727 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap");
+
+:root {
+  --focusly-purple: #60419a;
+  --focusly-purple-dark: #4f3487;
+  --focusly-purple-soft: #eee7f8;
+  --focusly-lilac: #f7f2fc;
+  --focusly-text: #2f2b3a;
+  --focusly-muted: #817b8e;
+  --focusly-border: #ebe7f1;
+  --focusly-bg: #fbfaff;
+  --focusly-white: #ffffff;
+  --focusly-success: #6f9d82;
+  --focusly-shadow: 0 12px 35px rgba(68, 46, 107, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.focusly-dashboard {
+  min-height: 100vh;
+  display: flex;
+  background: var(--focusly-bg);
+  color: var(--focusly-text);
+  font-family: "Nunito", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+.focusly-sidebar {
+  width: 245px;
+  min-height: 100vh;
+  padding: 28px 18px 20px;
+  display: flex;
+  flex-direction: column;
+  background: var(--focusly-white);
+  border-right: 1px solid var(--focusly-border);
+  position: sticky;
+  top: 0;
+  align-self: flex-start;
+}
+
+.focusly-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 12px 34px;
+  color: var(--focusly-purple);
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.focusly-brand-mark {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  font-size: 1.25rem;
+}
+
+.focusly-nav {
+  display: grid;
+  gap: 7px;
+}
+
+.focusly-nav-item,
+.focusly-theme-toggle {
+  border: 0;
+  background: transparent;
+  color: var(--focusly-muted);
+  cursor: pointer;
+  border-radius: 12px;
+  font: inherit;
+  text-align: left;
+  transition: 0.2s ease;
+}
+
+.focusly-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 13px 14px;
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.focusly-nav-item span {
+  width: 21px;
+  text-align: center;
+  font-size: 1.05rem;
+}
+
+.focusly-nav-item:hover,
+.focusly-theme-toggle:hover {
+  color: var(--focusly-purple);
+  background: var(--focusly-lilac);
+}
+
+.focusly-nav-item.is-active {
+  color: var(--focusly-purple);
+  background: var(--focusly-purple-soft);
+}
+
+.focusly-sidebar-footer {
+  margin-top: auto;
+}
+
+.focusly-theme-toggle {
+  width: 100%;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.focusly-main {
+  flex: 1;
+  min-width: 0;
+  padding: 30px clamp(22px, 4vw, 58px) 55px;
+}
+
+.focusly-header {
+  max-width: 1240px;
+  margin: 0 auto 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 25px;
+}
+
+.focusly-eyebrow,
+.focusly-kicker {
+  margin: 0 0 5px;
+  color: var(--focusly-purple);
+  font-size: 0.69rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.focusly-header h1 {
+  margin: 0;
+  font-size: clamp(1.75rem, 3vw, 2.35rem);
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+}
+
+.focusly-subtitle {
+  margin: 8px 0 0;
+  color: var(--focusly-muted);
+  font-size: 0.92rem;
+}
+
+.focusly-profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 10px 7px 7px;
+  border: 1px solid var(--focusly-border);
+  border-radius: 15px;
+  background: var(--focusly-white);
+  color: var(--focusly-text);
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(68, 46, 107, 0.04);
+}
+
+.focusly-avatar {
+  width: 39px;
+  height: 39px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: var(--focusly-purple-soft);
+  color: var(--focusly-purple);
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.focusly-profile-info {
+  display: grid;
+  text-align: left;
+  gap: 1px;
+}
+
+.focusly-profile-info strong {
+  font-size: 0.82rem;
+}
+
+.focusly-profile-info small {
+  color: var(--focusly-muted);
+  font-size: 0.7rem;
+}
+
+.focusly-chevron {
+  color: var(--focusly-muted);
+  margin-left: 4px;
+}
+
+.focusly-hero-grid,
+.focusly-task-layout {
+  max-width: 1240px;
+  margin-inline: auto;
+}
+
+.focusly-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+  gap: 20px;
+}
+
+.focusly-card {
+  background: var(--focusly-white);
+  border: 1px solid var(--focusly-border);
+  border-radius: 22px;
+  box-shadow: var(--focusly-shadow);
+}
+
+.focusly-pomodoro-card {
+  min-height: 330px;
+  padding: 25px;
+  background:
+    radial-gradient(circle at 82% 20%, rgba(96, 66, 154, 0.08), transparent 26%),
+    var(--focusly-white);
+}
+
+.focusly-card-heading,
+.focusly-section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.focusly-card-heading h2,
+.focusly-section-heading h2 {
+  margin: 0;
+  font-size: 1.2rem;
+  letter-spacing: -0.025em;
+}
+
+.focusly-status-dot {
+  color: var(--focusly-success);
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.focusly-timer {
+  display: flex;
+  justify-content: center;
+  margin: 18px 0;
+}
+
+.focusly-timer-ring {
+  width: 178px;
+  height: 178px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: conic-gradient(var(--focusly-purple) 0 72%, var(--focusly-purple-soft) 72% 100%);
+  position: relative;
+}
+
+.focusly-timer-ring::before {
+  content: "";
+  position: absolute;
+  inset: 10px;
+  border-radius: 50%;
+  background: var(--focusly-white);
+}
+
+.focusly-timer-content {
+  position: relative;
+  display: grid;
+  text-align: center;
+  gap: 2px;
+}
+
+.focusly-timer-content strong {
+  font-size: 2.15rem;
+  letter-spacing: -0.05em;
+}
+
+.focusly-timer-content span {
+  color: var(--focusly-muted);
+  font-size: 0.67rem;
+}
+
+.focusly-timer-actions {
+  display: flex;
+  justify-content: center;
+  gap: 9px;
+}
+
+.focusly-primary-button,
+.focusly-secondary-button,
+.focusly-add-button {
+  border: 0;
+  border-radius: 10px;
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.focusly-primary-button {
+  padding: 11px 24px;
+  background: var(--focusly-purple);
+  color: white;
+  box-shadow: 0 7px 16px rgba(96, 66, 154, 0.2);
+}
+
+.focusly-secondary-button {
+  padding: 10px 18px;
+  border: 1px solid var(--focusly-border);
+  background: var(--focusly-white);
+  color: var(--focusly-text);
+}
+
+.focusly-primary-button:hover,
+.focusly-secondary-button:hover,
+.focusly-add-button:hover {
+  transform: translateY(-1px);
+}
+
+.focusly-motivation-card {
+  min-height: 330px;
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  background:
+    radial-gradient(circle at 90% 90%, rgba(96, 66, 154, 0.08), transparent 30%),
+    var(--focusly-lilac);
+}
+
+.focusly-sparkle {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  color: var(--focusly-purple);
+  background: var(--focusly-white);
+}
+
+.focusly-quote {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 25px 10px;
+}
+
+.focusly-quote-mark {
+  align-self: flex-start;
+  color: var(--focusly-purple);
+  font-size: 4rem;
+  line-height: 0.8;
+  font-weight: 800;
+}
+
+.focusly-quote p {
+  margin: 0;
+  font-size: 1.12rem;
+  line-height: 1.55;
+  font-weight: 700;
+}
+
+.focusly-link-button,
+.focusly-view-all {
+  border: 0;
+  background: transparent;
+  color: var(--focusly-purple);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-align: left;
+}
+
+.focusly-link-button span,
+.focusly-view-all span {
+  margin-left: 5px;
+}
+
+.focusly-task-section {
+  max-width: 1240px;
+  margin: 30px auto 0;
+}
+
+.focusly-section-heading {
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.focusly-add-button {
+  padding: 10px 15px;
+  background: var(--focusly-purple);
+  color: white;
+}
+
+.focusly-new-task {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 14px;
+  padding: 12px;
+  border: 1px solid var(--focusly-border);
+  border-radius: 14px;
+  background: var(--focusly-white);
+}
+
+.focusly-new-task input {
+  flex: 1;
+  min-width: 0;
+  border: 1px solid var(--focusly-border);
+  border-radius: 9px;
+  padding: 10px 12px;
+  outline: none;
+  background: var(--focusly-bg);
+  color: var(--focusly-text);
+  font: inherit;
+}
+
+.focusly-new-task input:focus {
+  border-color: var(--focusly-purple);
+}
+
+.focusly-task-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 290px;
+  gap: 20px;
+}
+
+.focusly-tasks-card {
+  overflow: hidden;
+}
+
+.focusly-task-summary {
+  display: flex;
+  justify-content: space-between;
+  padding: 17px 20px;
+  border-bottom: 1px solid var(--focusly-border);
+  color: var(--focusly-muted);
+  font-size: 0.75rem;
+}
+
+.focusly-task-summary strong {
+  color: var(--focusly-purple);
+}
+
+.focusly-task-list {
+  display: grid;
+}
+
+.focusly-task {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 15px 20px;
+  border-bottom: 1px solid var(--focusly-border);
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.focusly-task:hover {
+  background: var(--focusly-lilac);
+}
+
+.focusly-task input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.focusly-checkmark {
+  width: 23px;
+  height: 23px;
+  flex: 0 0 23px;
+  display: grid;
+  place-items: center;
+  border: 1.5px solid #cfc8da;
+  border-radius: 7px;
+  color: transparent;
+  font-size: 0.7rem;
+  font-weight: 900;
+}
+
+.focusly-task.is-completed .focusly-checkmark {
+  border-color: var(--focusly-purple);
+  background: var(--focusly-purple);
+  color: white;
+}
+
+.focusly-task-copy {
+  min-width: 0;
+  display: grid;
+  gap: 3px;
+}
+
+.focusly-task-copy strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.83rem;
+}
+
+.focusly-task-copy small {
+  color: var(--focusly-muted);
+  font-size: 0.68rem;
+}
+
+.focusly-task.is-completed .focusly-task-copy strong {
+  color: var(--focusly-muted);
+  text-decoration: line-through;
+}
+
+.focusly-task-menu {
+  margin-left: auto;
+  color: #aaa3b3;
+  letter-spacing: 2px;
+}
+
+.focusly-view-all {
+  padding: 15px 20px;
+}
+
+.focusly-progress-card {
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.focusly-progress-card h3 {
+  width: 100%;
+  margin: 0;
+  text-align: left;
+  font-size: 1.05rem;
+}
+
+.focusly-progress-circle {
+  width: 128px;
+  height: 128px;
+  margin: 20px 0 14px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: conic-gradient(var(--focusly-purple) 0 35%, var(--focusly-purple-soft) 35% 100%);
+  position: relative;
+}
+
+.focusly-progress-circle::before {
+  content: "";
+  position: absolute;
+  inset: 11px;
+  border-radius: 50%;
+  background: var(--focusly-white);
+}
+
+.focusly-progress-circle span {
+  position: relative;
+  color: var(--focusly-purple);
+  font-size: 1.4rem;
+  font-weight: 800;
+}
+
+.focusly-progress-card p {
+  margin: 0;
+  color: var(--focusly-muted);
+  font-size: 0.75rem;
+  line-height: 1.5;
+}
+
+.focusly-dashboard.is-dark {
+  --focusly-text: #f3eff8;
+  --focusly-muted: #aaa2b7;
+  --focusly-border: #3a3344;
+  --focusly-bg: #1c1921;
+  --focusly-white: #28232f;
+  --focusly-lilac: #322b3c;
+  --focusly-purple-soft: #3a3049;
+}
+
+.focusly-dashboard.is-dark .focusly-sidebar {
+  background: #211d27;
+}
+
+.focusly-dashboard.is-dark .focusly-timer-ring::before,
+.focusly-dashboard.is-dark .focusly-progress-circle::before {
+  background: var(--focusly-white);
+}
+
+.focusly-dashboard.is-dark .focusly-profile,
+.focusly-dashboard.is-dark .focusly-secondary-button,
+.focusly-dashboard.is-dark .focusly-new-task {
+  background: var(--focusly-white);
+}
+
+.focusly-dashboard.is-dark .focusly-new-task input {
+  background: #211d27;
+}
+
+@media (max-width: 1050px) {
+  .focusly-sidebar {
+    width: 205px;
+  }
+
+  .focusly-hero-grid,
+  .focusly-task-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .focusly-progress-card {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .focusly-progress-card h3 {
+    text-align: left;
+  }
+}
+
+@media (max-width: 760px) {
+  .focusly-dashboard {
+    display: block;
+  }
+
+  .focusly-sidebar {
+    width: 100%;
+    min-height: auto;
+    position: static;
+    padding: 14px 16px;
+    border-right: 0;
+    border-bottom: 1px solid var(--focusly-border);
+  }
+
+  .focusly-brand {
+    padding: 0 4px 12px;
+  }
+
+  .focusly-nav {
+    display: flex;
+    overflow-x: auto;
+    gap: 5px;
+    padding-bottom: 3px;
+  }
+
+  .focusly-nav-item {
+    flex: 0 0 auto;
+    padding: 9px 11px;
+    font-size: 0.76rem;
+  }
+
+  .focusly-sidebar-footer {
+    display: none;
+  }
+
+  .focusly-main {
+    padding: 22px 16px 40px;
+  }
+
+  .focusly-header {
+    align-items: flex-start;
+  }
+
+  .focusly-profile-info {
+    display: none;
+  }
+
+  .focusly-profile {
+    flex: 0 0 auto;
+  }
+
+  .focusly-subtitle {
+    max-width: 420px;
+  }
+
+  .focusly-new-task {
+    flex-wrap: wrap;
+  }
+
+  .focusly-new-task input {
+    flex-basis: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .focusly-header {
+    gap: 12px;
+  }
+
+  .focusly-header h1 {
+    font-size: 1.55rem;
+  }
+
+  .focusly-subtitle {
+    font-size: 0.78rem;
+  }
+
+  .focusly-card {
+    border-radius: 17px;
+  }
+
+  .focusly-pomodoro-card,
+  .focusly-motivation-card {
+    min-height: 300px;
+    padding: 19px;
+  }
+
+  .focusly-task {
+    padding: 13px 14px;
+  }
+
+  .focusly-task-summary {
+    padding-inline: 14px;
+  }
+
+  .focusly-add-button {
+    padding: 9px 11px;
+  }
+}
