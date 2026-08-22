@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import Dashboard from "./pages/Dashboard";
+import Home from "./pages/Home";
 import "./App.css";
 
 function App() {
-  return(<Dashboard/>)
-  /* -------------------------
+  return (<Home/>)
+ /*  // -------------------------
   // ESTADO DE LAS TAREAS
   // -------------------------
   const [tasks, setTasks] = useState(() => {
@@ -125,7 +125,7 @@ function App() {
           <p>Organiza tus tareas y aprovecha mejor tu tiempo.</p>
         </header>
 
-        {/* ESTADÍSTICAS 
+        {/* ESTADÍSTICAS *
         <section className="stats">
 
           <div className="card">
@@ -219,7 +219,7 @@ function App() {
 
         </div>
 
-        {/* FRASE MOTIVADORA 
+        {/* FRASE MOTIVADORA *
         <section className="quote">
 
           <h2>Frase del día</h2>
