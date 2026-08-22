@@ -1,0 +1,404 @@
+/* =========================================================
+   FOCUSLY — Configuración
+   Compatible con el componente Configuracion.jsx
+   ========================================================= */
+
+:root {
+  --focusly-purple: #7550b8;
+  --focusly-purple-dark: #62409e;
+  --focusly-purple-soft: #eee7fa;
+  --focusly-lilac: #dca6e8;
+
+  --config-bg: #f7f3fb;
+  --config-surface: #ffffff;
+  --config-surface-soft: #faf8fd;
+  --config-text: #30263d;
+  --config-muted: #756b82;
+  --config-border: #e5dfee;
+  --config-shadow: 0 12px 32px rgba(72, 48, 104, 0.09);
+  --config-radius: 18px;
+  --config-transition: 180ms ease;
+}
+
+:root[data-theme="dark"] {
+  --config-bg: #19151f;
+  --config-surface: #241e2d;
+  --config-surface-soft: #2b2435;
+  --config-text: #f4eff8;
+  --config-muted: #b9afc2;
+  --config-border: #40364b;
+  --config-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.config-page {
+  min-height: 100vh;
+  width: 100%;
+  padding: 40px 24px;
+  background:
+    radial-gradient(circle at 0% 0%, rgba(220, 166, 232, 0.28), transparent 30%),
+    var(--config-bg);
+  color: var(--config-text);
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+  transition:
+    background var(--config-transition),
+    color var(--config-transition);
+}
+
+.config-container {
+  width: min(920px, 100%);
+  margin: 0 auto;
+}
+
+.config-header {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 28px;
+}
+
+.config-header__icon {
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  flex: 0 0 54px;
+  border-radius: 16px;
+  background: var(--focusly-purple-soft);
+  color: var(--focusly-purple);
+  font-size: 25px;
+}
+
+.config-eyebrow {
+  margin: 0 0 3px;
+  color: var(--focusly-purple);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+}
+
+.config-header h1 {
+  margin: 0;
+  font-size: clamp(26px, 4vw, 34px);
+  line-height: 1.15;
+  font-weight: 750;
+}
+
+.config-description {
+  margin: 7px 0 0;
+  color: var(--config-muted);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.config-card {
+  padding: 26px;
+  margin-bottom: 18px;
+  border: 1px solid var(--config-border);
+  border-radius: var(--config-radius);
+  background: var(--config-surface);
+  box-shadow: var(--config-shadow);
+  transition:
+    background var(--config-transition),
+    border-color var(--config-transition),
+    box-shadow var(--config-transition);
+}
+
+.config-card__heading {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.config-card__icon {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+  border-radius: 12px;
+  background: var(--config-purple-soft, #eee7fa);
+  color: var(--focusly-purple);
+  font-size: 21px;
+}
+
+.config-card h2 {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.3;
+}
+
+.config-card p {
+  margin: 5px 0 0;
+  color: var(--config-muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.theme-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.theme-option {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  min-height: 108px;
+  padding: 16px;
+  border: 1.5px solid var(--config-border);
+  border-radius: 15px;
+  background: var(--config-surface-soft);
+  color: var(--config-text);
+  text-align: left;
+  cursor: pointer;
+  transition:
+    border-color var(--config-transition),
+    background var(--config-transition),
+    transform var(--config-transition),
+    box-shadow var(--config-transition);
+}
+
+.theme-option:hover {
+  border-color: #b89bdc;
+  transform: translateY(-1px);
+}
+
+.theme-option:focus-visible {
+  outline: 3px solid rgba(117, 80, 184, 0.25);
+  outline-offset: 2px;
+}
+
+.theme-option--active {
+  border-color: var(--focusly-purple);
+  box-shadow: 0 0 0 3px rgba(117, 80, 184, 0.1);
+}
+
+.theme-preview {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 72px;
+  height: 66px;
+  flex: 0 0 72px;
+  padding: 10px 8px;
+  overflow: hidden;
+  border: 1px solid var(--config-border);
+  border-radius: 9px;
+}
+
+.theme-preview--light {
+  background: #ffffff;
+}
+
+.theme-preview--dark {
+  background: #27212e;
+}
+
+.theme-preview__bar,
+.theme-preview__line {
+  display: block;
+  border-radius: 4px;
+}
+
+.theme-preview__bar {
+  width: 58%;
+  height: 7px;
+  background: var(--focusly-purple);
+}
+
+.theme-preview__line {
+  width: 86%;
+  height: 5px;
+  background: #c9c0d1;
+}
+
+.theme-preview__line--short {
+  width: 64%;
+}
+
+.theme-preview--dark .theme-preview__line {
+  background: #70657b;
+}
+
+.theme-option__content {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+}
+
+.theme-option__content strong {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.theme-option__content small {
+  color: var(--config-muted);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.theme-option__check {
+  display: grid;
+  place-items: center;
+  width: 25px;
+  height: 25px;
+  flex: 0 0 25px;
+  margin-left: auto;
+  border: 1.5px solid var(--config-border);
+  border-radius: 50%;
+  color: #ffffff;
+  background: transparent;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.theme-option--active .theme-option__check {
+  border-color: var(--focusly-purple);
+  background: var(--focusly-purple);
+}
+
+.config-status {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 22px;
+}
+
+.config-status__icon {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+  border-radius: 50%;
+  background: var(--focusly-purple-soft);
+  color: var(--focusly-purple);
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.config-status__content {
+  min-width: 0;
+}
+
+.config-status__content h2 {
+  font-size: 15px;
+}
+
+.config-status__content p {
+  margin-top: 3px;
+  font-size: 13px;
+}
+
+.config-status__saved {
+  margin-left: auto;
+  color: var(--focusly-purple);
+  font-size: 12px;
+  font-weight: 700;
+  opacity: 0;
+  transform: translateY(3px);
+  transition:
+    opacity var(--config-transition),
+    transform var(--config-transition);
+}
+
+.config-status__saved.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.config-note {
+  margin: 14px 4px 0;
+  color: var(--config-muted);
+  font-size: 12px;
+  line-height: 1.55;
+  text-align: center;
+}
+
+/* Tablet */
+@media (max-width: 720px) {
+  .config-page {
+    padding: 28px 18px;
+  }
+
+  .theme-options {
+    grid-template-columns: 1fr;
+  }
+
+  .theme-option {
+    min-height: 96px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .config-page {
+    padding: 22px 14px;
+  }
+
+  .config-header {
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .config-header__icon {
+    width: 46px;
+    height: 46px;
+    flex-basis: 46px;
+    border-radius: 13px;
+    font-size: 21px;
+  }
+
+  .config-description {
+    font-size: 13px;
+  }
+
+  .config-card {
+    padding: 18px;
+    border-radius: 15px;
+  }
+
+  .theme-option {
+    padding: 13px;
+  }
+
+  .theme-preview {
+    width: 60px;
+    height: 58px;
+    flex-basis: 60px;
+  }
+
+  .config-status {
+    padding: 16px;
+  }
+
+  .config-status__saved {
+    display: none;
+  }
+}
+
+/* Reduce motion when the user requests it. */
+@media (prefers-reduced-motion: reduce) {
+  .config-page,
+  .config-card,
+  .theme-option,
+  .config-status__saved {
+    transition: none;
+  }
+
+  .theme-option:hover {
+    transform: none;
+  }
+}
