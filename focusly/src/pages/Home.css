@@ -1,0 +1,651 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&display=swap");
+
+/* ================= VARIABLES ================= */
+
+:root {
+  --primary: #68519c;
+  --primary-dark: #514078;
+  --primary-light: #ede9f7;
+  --background: #f7f7fb;
+  --white: #ffffff;
+  --text: #2f2b3d;
+  --text-light: #9692a2;
+  --border: #e8e6ef;
+  --shadow: 0 8px 25px rgba(75, 60, 110, 0.08);
+}
+
+/* ================= GENERAL ================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Nunito", sans-serif;
+  background: var(--background);
+  color: var(--text);
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+}
+
+/* ================= CONTENEDOR ================= */
+
+.home {
+  min-height: 100vh;
+  display: flex;
+  background: var(--background);
+}
+
+/* ================= SIDEBAR ================= */
+
+.sidebar {
+  width: 210px;
+  min-height: 100vh;
+  background: var(--white);
+  border-right: 1px solid var(--border);
+  padding: 25px 15px;
+}
+
+.logo {
+  padding: 0 12px;
+  margin-bottom: 45px;
+}
+
+.logo span {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--primary);
+  letter-spacing: -0.5px;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.menu-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 12px 15px;
+  background: transparent;
+  color: #8c8896;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: left;
+  transition: 0.25s;
+}
+
+.menu-item svg {
+  font-size: 17px;
+}
+
+.menu-item:hover {
+  background: #f4f1fa;
+  color: var(--primary);
+}
+
+.menu-item.active {
+  background: var(--primary-light);
+  color: var(--primary);
+}
+
+/* ================= CONTENIDO ================= */
+
+.main-content {
+  flex: 1;
+  max-width: 1250px;
+  padding: 25px 40px 40px;
+  margin: 0 auto;
+}
+
+/* ================= HEADER ================= */
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.welcome h1 {
+  font-size: 23px;
+  font-weight: 800;
+  margin-bottom: 5px;
+}
+
+.welcome p {
+  font-size: 12px;
+  color: var(--text-light);
+}
+
+.user-area {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.notification {
+  background: transparent;
+  color: #6f6a78;
+  position: relative;
+  font-size: 18px;
+}
+
+.notification-dot {
+  width: 5px;
+  height: 5px;
+  background: var(--primary);
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.avatar {
+  width: 34px;
+  height: 34px;
+  background: #e5e0f1;
+  color: var(--primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-info strong {
+  font-size: 12px;
+}
+
+.user-info span {
+  color: var(--text-light);
+  font-size: 10px;
+}
+
+.arrow-down {
+  color: var(--text-light);
+  font-size: 14px;
+}
+
+/* ================= PARTE SUPERIOR ================= */
+
+.dashboard-top {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px;
+  margin-bottom: 30px;
+}
+
+/* ================= POMODORO ================= */
+
+.pomodoro-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 22px;
+  box-shadow: var(--shadow);
+  min-height: 310px;
+}
+
+.pomodoro-card h3 {
+  font-size: 15px;
+  margin-bottom: 5px;
+}
+
+.timer-circle {
+  width: 155px;
+  height: 155px;
+  margin: 0 auto 10px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.progress-ring {
+  position: absolute;
+  transform: rotate(-90deg);
+}
+
+.circle-background {
+  fill: none;
+  stroke: #eeeaf5;
+  stroke-width: 6;
+}
+
+.circle-progress {
+  fill: none;
+  stroke: var(--primary);
+  stroke-width: 6;
+  stroke-linecap: round;
+  stroke-dasharray: 377;
+  stroke-dashoffset: 90;
+}
+
+.timer-content {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.timer-content span {
+  font-size: 26px;
+  font-weight: 800;
+}
+
+.timer-content small {
+  font-size: 9px;
+  color: var(--text-light);
+  margin-top: 3px;
+}
+
+.pomodoro-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.start-button {
+  padding: 10px 24px;
+  background: var(--primary);
+  color: white;
+  border-radius: 6px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  transition: 0.25s;
+}
+
+.start-button:hover {
+  background: var(--primary-dark);
+  transform: translateY(-1px);
+}
+
+.reset-button {
+  padding: 10px 15px;
+  background: #f7f5fb;
+  color: var(--primary);
+  border-radius: 6px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+/* ================= MOTIVACIÓN ================= */
+
+.motivation-card {
+  min-height: 310px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--white);
+  display: flex;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.motivation-content {
+  width: 55%;
+  padding: 25px 20px;
+  position: relative;
+  z-index: 2;
+}
+
+.motivation-content h3 {
+  font-size: 15px;
+  margin-bottom: 25px;
+}
+
+.motivation-content p {
+  color: var(--primary);
+  font-size: 14px;
+  line-height: 1.7;
+  font-weight: 700;
+}
+
+.motivation-content button {
+  margin-top: 45px;
+  border: 1px solid #ddd8e8;
+  color: var(--primary);
+  background: white;
+  padding: 8px 14px;
+  border-radius: 5px;
+  font-size: 10px;
+}
+
+.motivation-image {
+  width: 45%;
+  background: linear-gradient(180deg, #f5f2fb, #e8e2f2);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Luna */
+
+.moon {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background: #ddd6ed;
+  position: absolute;
+  top: 55px;
+  left: 35px;
+}
+
+/* Montañas */
+
+.mountain {
+  position: absolute;
+  bottom: 0;
+  width: 150px;
+  height: 120px;
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+.mountain-back {
+  background: #b7add0;
+  right: 10px;
+  bottom: 15px;
+}
+
+.mountain-front {
+  background: #8474a7;
+  right: -30px;
+  height: 100px;
+}
+
+/* Bandera */
+
+.flag {
+  position: absolute;
+  right: 40px;
+  top: 95px;
+  width: 2px;
+  height: 40px;
+  background: #66578b;
+}
+
+.flag::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 2px;
+  width: 22px;
+  height: 13px;
+  background: #66578b;
+  clip-path: polygon(0 0, 100% 30%, 0 100%);
+}
+
+/* ================= TAREAS ================= */
+
+.tasks-section {
+  margin-bottom: 25px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.section-header h2 {
+  font-size: 16px;
+  margin-bottom: 3px;
+}
+
+.section-header p {
+  font-size: 11px;
+  color: var(--text-light);
+}
+
+.new-task-button {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--primary);
+  color: white;
+  padding: 9px 15px;
+  border-radius: 6px;
+  font-size: 11px;
+}
+
+.tasks-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.task-item {
+  min-height: 68px;
+  padding: 13px 20px;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  border-bottom: 1px solid #f0eef4;
+}
+
+.task-check {
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  border: 1.5px solid #d7d2e1;
+  background: white;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+}
+
+.task-check.completed {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+.task-information {
+  flex: 1;
+}
+
+.task-information h4 {
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+
+.task-information p {
+  font-size: 10px;
+  color: var(--text-light);
+}
+
+.task-completed-text {
+  text-decoration: line-through;
+  color: var(--text-light);
+}
+
+.task-status {
+  font-size: 10px;
+  color: var(--primary);
+  background: #f2eff8;
+  padding: 5px 9px;
+  border-radius: 5px;
+}
+
+.more-button {
+  background: transparent;
+  color: var(--text-light);
+  font-size: 16px;
+}
+
+.view-tasks {
+  width: 100%;
+  background: white;
+  color: var(--primary);
+  padding: 13px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+/* ================= RESUMEN ================= */
+
+.summary-card {
+  background: #f0edf7;
+  border-radius: 12px;
+  padding: 18px 22px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.summary-icon {
+  width: 40px;
+  height: 40px;
+  background: var(--primary);
+  color: white;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+}
+
+.summary-text {
+  flex: 1;
+}
+
+.summary-text h3 {
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
+.summary-text p {
+  color: #827c91;
+  font-size: 10px;
+}
+
+.summary-button {
+  background: var(--primary);
+  color: white;
+  padding: 9px 15px;
+  border-radius: 6px;
+  font-size: 11px;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 900px) {
+  .sidebar {
+    width: 75px;
+    padding: 20px 10px;
+  }
+
+  .logo {
+    padding: 0;
+    text-align: center;
+  }
+
+  .logo span {
+    font-size: 0;
+  }
+
+  .logo span::first-letter {
+    font-size: 22px;
+  }
+
+  .menu-item {
+    justify-content: center;
+    padding: 14px;
+  }
+
+  .menu-item span {
+    display: none;
+  }
+
+  .main-content {
+    padding: 25px;
+  }
+
+  .dashboard-top {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .sidebar {
+    display: none;
+  }
+
+  .main-content {
+    padding: 20px 15px;
+  }
+
+  .topbar {
+    align-items: flex-start;
+  }
+
+  .welcome h1 {
+    font-size: 18px;
+  }
+
+  .user-info,
+  .arrow-down,
+  .notification {
+    display: none;
+  }
+
+  .section-header {
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .section-header p {
+    display: none;
+  }
+
+  .new-task-button {
+    white-space: nowrap;
+  }
+
+  .motivation-card {
+    min-height: 260px;
+  }
+
+  .task-item {
+    padding: 12px;
+  }
+
+  .task-status {
+    display: none;
+  }
+
+  .summary-card {
+    flex-wrap: wrap;
+  }
+
+  .summary-button {
+    width: 100%;
+  }
+}
