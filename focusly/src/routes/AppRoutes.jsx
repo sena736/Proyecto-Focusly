@@ -114,14 +114,14 @@ const AppRoutes = () => {
           }
         />
 
-        <Route
+      {/*   <Route
           path="/tareas"
           element={
             <ProtectedRoute>
               <Tasks />
             </ProtectedRoute>
           }
-        />
+        /> */}
 
         <Route
           path="/pomodoro"
@@ -141,14 +141,14 @@ const AppRoutes = () => {
           }
         />
 
-        <Route
+        {/* <Route
           path="/perfil"
           element={
             <ProtectedRoute>
               <Profile />
             </ProtectedRoute>
           }
-        />
+        /> */}
 
         <Route
           path="/configuracion"
