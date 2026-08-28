@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./Configuracion.css";
+import "./Settings.css";
 
 /**
  * Componente de configuración de Focusly.
