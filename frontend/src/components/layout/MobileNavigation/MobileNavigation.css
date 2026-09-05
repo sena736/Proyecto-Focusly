@@ -1,0 +1,104 @@
+.mobile-navigation {
+  display: none;
+}
+
+/* =========================================
+   MOBILE NAVIGATION
+========================================= */
+
+@media (max-width: 768px) {
+  .mobile-navigation {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 72px;
+    background-color: #ffffff;
+    border-top: 1px solid #e4eceb;
+    z-index: 1000;
+    box-shadow: 0 -4px 15px rgba(78, 118, 125, 0.08);
+  }
+
+  .mobile-navigation__container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 6px 8px;
+  }
+
+  .mobile-navigation__item {
+    flex: 1;
+    height: 60px;
+    max-width: 90px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+
+    border: none;
+    background: transparent;
+    color: #8a9b9e;
+
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: 12px;
+
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .mobile-navigation__item:hover {
+    color: #4e767d;
+  }
+
+  .mobile-navigation__item--active {
+    color: #4e767d;
+  }
+
+  .mobile-navigation__icon {
+    transition: transform 0.2s ease;
+  }
+
+  .mobile-navigation__item--active
+    .mobile-navigation__icon {
+    transform: translateY(-1px);
+  }
+
+  .mobile-navigation__label {
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .mobile-navigation__item--active
+    .mobile-navigation__label {
+    font-weight: 600;
+  }
+}
+
+/* =========================================
+   SMALL PHONES
+========================================= */
+
+@media (max-width: 380px) {
+  .mobile-navigation {
+    height: 68px;
+  }
+
+  .mobile-navigation__item {
+    height: 56px;
+  }
+
+  .mobile-navigation__icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .mobile-navigation__label {
+    font-size: 10px;
+  }
+}
