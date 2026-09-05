@@ -1,0 +1,147 @@
+.task-filters {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* =========================================
+   HEADER
+========================================= */
+
+.task-filters__header {
+  margin-bottom: 12px;
+}
+
+.task-filters__title {
+  margin: 0;
+
+  color: #38565b;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* =========================================
+   FILTER LIST
+========================================= */
+
+.task-filters__list {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  width: 100%;
+  overflow-x: auto;
+
+  scrollbar-width: none;
+}
+
+.task-filters__list::-webkit-scrollbar {
+  display: none;
+}
+
+/* =========================================
+   FILTER BUTTON
+========================================= */
+
+.task-filters__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+
+  min-height: 38px;
+  padding: 8px 14px;
+
+  border: 1px solid #dce7e5;
+  border-radius: 10px;
+
+  background-color: #ffffff;
+  color: #718386;
+
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 500;
+
+  white-space: nowrap;
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.task-filters__button:hover {
+  border-color: #b8cecb;
+  color: #4e767d;
+}
+
+.task-filters__button:active {
+  transform: scale(0.97);
+}
+
+/* =========================================
+   ACTIVE FILTER
+========================================= */
+
+.task-filters__button--active {
+  background-color: #4e767d;
+  border-color: #4e767d;
+  color: #ffffff;
+}
+
+.task-filters__button--active:hover {
+  background-color: #416970;
+  border-color: #416970;
+  color: #ffffff;
+}
+
+.task-filters__icon {
+  flex-shrink: 0;
+}
+
+/* =========================================
+   FOCUS
+========================================= */
+
+.task-filters__button:focus-visible {
+  outline: 2px solid #4e767d;
+  outline-offset: 2px;
+}
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 768px) {
+  .task-filters__list {
+    padding-bottom: 3px;
+  }
+
+  .task-filters__button {
+    min-height: 36px;
+    padding: 7px 12px;
+  }
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 480px) {
+  .task-filters__title {
+    font-size: 14px;
+  }
+
+  .task-filters__button {
+    min-height: 35px;
+    padding: 7px 11px;
+
+    font-size: 11px;
+  }
+
+  .task-filters__icon {
+    width: 16px;
+    height: 16px;
+  }
+}
