@@ -15,40 +15,15 @@ import {
   FiRotateCcw,
   FiTarget,
 } from "react-icons/fi";
+import Pomodoro from "../components/Pomodoro";
+import SeccionTareas from "../components/SeccionTareas";
 
 const Home = () => {
-  const [tareas, setTareas] = useState([
-    {
-      id: 1,
-      titulo: "Tarea 1",
-      descripcion: "Revisar matemáticas",
-      completada: false,
-    },
-    {
-      id: 2,
-      titulo: "Tarea 2",
-      descripcion: "Repasar inglés",
-      completada: false,
-    },
-    {
-      id: 3,
-      titulo: "Tarea 3",
-      descripcion: "Resolver ejercicios de biología",
-      completada: true,
-    },
-  ]);
+  
 
   const [tiempo, setTiempo] = useState("25:00");
 
-  const cambiarEstadoTarea = (id) => {
-    setTareas(
-      tareas.map((tarea) =>
-        tarea.id === id
-          ? { ...tarea, completada: !tarea.completada }
-          : tarea
-      )
-    );
-  };
+  
 
   return (
     <div className="home">
@@ -117,47 +92,7 @@ const Home = () => {
         {/* CONTENIDO SUPERIOR */}
         <section className="dashboard-top">
           {/* POMODORO */}
-          <div className="pomodoro-card">
-            <h3>Pomodoro</h3>
-
-            <div className="timer-circle">
-              <svg className="progress-ring" width="145" height="145">
-                <circle
-                  className="circle-background"
-                  cx="72"
-                  cy="72"
-                  r="60"
-                />
-
-                <circle
-                  className="circle-progress"
-                  cx="72"
-                  cy="72"
-                  r="60"
-                />
-              </svg>
-
-              <div className="timer-content">
-                <span>{tiempo}</span>
-                <small>Sesión de enfoque</small>
-              </div>
-            </div>
-
-            <div className="pomodoro-buttons">
-              <button className="start-button">
-                <FiPlay />
-                Iniciar
-              </button>
-
-              <button
-                className="reset-button"
-                onClick={() => setTiempo("25:00")}
-              >
-                <FiRotateCcw />
-                Reiniciar
-              </button>
-            </div>
-          </div>
+          <Pomodoro/>
 
           {/* MOTIVACIÓN */}
           <div className="motivation-card">
@@ -183,58 +118,7 @@ const Home = () => {
         </section>
 
         {/* TAREAS */}
-        <section className="tasks-section">
-          <div className="section-header">
-            <div>
-              <h2>Mis tareas</h2>
-              <p>Organiza tus actividades y mantén el enfoque.</p>
-            </div>
-
-            <button className="new-task-button">
-              <FiPlus />
-              Nueva tarea
-            </button>
-          </div>
-
-          <div className="tasks-card">
-            {tareas.map((tarea) => (
-              <div className="task-item" key={tarea.id}>
-                <button
-                  className={`task-check ${
-                    tarea.completada ? "completed" : ""
-                  }`}
-                  onClick={() => cambiarEstadoTarea(tarea.id)}
-                >
-                  {tarea.completada && "✓"}
-                </button>
-
-                <div className="task-information">
-                  <h4
-                    className={
-                      tarea.completada ? "task-completed-text" : ""
-                    }
-                  >
-                    {tarea.titulo}
-                  </h4>
-
-                  <p>{tarea.descripcion}</p>
-                </div>
-
-                <span className="task-status">
-                  {tarea.completada ? "Hecha" : "Hoy"}
-                </span>
-
-                <button className="more-button">
-                  <FiMoreVertical />
-                </button>
-              </div>
-            ))}
-
-            <button className="view-tasks">
-              Ver todas las tareas
-            </button>
-          </div>
-        </section>
+        <SeccionTareas/>
 
         {/* RESUMEN */}
         <section className="summary-card">
