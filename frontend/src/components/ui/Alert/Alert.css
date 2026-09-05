@@ -1,0 +1,209 @@
+/* ==============================
+   ALERT - FOCUSLY
+   ============================== */
+
+.alert {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  padding: 13px 15px;
+
+  border-radius: 8px;
+
+  font-family: "Nunito", sans-serif;
+
+  border: 1px solid transparent;
+
+  animation: alertAppear 0.25s ease;
+
+  box-sizing: border-box;
+}
+
+/* ==============================
+   ICONO
+   ============================== */
+
+.alert-icon {
+  width: 32px;
+  height: 32px;
+
+  min-width: 32px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  font-size: 17px;
+}
+
+/* ==============================
+   CONTENIDO
+   ============================== */
+
+.alert-content {
+  flex: 1;
+}
+
+.alert-title {
+  margin: 0 0 3px;
+
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.alert-message {
+  margin: 0;
+
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+/* ==============================
+   BOTÓN CERRAR
+   ============================== */
+
+.alert-close {
+  width: 25px;
+  height: 25px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: transparent;
+
+  border: none;
+
+  border-radius: 5px;
+
+  cursor: pointer;
+
+  font-size: 16px;
+
+  transition: 0.2s;
+}
+
+.alert-close:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+/* ==============================
+   SUCCESS
+   ============================== */
+
+.alert-success {
+  background: #f0f8f3;
+  border-color: #c9e8d4;
+  color: #27633c;
+}
+
+.alert-success .alert-icon {
+  background: #d9f0e1;
+  color: #36834f;
+}
+
+.alert-success .alert-close {
+  color: #36834f;
+}
+
+/* ==============================
+   ERROR
+   ============================== */
+
+.alert-error {
+  background: #fff1f1;
+  border-color: #f0cccc;
+  color: #8a3030;
+}
+
+.alert-error .alert-icon {
+  background: #f9dddd;
+  color: #c34444;
+}
+
+.alert-error .alert-close {
+  color: #c34444;
+}
+
+/* ==============================
+   WARNING
+   ============================== */
+
+.alert-warning {
+  background: #fff9ed;
+  border-color: #f0dfb6;
+  color: #795c1d;
+}
+
+.alert-warning .alert-icon {
+  background: #f8eac7;
+  color: #b28124;
+}
+
+.alert-warning .alert-close {
+  color: #b28124;
+}
+
+/* ==============================
+   INFO
+   ============================== */
+
+.alert-info {
+  background: #f2eff9;
+  border-color: #dcd3ef;
+  color: #514078;
+}
+
+.alert-info .alert-icon {
+  background: #e4ddf5;
+  color: #68519c;
+}
+
+.alert-info .alert-close {
+  color: #68519c;
+}
+
+/* ==============================
+   ANIMACIÓN
+   ============================== */
+
+@keyframes alertAppear {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==============================
+   RESPONSIVE
+   ============================== */
+
+@media (max-width: 500px) {
+  .alert {
+    padding: 11px 12px;
+  }
+
+  .alert-icon {
+    width: 29px;
+    height: 29px;
+    min-width: 29px;
+    font-size: 15px;
+  }
+
+  .alert-title {
+    font-size: 11px;
+  }
+
+  .alert-message {
+    font-size: 10px;
+  }
+}

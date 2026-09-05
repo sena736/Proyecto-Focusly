@@ -103,7 +103,7 @@ function App() {
     <Login/>
     {/* <div className="app">
 
-      {/* BARRA LATERAL */}
+      {/* BARRA LATERAL *
       <aside className="sidebar">
 
         <h1 className="logo">Focusly</h1>
@@ -120,7 +120,7 @@ function App() {
 
       </aside>
 
-      {/* CONTENIDO PRINCIPAL */}
+      {/* CONTENIDO PRINCIPAL *
       <main className="main">
 
         <header>
@@ -154,7 +154,7 @@ function App() {
 
         <div className="content">
 
-          {/* LISTA DE TAREAS */}
+          {/* LISTA DE TAREAS *
           <section className="tasks">
 
             <h2>Lista de tareas</h2>
@@ -237,7 +237,7 @@ function App() {
       </main>
 
     </div>
-  );
+  ); */
 }
 
 export default App;
