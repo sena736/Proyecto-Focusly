@@ -1,0 +1,691 @@
+/* =========================================================
+   FOCUSLY - GLOBAL.CSS
+   Estilos globales de la aplicación
+========================================================= */
+
+/* =========================================================
+   1. VARIABLES GLOBALES
+========================================================= */
+
+:root {
+	/* Colores principales */
+	--primary: #6c4cd3;
+	--primary-hover: #5938c5;
+	--primary-light: #eee9ff;
+	--primary-soft: #f7f4ff;
+
+	/* Colores secundarios */
+	--secondary: #8d72e1;
+	--secondary-light: #dcd2ff;
+
+	/* Texto */
+	--text-primary: #1f1f2e;
+	--text-secondary: #66667a;
+	--text-muted: #9292a5;
+
+	/* Fondos */
+	--background: #f8f8fc;
+	--surface: #ffffff;
+	--surface-secondary: #f3f1fb;
+
+	/* Bordes */
+	--border-color: #e5e2ef;
+	--border-focus: #6c4cd3;
+
+	/* Estados */
+	--success: #35b26f;
+	--warning: #f2a93b;
+	--danger: #e94d5f;
+	--info: #4c84ff;
+
+	/* Sombras */
+	--shadow-sm: 0 2px 8px rgba(37, 26, 76, 0.06);
+	--shadow-md: 0 6px 20px rgba(37, 26, 76, 0.1);
+	--shadow-lg: 0 12px 35px rgba(37, 26, 76, 0.14);
+
+	/* Bordes redondeados */
+	--radius-sm: 6px;
+	--radius-md: 10px;
+	--radius-lg: 16px;
+	--radius-xl: 22px;
+	--radius-round: 999px;
+
+	/* Espaciado */
+	--space-xs: 4px;
+	--space-sm: 8px;
+	--space-md: 16px;
+	--space-lg: 24px;
+	--space-xl: 32px;
+	--space-2xl: 48px;
+
+	/* Tamaños */
+	--sidebar-width: 240px;
+	--header-height: 72px;
+
+	/* Transiciones */
+	--transition-fast: 0.2s ease;
+	--transition-normal: 0.3s ease;
+}
+
+/* =========================================================
+   2. RESET BÁSICO
+========================================================= */
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+body {
+	min-width: 320px;
+	min-height: 100vh;
+
+	font-family:
+		Inter,
+		system-ui,
+		-apple-system,
+		BlinkMacSystemFont,
+		"Segoe UI",
+		sans-serif;
+
+	background-color: var(--background);
+	color: var(--text-primary);
+
+	font-size: 16px;
+	line-height: 1.5;
+
+	transition:
+		background-color var(--transition-normal),
+		color var(--transition-normal);
+}
+
+#root {
+	min-height: 100vh;
+}
+
+/* =========================================================
+   3. ELEMENTOS GENERALES
+========================================================= */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	color: var(--text-primary);
+	font-weight: 700;
+	line-height: 1.2;
+}
+
+h1 {
+	font-size: 2rem;
+}
+
+h2 {
+	font-size: 1.6rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+}
+
+p {
+	color: var(--text-secondary);
+}
+
+a {
+	color: var(--primary);
+	text-decoration: none;
+	transition: color var(--transition-fast);
+}
+
+a:hover {
+	color: var(--primary-hover);
+}
+
+button,
+input,
+textarea,
+select {
+	font: inherit;
+}
+
+button {
+	border: none;
+	cursor: pointer;
+}
+
+img {
+	max-width: 100%;
+	display: block;
+}
+
+/* =========================================================
+   4. CONTENEDOR GENERAL
+========================================================= */
+
+.container {
+	width: 100%;
+	max-width: 1440px;
+	margin: 0 auto;
+	padding: 0 var(--space-lg);
+}
+
+.page-container {
+	padding: var(--space-lg);
+	width: 100%;
+}
+
+/* =========================================================
+   5. LAYOUT PRINCIPAL
+========================================================= */
+
+.app-layout {
+	display: flex;
+	min-height: 100vh;
+	background-color: var(--background);
+}
+
+.app-main {
+	flex: 1;
+	min-width: 0;
+}
+
+.app-content {
+	padding: var(--space-lg);
+}
+
+/* =========================================================
+   6. TARJETAS
+========================================================= */
+
+.card {
+	background-color: var(--surface);
+	border: 1px solid var(--border-color);
+	border-radius: var(--radius-lg);
+	padding: var(--space-lg);
+
+	box-shadow: var(--shadow-sm);
+
+	transition:
+		transform var(--transition-fast),
+		box-shadow var(--transition-fast),
+		background-color var(--transition-normal);
+}
+
+.card:hover {
+	box-shadow: var(--shadow-md);
+}
+
+.card-title {
+	margin-bottom: var(--space-sm);
+	font-size: 1.1rem;
+}
+
+.card-description {
+	font-size: 0.9rem;
+	color: var(--text-secondary);
+}
+
+/* =========================================================
+   7. BOTONES GLOBALES
+========================================================= */
+
+.btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+
+	gap: var(--space-sm);
+
+	min-height: 42px;
+	padding: 10px 18px;
+
+	border-radius: var(--radius-md);
+
+	font-weight: 600;
+
+	transition:
+		background-color var(--transition-fast),
+		color var(--transition-fast),
+		transform var(--transition-fast),
+		box-shadow var(--transition-fast);
+}
+
+.btn:active {
+	transform: scale(0.98);
+}
+
+.btn-primary {
+	background-color: var(--primary);
+	color: #ffffff;
+}
+
+.btn-primary:hover {
+	background-color: var(--primary-hover);
+	box-shadow: var(--shadow-sm);
+}
+
+.btn-secondary {
+	background-color: var(--primary-light);
+	color: var(--primary);
+}
+
+.btn-secondary:hover {
+	background-color: var(--secondary-light);
+}
+
+.btn-outline {
+	background-color: transparent;
+	border: 1px solid var(--primary);
+	color: var(--primary);
+}
+
+.btn-outline:hover {
+	background-color: var(--primary-soft);
+}
+
+.btn-danger {
+	background-color: var(--danger);
+	color: #ffffff;
+}
+
+.btn-danger:hover {
+	opacity: 0.9;
+}
+
+.btn-block {
+	width: 100%;
+}
+
+/* =========================================================
+   8. INPUTS
+========================================================= */
+
+.form-group {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	margin-bottom: var(--space-md);
+}
+
+.form-label {
+	font-size: 0.9rem;
+	font-weight: 600;
+	color: var(--text-primary);
+}
+
+.form-control {
+	width: 100%;
+	min-height: 44px;
+
+	padding: 10px 12px;
+
+	border: 1px solid var(--border-color);
+	border-radius: var(--radius-md);
+
+	background-color: var(--surface);
+	color: var(--text-primary);
+
+	outline: none;
+
+	transition:
+		border-color var(--transition-fast),
+		box-shadow var(--transition-fast),
+		background-color var(--transition-normal);
+}
+
+.form-control::placeholder {
+	color: var(--text-muted);
+}
+
+.form-control:focus {
+	border-color: var(--border-focus);
+	box-shadow: 0 0 0 3px rgba(108, 76, 211, 0.12);
+}
+
+textarea.form-control {
+	min-height: 100px;
+	resize: vertical;
+}
+
+/* =========================================================
+   9. GRID
+========================================================= */
+
+.grid {
+	display: grid;
+	gap: var(--space-lg);
+}
+
+.grid-2 {
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.grid-3 {
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.grid-4 {
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+/* =========================================================
+   10. FLEX UTILITIES
+========================================================= */
+
+.flex {
+	display: flex;
+}
+
+.flex-column {
+	flex-direction: column;
+}
+
+.items-center {
+	align-items: center;
+}
+
+.justify-center {
+	justify-content: center;
+}
+
+.justify-between {
+	justify-content: space-between;
+}
+
+.flex-wrap {
+	flex-wrap: wrap;
+}
+
+.gap-sm {
+	gap: var(--space-sm);
+}
+
+.gap-md {
+	gap: var(--space-md);
+}
+
+.gap-lg {
+	gap: var(--space-lg);
+}
+
+/* =========================================================
+   11. TEXTO Y UTILIDADES
+========================================================= */
+
+.text-center {
+	text-align: center;
+}
+
+.text-primary {
+	color: var(--primary);
+}
+
+.text-secondary {
+	color: var(--text-secondary);
+}
+
+.text-muted {
+	color: var(--text-muted);
+}
+
+.text-danger {
+	color: var(--danger);
+}
+
+.text-success {
+	color: var(--success);
+}
+
+.font-bold {
+	font-weight: 700;
+}
+
+.font-semibold {
+	font-weight: 600;
+}
+
+/* =========================================================
+   12. BADGES
+========================================================= */
+
+.badge {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+
+	padding: 4px 10px;
+
+	border-radius: var(--radius-round);
+
+	font-size: 0.78rem;
+	font-weight: 600;
+}
+
+.badge-primary {
+	background-color: var(--primary-light);
+	color: var(--primary);
+}
+
+.badge-success {
+	background-color: rgba(53, 178, 111, 0.12);
+	color: var(--success);
+}
+
+.badge-warning {
+	background-color: rgba(242, 169, 59, 0.14);
+	color: var(--warning);
+}
+
+/* =========================================================
+   13. ESTADOS DE TAREA
+========================================================= */
+
+.task-completed {
+	opacity: 0.65;
+}
+
+.task-completed .task-title {
+	text-decoration: line-through;
+}
+
+/* =========================================================
+   14. MODAL GLOBAL
+========================================================= */
+
+.modal-overlay {
+	position: fixed;
+	inset: 0;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	padding: var(--space-md);
+
+	background-color: rgba(18, 15, 32, 0.55);
+
+	z-index: 1000;
+}
+
+.modal-content {
+	width: 100%;
+	max-width: 520px;
+
+	background-color: var(--surface);
+
+	border-radius: var(--radius-lg);
+
+	padding: var(--space-lg);
+
+	box-shadow: var(--shadow-lg);
+}
+
+/* =========================================================
+   15. LOADER
+========================================================= */
+
+.loader {
+	width: 42px;
+	height: 42px;
+
+	border: 4px solid var(--primary-light);
+	border-top-color: var(--primary);
+
+	border-radius: 50%;
+
+	animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+/* =========================================================
+   16. SCROLLBAR
+========================================================= */
+
+::-webkit-scrollbar {
+	width: 8px;
+	height: 8px;
+}
+
+::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: #c8c1dc;
+	border-radius: var(--radius-round);
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background-color: #aaa0ca;
+}
+
+/* =========================================================
+   17. MODO OSCURO
+========================================================= */
+
+[data-theme="dark"] {
+	--background: #15131f;
+	--surface: #211e2d;
+	--surface-secondary: #29253a;
+
+	--text-primary: #f7f5ff;
+	--text-secondary: #c3bed3;
+	--text-muted: #8d879e;
+
+	--border-color: #39334d;
+
+	--primary-light: #32284f;
+	--primary-soft: #241d39;
+
+	--shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.18);
+	--shadow-md: 0 6px 20px rgba(0, 0, 0, 0.25);
+	--shadow-lg: 0 12px 35px rgba(0, 0, 0, 0.32);
+}
+
+/* =========================================================
+   18. SELECCIÓN DE TEXTO
+========================================================= */
+
+::selection {
+	background-color: var(--primary);
+	color: #ffffff;
+}
+
+/* =========================================================
+   19. ACCESIBILIDAD
+========================================================= */
+
+:focus-visible {
+	outline: 3px solid rgba(108, 76, 211, 0.35);
+	outline-offset: 2px;
+}
+
+/* =========================================================
+   20. RESPONSIVE
+========================================================= */
+
+@media (max-width: 1024px) {
+	.grid-4 {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	.grid-3 {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+@media (max-width: 768px) {
+	:root {
+		--space-lg: 18px;
+		--space-xl: 24px;
+	}
+
+	h1 {
+		font-size: 1.7rem;
+	}
+
+	h2 {
+		font-size: 1.4rem;
+	}
+
+	.container {
+		padding: 0 var(--space-md);
+	}
+
+	.page-container,
+	.app-content {
+		padding: var(--space-md);
+	}
+
+	.grid-2,
+	.grid-3,
+	.grid-4 {
+		grid-template-columns: 1fr;
+	}
+
+	.card {
+		padding: var(--space-md);
+	}
+}
+
+@media (max-width: 480px) {
+	body {
+		font-size: 15px;
+	}
+
+	.btn {
+		min-height: 44px;
+	}
+
+	.modal-content {
+		padding: var(--space-md);
+	}
+}
+
+/* =========================================================
+   21. REDUCIR ANIMACIONES
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		scroll-behavior: auto !important;
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+	}
+}

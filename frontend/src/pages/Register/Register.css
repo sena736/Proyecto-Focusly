@@ -1,0 +1,655 @@
+/* =========================================================
+   Focusly - Register
+   Estilos del componente de registro
+   ========================================================= */
+
+:root {
+  --focusly-purple-900: #4d2c83;
+  --focusly-purple-800: #5a3594;
+  --focusly-purple-700: #673bb0;
+  --focusly-purple-600: #7548c3;
+  --focusly-purple-100: #eee6fa;
+  --focusly-purple-050: #f7f2fc;
+  --focusly-lilac: #dca7e9;
+  --focusly-text: #3e3150;
+  --focusly-muted: #81768e;
+  --focusly-border: #d8d0e0;
+  --focusly-danger: #c94b68;
+  --focusly-success: #3f8b69;
+  --focusly-white: #ffffff;
+  --focusly-shadow: 0 22px 55px rgba(71, 43, 105, 0.14);
+}
+
+/* =========================================================
+   CONTENEDOR PRINCIPAL
+   ========================================================= */
+
+.register-page {
+  min-height: 100vh;
+  min-height: 100dvh;
+
+  position: relative;
+  overflow: hidden;
+
+  display: grid;
+  place-items: center;
+
+  padding: 32px 18px;
+
+  background:
+    radial-gradient(
+      circle at 12% 14%,
+      rgba(255, 255, 255, 0.36) 0 4px,
+      transparent 5px
+    ),
+    radial-gradient(
+      circle at 88% 80%,
+      rgba(255, 255, 255, 0.28) 0 3px,
+      transparent 4px
+    ),
+    linear-gradient(
+      135deg,
+      #e5b2ed 0%,
+      #d7a4e6 48%,
+      #cfa0e1 100%
+    );
+
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+  color: var(--focusly-text);
+}
+
+/* =========================================================
+   DECORACIONES
+   ========================================================= */
+
+.register-page::before,
+.register-page::after {
+  content: "";
+
+  position: absolute;
+
+  border: 1px solid rgba(255, 255, 255, 0.38);
+
+  border-radius: 50%;
+
+  pointer-events: none;
+}
+
+.register-page::before {
+  width: 320px;
+  height: 320px;
+
+  left: -160px;
+  top: 10%;
+}
+
+.register-page::after {
+  width: 260px;
+  height: 260px;
+
+  right: -120px;
+  bottom: 6%;
+}
+
+.register-decoration {
+  position: absolute;
+
+  pointer-events: none;
+
+  opacity: 0.55;
+}
+
+.register-decoration--top {
+  width: 150px;
+  height: 150px;
+
+  top: -65px;
+  right: 16%;
+
+  border-radius: 42% 58% 52% 48%;
+
+  background: rgba(255, 255, 255, 0.22);
+
+  transform: rotate(18deg);
+}
+
+.register-decoration--bottom {
+  width: 180px;
+  height: 100px;
+
+  bottom: -42px;
+  left: 18%;
+
+  border-radius: 50%;
+
+  border: 1px solid rgba(255, 255, 255, 0.4);
+
+  transform: rotate(-15deg);
+}
+
+/* =========================================================
+   TARJETA
+   ========================================================= */
+
+.register-card {
+  width: min(100%, 470px);
+
+  position: relative;
+  z-index: 2;
+
+  padding: 38px 42px 30px;
+
+  border: 1px solid rgba(255, 255, 255, 0.8);
+
+  border-radius: 24px;
+
+  background: rgba(255, 255, 255, 0.97);
+
+  box-shadow: var(--focusly-shadow);
+}
+
+/* =========================================================
+   LOGO
+   ========================================================= */
+
+.register-brand {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  gap: 6px;
+
+  margin-bottom: 20px;
+}
+
+.register-logo {
+  width: 64px;
+  height: 64px;
+
+  display: grid;
+  place-items: center;
+
+  border: 5px solid var(--focusly-purple-900);
+
+  border-radius: 50%;
+
+  color: var(--focusly-purple-900);
+
+  font-size: 38px;
+
+  line-height: 1;
+
+  font-weight: 800;
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  position: relative;
+}
+
+.register-logo::before,
+.register-logo::after {
+  content: "";
+
+  position: absolute;
+
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background: var(--focusly-purple-900);
+}
+
+.register-logo::before {
+  left: -11px;
+  bottom: 7px;
+}
+
+.register-logo::after {
+  right: -11px;
+  bottom: 14px;
+}
+
+.register-brand-name {
+  color: var(--focusly-purple-900);
+
+  font-size: 20px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.08em;
+}
+
+/* =========================================================
+   ENCABEZADO
+   ========================================================= */
+
+.register-heading {
+  text-align: center;
+
+  margin-bottom: 22px;
+}
+
+.register-eyebrow {
+  display: block;
+
+  margin-bottom: 3px;
+
+  color: var(--focusly-purple-600);
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.18em;
+}
+
+.register-heading h1 {
+  margin: 0;
+
+  color: var(--focusly-purple-900);
+
+  font-family:
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: clamp(25px, 5vw, 31px);
+
+  letter-spacing: 0.07em;
+}
+
+.register-heading p {
+  max-width: 340px;
+
+  margin: 8px auto 0;
+
+  color: var(--focusly-muted);
+
+  font-size: 13px;
+
+  line-height: 1.55;
+}
+
+/* =========================================================
+   FORMULARIO
+   ========================================================= */
+
+.register-form {
+  display: grid;
+
+  gap: 14px;
+}
+
+.register-field {
+  display: grid;
+
+  gap: 6px;
+}
+
+.register-field label {
+  padding-left: 2px;
+
+  color: var(--focusly-text);
+
+  font-size: 12px;
+
+  font-weight: 700;
+}
+
+/* =========================================================
+   INPUTS
+   ========================================================= */
+
+.register-input-wrap {
+  min-height: 47px;
+
+  display: flex;
+
+  align-items: center;
+
+  border: 1px solid var(--focusly-border);
+
+  border-radius: 9px;
+
+  background: var(--focusly-white);
+
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    background 160ms ease;
+}
+
+.register-input-wrap:focus-within {
+  border-color: var(--focusly-purple-600);
+
+  box-shadow:
+    0 0 0 3px rgba(117, 72, 195, 0.11);
+}
+
+.register-input-wrap.has-error {
+  border-color: var(--focusly-danger);
+}
+
+.register-input-icon {
+  width: 43px;
+
+  flex: 0 0 43px;
+
+  display: grid;
+
+  place-items: center;
+
+  color: var(--focusly-purple-700);
+}
+
+.register-input-icon svg {
+  width: 18px;
+  height: 18px;
+
+  fill: none;
+
+  stroke: currentColor;
+
+  stroke-width: 1.7;
+
+  stroke-linecap: round;
+
+  stroke-linejoin: round;
+}
+
+.register-input-wrap input {
+  width: 100%;
+
+  min-width: 0;
+
+  height: 45px;
+
+  border: 0;
+
+  outline: 0;
+
+  padding: 0 13px 0 0;
+
+  color: var(--focusly-text);
+
+  background: transparent;
+
+  font: inherit;
+
+  font-size: 13px;
+}
+
+.register-input-wrap input::placeholder {
+  color: #aaa2b1;
+}
+
+/* =========================================================
+   ERRORES
+   ========================================================= */
+
+.register-error {
+  padding-left: 2px;
+
+  color: var(--focusly-danger);
+
+  font-size: 11px;
+
+  line-height: 1.35;
+}
+
+/* =========================================================
+   TRATAMIENTO DE DATOS
+   ========================================================= */
+
+.register-consent {
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 9px;
+
+  margin-top: 2px;
+
+  color: var(--focusly-muted);
+
+  font-size: 11px;
+
+  line-height: 1.45;
+
+  cursor: pointer;
+}
+
+.register-consent input {
+  width: 15px;
+  height: 15px;
+
+  flex: 0 0 15px;
+
+  margin: 1px 0 0;
+
+  accent-color: var(--focusly-purple-700);
+}
+
+.register-consent.has-error {
+  color: var(--focusly-danger);
+}
+
+.register-consent-error {
+  margin-top: -8px;
+}
+
+/* =========================================================
+   BOTÓN REGISTRARSE
+   ========================================================= */
+
+.register-submit {
+  width: 100%;
+
+  min-height: 48px;
+
+  margin-top: 4px;
+
+  border: 0;
+
+  border-radius: 9px;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--focusly-purple-800),
+      var(--focusly-purple-600)
+    );
+
+  color: var(--focusly-white);
+
+  font-size: 12px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.08em;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 8px 18px rgba(103, 59, 176, 0.2);
+
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease,
+    opacity 160ms ease;
+}
+
+.register-submit:hover:not(:disabled) {
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 11px 22px rgba(103, 59, 176, 0.25);
+}
+
+.register-submit:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.register-submit:disabled {
+  opacity: 0.65;
+
+  cursor: not-allowed;
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.register-footer {
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  flex-wrap: wrap;
+
+  gap: 5px;
+
+  margin-top: 21px;
+
+  color: var(--focusly-muted);
+
+  font-size: 12px;
+}
+
+.register-login {
+  padding: 0;
+
+  border: 0;
+
+  background: transparent;
+
+  color: var(--focusly-purple-700);
+
+  font: inherit;
+
+  font-weight: 800;
+
+  cursor: pointer;
+}
+
+.register-login:hover {
+  text-decoration: underline;
+}
+
+/* =========================================================
+   ALERTAS
+   ========================================================= */
+
+.register-alert {
+  margin-bottom: 15px;
+
+  padding: 10px 12px;
+
+  border-radius: 8px;
+
+  font-size: 12px;
+
+  line-height: 1.4;
+}
+
+.register-alert--error {
+  border:
+    1px solid rgba(201, 75, 104, 0.2);
+
+  background:
+    rgba(201, 75, 104, 0.07);
+
+  color: var(--focusly-danger);
+}
+
+.register-alert--success {
+  border:
+    1px solid rgba(63, 139, 105, 0.2);
+
+  background:
+    rgba(63, 139, 105, 0.07);
+
+  color: var(--focusly-success);
+}
+
+/* =========================================================
+   TABLETS
+   ========================================================= */
+
+@media (max-width: 640px) {
+  .register-page {
+    padding: 24px 14px;
+  }
+
+  .register-card {
+    padding: 31px 25px 26px;
+
+    border-radius: 20px;
+  }
+}
+
+/* =========================================================
+   TELÉFONOS
+   ========================================================= */
+
+@media (max-width: 420px) {
+  .register-page {
+    align-items: start;
+
+    padding: 18px 12px;
+  }
+
+  .register-card {
+    margin: 8px 0;
+
+    padding: 27px 18px 23px;
+
+    border-radius: 18px;
+  }
+
+  .register-brand {
+    margin-bottom: 16px;
+  }
+
+  .register-logo {
+    width: 58px;
+    height: 58px;
+
+    font-size: 34px;
+  }
+
+  .register-heading {
+    margin-bottom: 18px;
+  }
+
+  .register-form {
+    gap: 12px;
+  }
+}
+
+/* =========================================================
+   ACCESIBILIDAD
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .register-input-wrap,
+  .register-submit {
+    transition: none;
+  }
+} 
