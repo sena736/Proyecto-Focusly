@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./Login.css";
+import { Link } from "react-router-dom";
 
 const Login = ({ onLogin, onRegister }) => {
   const [formData, setFormData] = useState({
@@ -261,14 +262,15 @@ const Login = ({ onLogin, onRegister }) => {
             )}
 
             {/* Funcionalidad futura según ERS */}
-            <button
+            <Link
+              to={"/ForgotPassword"}
               type="button"
               className="forgot-password"
               title="Funcionalidad prevista para una versión futura"
               onClick={() => {}}
             >
               ¿Olvidaste tu contraseña?
-            </button>
+            </Link>
           </div>
 
           {/* Error del servidor */}

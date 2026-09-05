@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import Home  from './pages/Home'
 import "./App.css";
+import ForgotPassword from "./pages/ForgotPassword";
 
 function App() {
-  return (<Home/>)
+  return (<ForgotPassword/>)
  /*  // -------------------------
   // ESTADO DE LAS TAREAS
   // -------------------------
