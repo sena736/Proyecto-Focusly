@@ -1,0 +1,204 @@
+/* =========================================
+   POMODORO SETTINGS
+   ========================================= */
+
+.pomodoro-settings {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 12px;
+}
+
+/* =========================================
+   SETTING
+   ========================================= */
+
+.pomodoro-setting {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding: 14px 16px;
+
+  background: #ffffff;
+
+  border: 1px solid #e5e1f3;
+
+  border-radius: 10px;
+
+  box-sizing: border-box;
+}
+
+/* =========================================
+   INFORMATION
+   ========================================= */
+
+.pomodoro-setting__info {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 3px;
+
+  min-width: 0;
+}
+
+/* =========================================
+   TITLE
+   ========================================= */
+
+.pomodoro-setting__title {
+  color: #25245a;
+
+  font-family: "Poppins", "Segoe UI", sans-serif;
+
+  font-size: 13px;
+
+  font-weight: 600;
+}
+
+/* =========================================
+   DESCRIPTION
+   ========================================= */
+
+.pomodoro-setting__description {
+  color: #8585a0;
+
+  font-family: "Poppins", "Segoe UI", sans-serif;
+
+  font-size: 11px;
+
+  line-height: 1.4;
+}
+
+/* =========================================
+   CONTROLS
+   ========================================= */
+
+.pomodoro-setting__controls {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  flex-shrink: 0;
+}
+
+/* =========================================
+   BUTTON
+   ========================================= */
+
+.pomodoro-setting__button {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 30px;
+  height: 30px;
+
+  padding: 0;
+
+  background: #f3f0ff;
+
+  border: 1px solid #ddd5f6;
+
+  border-radius: 7px;
+
+  color: #6546c7;
+
+  font-size: 18px;
+
+  font-weight: 500;
+
+  line-height: 1;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.15s ease;
+}
+
+/* =========================================
+   BUTTON HOVER
+   ========================================= */
+
+.pomodoro-setting__button:hover {
+  background: #e8e2ff;
+
+  border-color: #6546c7;
+
+  transform: translateY(-1px);
+}
+
+/* =========================================
+   BUTTON ACTIVE
+   ========================================= */
+
+.pomodoro-setting__button:active {
+  transform: translateY(0);
+}
+
+/* =========================================
+   VALUE
+   ========================================= */
+
+.pomodoro-setting__value {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-width: 32px;
+
+  color: #25245a;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  text-align: center;
+}
+
+/* =========================================
+   FOCUS
+   ========================================= */
+
+.pomodoro-setting__button:focus-visible {
+  outline: 3px solid rgba(101, 70, 199, 0.2);
+
+  outline-offset: 2px;
+}
+
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+
+@media (max-width: 520px) {
+  .pomodoro-setting {
+    padding: 12px;
+
+    gap: 12px;
+  }
+
+  .pomodoro-setting__title {
+    font-size: 12px;
+  }
+
+  .pomodoro-setting__description {
+    font-size: 10px;
+  }
+
+  .pomodoro-setting__button {
+    width: 28px;
+    height: 28px;
+  }
+}
