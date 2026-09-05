@@ -1,0 +1,293 @@
+/* Modal Focusly
+   Paleta y formas inspiradas en el mockup de la aplicación.
+*/
+
+:root {
+  --modal-purple: #6042a3;
+  --modal-purple-dark: #4e328d;
+  --modal-purple-light: #eee9ff;
+  --modal-text: #29263a;
+  --modal-muted: #777187;
+  --modal-border: #e8e2f3;
+  --modal-white: #ffffff;
+  --modal-danger: #c45c68;
+}
+
+.focusly-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(34, 25, 61, 0.52);
+  backdrop-filter: blur(4px);
+  animation: focusly-modal-overlay-in 0.2s ease-out;
+}
+
+.focusly-modal {
+  position: relative;
+  width: min(100%, 500px);
+  max-height: min(720px, calc(100vh - 40px));
+  overflow: auto;
+  padding: 30px;
+  border: 1px solid var(--modal-border);
+  border-radius: 24px;
+  background: var(--modal-white);
+  color: var(--modal-text);
+  box-shadow: 0 25px 70px rgba(44, 30, 78, 0.25);
+  font-family: "Nunito", "Segoe UI", sans-serif;
+  animation: focusly-modal-in 0.25s ease-out;
+}
+
+.focusly-modal-decoration {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 135px;
+  height: 95px;
+  overflow: hidden;
+  border-radius: 24px 0 70px 0;
+  background:
+    radial-gradient(circle at 25% 20%, #ded5ff 0 25%, transparent 26%),
+    linear-gradient(135deg, #f0ebff 0%, #faf9ff 68%, transparent 69%);
+  opacity: 0.95;
+  pointer-events: none;
+}
+
+.focusly-modal-decoration::after {
+  content: "✦";
+  position: absolute;
+  top: 28px;
+  left: 45px;
+  color: var(--modal-purple);
+  font-size: 16px;
+  opacity: 0.75;
+}
+
+.focusly-modal-close {
+  position: absolute;
+  top: 17px;
+  right: 18px;
+  z-index: 2;
+  width: 34px;
+  height: 34px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--modal-muted);
+  cursor: pointer;
+  font-size: 26px;
+  line-height: 1;
+  transition: 0.2s ease;
+}
+
+.focusly-modal-close:hover:not(:disabled) {
+  background: var(--modal-purple-light);
+  color: var(--modal-purple);
+  transform: rotate(4deg);
+}
+
+.focusly-modal-close:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.focusly-modal-header {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-right: 32px;
+  margin-bottom: 22px;
+}
+
+.focusly-modal-icon {
+  width: 48px;
+  height: 48px;
+  flex: 0 0 48px;
+  display: grid;
+  place-items: center;
+  border-radius: 15px;
+  background: var(--modal-purple-light);
+  color: var(--modal-purple);
+  font-size: 22px;
+}
+
+.focusly-modal-header h2 {
+  margin: 0;
+  color: var(--modal-text);
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+}
+
+.focusly-modal-header p {
+  margin: 5px 0 0;
+  color: var(--modal-muted);
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
+.focusly-modal-body {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 24px;
+}
+
+.focusly-modal-body label {
+  display: block;
+  margin-bottom: 7px;
+  color: var(--modal-text);
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.focusly-modal-body input,
+.focusly-modal-body textarea,
+.focusly-modal-body select {
+  width: 100%;
+  padding: 11px 13px;
+  border: 1px solid var(--modal-border);
+  border-radius: 10px;
+  outline: none;
+  background: #fbfaff;
+  color: var(--modal-text);
+  font: inherit;
+  font-size: 0.78rem;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.focusly-modal-body input:focus,
+.focusly-modal-body textarea:focus,
+.focusly-modal-body select:focus {
+  border-color: var(--modal-purple);
+  box-shadow: 0 0 0 3px rgba(96, 66, 163, 0.1);
+}
+
+.focusly-modal-body textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.focusly-modal-footer {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: flex-end;
+  gap: 9px;
+}
+
+.focusly-modal-button {
+  min-width: 110px;
+  min-height: 40px;
+  padding: 9px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.76rem;
+  font-weight: 800;
+  transition: 0.2s ease;
+}
+
+.focusly-modal-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.focusly-modal-button--secondary {
+  border: 1px solid var(--modal-border);
+  background: var(--modal-white);
+  color: var(--modal-text);
+}
+
+.focusly-modal-button--secondary:hover:not(:disabled) {
+  border-color: var(--modal-purple);
+  color: var(--modal-purple);
+}
+
+.focusly-modal-button--primary {
+  border: 1px solid var(--modal-purple);
+  background: var(--modal-purple);
+  color: white;
+  box-shadow: 0 7px 18px rgba(96, 66, 163, 0.2);
+}
+
+.focusly-modal-button--primary:hover:not(:disabled) {
+  background: var(--modal-purple-dark);
+  transform: translateY(-1px);
+}
+
+.focusly-modal-button--danger {
+  border-color: var(--modal-danger);
+  background: var(--modal-danger);
+  box-shadow: 0 7px 18px rgba(196, 92, 104, 0.2);
+}
+
+.focusly-modal--danger .focusly-modal-icon {
+  background: #fae9ec;
+  color: var(--modal-danger);
+}
+
+.focusly-modal-spinner {
+  display: inline-block;
+  width: 13px;
+  height: 13px;
+  margin-right: 7px;
+  vertical-align: -2px;
+  border: 2px solid rgba(255, 255, 255, 0.45);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: focusly-modal-spin 0.7s linear infinite;
+}
+
+@keyframes focusly-modal-overlay-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes focusly-modal-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes focusly-modal-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 520px) {
+  .focusly-modal-overlay {
+    padding: 12px;
+    align-items: flex-end;
+  }
+
+  .focusly-modal {
+    max-height: calc(100vh - 24px);
+    padding: 24px 20px 20px;
+    border-radius: 21px;
+  }
+
+  .focusly-modal-footer {
+    flex-direction: column-reverse;
+  }
+
+  .focusly-modal-button {
+    width: 100%;
+  }
+}
