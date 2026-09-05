@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 // =====================================================
 // PÁGINAS PÚBLICAS
@@ -51,9 +46,7 @@ const AdminRoute = ({ children }) => {
     return <Navigate to="/login" replace />;
   }
 
-  const usuario = JSON.parse(
-    localStorage.getItem("focusly_usuario") || "{}"
-  );
+  const usuario = JSON.parse(localStorage.getItem("focusly_usuario") || "{}");
 
   /*
    * El DDS contempla los roles:
@@ -80,26 +73,15 @@ const AppRoutes = () => {
   return (
     <BrowserRouter>
       <Routes>
-
         {/* =========================================
             RUTAS PÚBLICAS
             ========================================= */}
 
-        <Route
-          path="/"
-          element={<Home />}
-        />
+        <Route path="/" element={<Home />} />
 
-        <Route
-          path="/login"
-          element={<Login />}
-        />
+        <Route path="/login" element={<Login />} />
 
-        <Route
-          path="/registro"
-          element={<Register />}
-        />
-
+        <Route path="/registro" element={<Register />} />
 
         {/* =========================================
             RUTAS PROTEGIDAS
@@ -114,7 +96,7 @@ const AppRoutes = () => {
           }
         />
 
-      {/*   <Route
+        {/*  <Route
           path="/tareas"
           element={
             <ProtectedRoute>
@@ -141,7 +123,7 @@ const AppRoutes = () => {
           }
         />
 
-        {/* <Route
+        {/*       <Route
           path="/perfil"
           element={
             <ProtectedRoute>
@@ -159,7 +141,6 @@ const AppRoutes = () => {
           }
         />
 
-
         {/* =========================================
             PANEL ADMINISTRATIVO
             ========================================= */}
@@ -173,26 +154,14 @@ const AppRoutes = () => {
           }
         />
 
-
         {/* =========================================
             RUTA NO ENCONTRADA
             ========================================= */}
 
-        <Route
-          path="*"
-          element={
-            <Navigate
-              to="/"
-              replace
-            />
-          }
-        />
-
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
   );
 };
 
 export default AppRoutes;
-
-
