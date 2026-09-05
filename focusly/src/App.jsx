@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import "./App.css";
+import Home  from './pages/Home'
+import "./App.css"
 
 function App() {
-  return (<Register/>)
+  return (<Home/>)
  /*  // -------------------------
   // ESTADO DE LAS TAREAS
   // -------------------------
@@ -234,7 +235,7 @@ function App() {
 
       </main>
 
-    </div> 
+    </div>
   ); */
 }
 

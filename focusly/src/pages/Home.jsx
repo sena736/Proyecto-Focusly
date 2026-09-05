@@ -17,6 +17,7 @@ import {
 } from "react-icons/fi";
 import Pomodoro from "../components/Pomodoro";
 import SeccionTareas from "../components/SeccionTareas";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   
@@ -36,27 +37,27 @@ const Home = () => {
         <nav className="menu">
           <button className="menu-item active">
             <FiHome />
-            <span>Inicio</span>
+            <Link to={"/"}>Inicio</Link>
           </button>
 
           <button className="menu-item">
             <FiClock />
-            <span>Pomodoro</span>
+            <Link to={"/pomodoro"}>Pomodoro</Link>
           </button>
 
           <button className="menu-item">
             <FiCheckSquare />
-            <span>Tareas</span>
+            <Link to={"/tareas"}>Tareas</Link>
           </button>
 
           <button className="menu-item">
             <FiStar />
-            <span>Motivación</span>
+            <Link to={"/motivacion"}>Motivación</Link>
           </button>
 
           <button className="menu-item">
             <FiSettings />
-            <span>Configuración</span>
+            <Link to={"/configuracion"}>Configuración</Link>
           </button>
         </nav>
       </aside>
@@ -128,14 +129,10 @@ const Home = () => {
 
           <div className="summary-text">
             <h3>Resumen de hoy</h3>
-            <p>
-              Cada pequeño esfuerzo te acerca a tus metas. ¡Sigue adelante!
-            </p>
+            <p>Cada pequeño esfuerzo te acerca a tus metas. ¡Sigue adelante!</p>
           </div>
 
-          <button className="summary-button">
-            Ver progreso
-          </button>
+          <button className="summary-button">Ver progreso</button>
         </section>
       </main>
     </div>
