@@ -1,0 +1,243 @@
+/* =========================================
+   BUTTON BASE
+   ========================================= */
+
+.focusly-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  border: none;
+  border-radius: 8px;
+
+  font-family: "Poppins", "Segoe UI", sans-serif;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.15s ease,
+    box-shadow 0.2s ease;
+
+  outline: none;
+}
+
+/* =========================================
+   FOCUS
+   ========================================= */
+
+.focusly-button:focus-visible {
+  outline: 3px solid rgba(92, 61, 178, 0.25);
+  outline-offset: 2px;
+}
+
+/* =========================================
+   HOVER / ACTIVE
+   ========================================= */
+
+.focusly-button:not(:disabled):hover {
+  transform: translateY(-1px);
+}
+
+.focusly-button:not(:disabled):active {
+  transform: translateY(0);
+}
+
+/* =========================================
+   DISABLED
+   ========================================= */
+
+.focusly-button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* =========================================
+   VARIANTE PRIMARY
+   Botones principales:
+   Registrarse
+   Iniciar sesión
+   Iniciar
+   Nueva tarea
+   Guardar cambios
+   ========================================= */
+
+.focusly-button--primary {
+  background: #6546c7;
+  color: #ffffff;
+  border: 1px solid #6546c7;
+}
+
+.focusly-button--primary:not(:disabled):hover {
+  background: #5436b1;
+  border-color: #5436b1;
+}
+
+.focusly-button--primary:not(:disabled):active {
+  background: #462b9a;
+}
+
+/* =========================================
+   VARIANTE SECONDARY
+   Botones blancos de los mockups
+   ========================================= */
+
+.focusly-button--secondary {
+  background: #ffffff;
+  color: #26305f;
+  border: 1px solid #6d6d91;
+}
+
+.focusly-button--secondary:not(:disabled):hover {
+  background: #f7f5ff;
+  border-color: #6546c7;
+  color: #6546c7;
+}
+
+/* =========================================
+   VARIANTE OUTLINE
+   ========================================= */
+
+.focusly-button--outline {
+  background: transparent;
+  color: #6546c7;
+  border: 1px solid #6546c7;
+}
+
+.focusly-button--outline:not(:disabled):hover {
+  background: #f3efff;
+}
+
+/* =========================================
+   VARIANTE GHOST
+   Para acciones pequeñas
+   ========================================= */
+
+.focusly-button--ghost {
+  background: transparent;
+  color: #6546c7;
+  border: 1px solid transparent;
+}
+
+.focusly-button--ghost:not(:disabled):hover {
+  background: #f3efff;
+}
+
+/* =========================================
+   VARIANTE DANGER
+   Cerrar sesión
+   ========================================= */
+
+.focusly-button--danger {
+  background: #ffffff;
+  color: #dc2626;
+  border: 1px solid #ef4444;
+}
+
+.focusly-button--danger:not(:disabled):hover {
+  background: #fff1f1;
+}
+
+/* =========================================
+   TAMAÑOS
+   ========================================= */
+
+/* Pequeño */
+.focusly-button--small {
+  min-height: 32px;
+  padding: 6px 12px;
+
+  font-size: 12px;
+}
+
+/* Mediano */
+.focusly-button--medium {
+  min-height: 42px;
+  padding: 10px 20px;
+
+  font-size: 14px;
+}
+
+/* Grande */
+.focusly-button--large {
+  min-height: 50px;
+  padding: 12px 28px;
+
+  font-size: 15px;
+}
+
+/* =========================================
+   FULL WIDTH
+   ========================================= */
+
+.focusly-button--full {
+  width: 100%;
+}
+
+/* =========================================
+   ICONO
+   ========================================= */
+
+.focusly-button__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 18px;
+  line-height: 1;
+}
+
+.focusly-button--small .focusly-button__icon {
+  font-size: 15px;
+}
+
+.focusly-button--large .focusly-button__icon {
+  font-size: 20px;
+}
+
+/* =========================================
+   TEXTO
+   ========================================= */
+
+.focusly-button__text {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* =========================================
+   LOADING
+   ========================================= */
+
+.focusly-button__loading {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* =========================================
+   SPINNER
+   ========================================= */
+
+.focusly-button__spinner {
+  width: 15px;
+  height: 15px;
+
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #ffffff;
+
+  border-radius: 50%;
+
+  animation: focusly-spin 0.7s linear infinite;
+}
+
+@keyframes focusly-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -1,0 +1,234 @@
+/* Footer Focusly
+   Diseño basado en la identidad visual de los mockups:
+   morado, blanco, formas suaves y tipografía limpia.
+*/
+
+:root {
+  --footer-purple: #4d378f;
+  --footer-purple-dark: #35236f;
+  --footer-purple-light: #eee9ff;
+  --footer-text: #29263a;
+  --footer-muted: #777187;
+  --footer-border: #e4def0;
+  --footer-white: #ffffff;
+}
+
+.focusly-footer {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: var(--footer-white);
+  color: var(--footer-text);
+  font-family: "Nunito", "Segoe UI", sans-serif;
+}
+
+.focusly-footer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -80px;
+  width: 280px;
+  height: 170px;
+  border-radius: 0 0 80% 0;
+  background: #f0ebff;
+  pointer-events: none;
+}
+
+.focusly-footer::after {
+  content: "✦";
+  position: absolute;
+  top: 42px;
+  left: 125px;
+  color: var(--footer-purple);
+  font-size: 18px;
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.focusly-footer__container {
+  position: relative;
+  z-index: 1;
+  width: min(1180px, calc(100% - 40px));
+  margin: 0 auto;
+  padding: 46px 0 20px;
+}
+
+.focusly-footer__main {
+  display: grid;
+  grid-template-columns: 1.15fr 1.5fr 0.9fr;
+  align-items: start;
+  gap: 50px;
+}
+
+/* Marca */
+.focusly-footer__brand {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+
+.focusly-footer__logo {
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 54px;
+  border: 2px solid var(--footer-purple);
+  border-radius: 50%;
+  background: var(--footer-purple-light);
+  color: var(--footer-purple);
+  font-size: 30px;
+  font-weight: 900;
+}
+
+.focusly-footer__brand h2 {
+  margin: 0;
+  color: var(--footer-purple);
+  font-size: 1.35rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+}
+
+.focusly-footer__brand p {
+  margin: 3px 0 0;
+  color: var(--footer-muted);
+  font-size: 0.7rem;
+  line-height: 1.4;
+}
+
+/* Navegación */
+.focusly-footer__navigation {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.focusly-footer__column {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.focusly-footer__column h3 {
+  margin: 0 0 5px;
+  color: var(--footer-text);
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+.focusly-footer__column a,
+.focusly-footer__links a {
+  color: var(--footer-muted);
+  font-size: 0.7rem;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.focusly-footer__column a:hover,
+.focusly-footer__links a:hover {
+  color: var(--footer-purple);
+}
+
+/* Frase */
+.focusly-footer__quote {
+  position: relative;
+  min-height: 90px;
+  padding: 17px 18px;
+  border: 1px solid #e5def6;
+  border-radius: 15px;
+  background: linear-gradient(145deg, #faf9ff, #f2eeff);
+}
+
+.focusly-footer__quote-icon {
+  display: block;
+  margin-bottom: 7px;
+  color: var(--footer-purple);
+  font-size: 15px;
+}
+
+.focusly-footer__quote p {
+  margin: 0;
+  color: var(--footer-purple-dark);
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+/* Línea */
+.focusly-footer__divider {
+  width: 100%;
+  height: 1px;
+  margin: 32px 0 17px;
+  background: var(--footer-border);
+}
+
+/* Parte inferior */
+.focusly-footer__bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.focusly-footer__bottom p {
+  margin: 0;
+  color: var(--footer-muted);
+  font-size: 0.66rem;
+}
+
+.focusly-footer__links {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Tablet */
+@media (max-width: 850px) {
+  .focusly-footer__main {
+    grid-template-columns: 1fr 1.5fr;
+    gap: 35px;
+  }
+
+  .focusly-footer__quote {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Móvil */
+@media (max-width: 600px) {
+  .focusly-footer__container {
+    width: min(100% - 28px, 500px);
+    padding-top: 38px;
+  }
+
+  .focusly-footer__main {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .focusly-footer__navigation {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  .focusly-footer__quote {
+    grid-column: auto;
+  }
+
+  .focusly-footer__bottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .focusly-footer__links {
+    flex-wrap: wrap;
+    gap: 10px 18px;
+  }
+}
+
+@media (max-width: 390px) {
+  .focusly-footer__navigation {
+    grid-template-columns: 1fr 1fr;
+  }
+}

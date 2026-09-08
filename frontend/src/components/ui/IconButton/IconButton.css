@@ -1,0 +1,153 @@
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: none;
+  border-radius: 10px;
+
+  background: transparent;
+  color: #25245a;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+/* Icono */
+
+.icon-button-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  line-height: 1;
+}
+
+/* Tamaños */
+
+.icon-button-small {
+  width: 34px;
+  height: 34px;
+
+  font-size: 16px;
+}
+
+.icon-button-medium {
+  width: 42px;
+  height: 42px;
+
+  font-size: 20px;
+}
+
+.icon-button-large {
+  width: 50px;
+  height: 50px;
+
+  font-size: 24px;
+}
+
+/* Variante por defecto */
+
+.icon-button-default:hover {
+  background: #f1edff;
+  color: #5636d9;
+}
+
+/* Variante primaria */
+
+.icon-button-primary {
+  background: #5636d9;
+  color: #ffffff;
+}
+
+.icon-button-primary:hover {
+  background: #4528b8;
+
+  transform: translateY(-1px);
+
+  box-shadow: 0 4px 10px rgba(86, 54, 217, 0.2);
+}
+
+/* Variante secundaria */
+
+.icon-button-secondary {
+  background: #f1edff;
+  color: #5636d9;
+}
+
+.icon-button-secondary:hover {
+  background: #e5defc;
+}
+
+/* Variante outline */
+
+.icon-button-outline {
+  border: 1px solid #d8d3ee;
+  background: #ffffff;
+  color: #5636d9;
+}
+
+.icon-button-outline:hover {
+  border-color: #5636d9;
+  background: #f8f6ff;
+}
+
+/* Variante danger */
+
+.icon-button-danger {
+  background: #fff0f0;
+  color: #dc3545;
+}
+
+.icon-button-danger:hover {
+  background: #fde0e0;
+}
+
+/* Estado activo */
+
+.icon-button-active {
+  background: #eee9ff;
+  color: #5636d9;
+}
+
+/* Estado deshabilitado */
+
+.icon-button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Accesibilidad */
+
+.icon-button:focus-visible {
+  outline: 3px solid rgba(86, 54, 217, 0.25);
+  outline-offset: 2px;
+}
+
+/* Responsive */
+
+@media (max-width: 480px) {
+  .icon-button-small {
+    width: 32px;
+    height: 32px;
+  }
+
+  .icon-button-medium {
+    width: 40px;
+    height: 40px;
+  }
+
+  .icon-button-large {
+    width: 46px;
+    height: 46px;
+  }
+}

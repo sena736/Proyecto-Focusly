@@ -1,0 +1,268 @@
+/* Select Focusly
+   Estilo basado en la interfaz mostrada en los mockups:
+   bordes suaves, blanco/lila y acentos morados.
+*/
+
+:root {
+  --select-purple: #6042a3;
+  --select-purple-dark: #4e328d;
+  --select-purple-light: #eee9ff;
+  --select-text: #29263a;
+  --select-muted: #777187;
+  --select-border: #ddd7e9;
+  --select-background: #ffffff;
+  --select-option-hover: #f7f3ff;
+  --select-danger: #c45c68;
+  --select-shadow: 0 12px 32px rgba(56, 38, 91, 0.14);
+}
+
+.focusly-select {
+  position: relative;
+  width: 100%;
+  font-family: "Nunito", "Segoe UI", sans-serif;
+}
+
+.focusly-select__label {
+  display: block;
+  margin: 0 0 7px;
+  color: var(--select-text);
+  font-size: 0.76rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.focusly-select__label span {
+  color: var(--select-danger);
+}
+
+.focusly-select__trigger {
+  width: 100%;
+  min-height: 43px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 9px 12px;
+  border: 1px solid var(--select-border);
+  border-radius: 10px;
+  outline: none;
+  background: var(--select-background);
+  color: var(--select-text);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.78rem;
+  text-align: left;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.focusly-select__trigger:hover:not(:disabled) {
+  border-color: #c9bce0;
+}
+
+.focusly-select__trigger:focus-visible,
+.focusly-select.is-open .focusly-select__trigger {
+  border-color: var(--select-purple);
+  box-shadow: 0 0 0 3px rgba(96, 66, 163, 0.1);
+}
+
+.focusly-select__trigger-content {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.focusly-select__icon {
+  width: 25px;
+  height: 25px;
+  flex: 0 0 25px;
+  display: grid;
+  place-items: center;
+  border-radius: 7px;
+  background: var(--select-purple-light);
+  color: var(--select-purple);
+  font-size: 0.75rem;
+}
+
+.focusly-select__value {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.focusly-select__value.is-placeholder {
+  color: var(--select-muted);
+}
+
+.focusly-select__arrow {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+  display: grid;
+  place-items: center;
+  color: var(--select-purple);
+  transition: transform 0.2s ease;
+}
+
+.focusly-select__arrow svg {
+  width: 17px;
+  height: 17px;
+}
+
+.focusly-select.is-open .focusly-select__arrow {
+  transform: rotate(180deg);
+}
+
+.focusly-select__trigger:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+  background: #f5f3f8;
+}
+
+.focusly-select.has-error .focusly-select__trigger {
+  border-color: var(--select-danger);
+}
+
+.focusly-select.has-error .focusly-select__trigger:focus-visible,
+.focusly-select.has-error.is-open .focusly-select__trigger {
+  box-shadow: 0 0 0 3px rgba(196, 92, 104, 0.1);
+}
+
+.focusly-select__menu {
+  position: absolute;
+  top: calc(100% + 7px);
+  left: 0;
+  z-index: 1000;
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid var(--select-border);
+  border-radius: 13px;
+  background: var(--select-background);
+  box-shadow: var(--select-shadow);
+  animation: focusly-select-menu-in 0.16s ease-out;
+}
+
+.focusly-select__search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px;
+  border-bottom: 1px solid var(--select-border);
+  background: #fbfaff;
+}
+
+.focusly-select__search svg {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+  color: var(--select-muted);
+}
+
+.focusly-select__search input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--select-text);
+  font: inherit;
+  font-size: 0.75rem;
+}
+
+.focusly-select__search input::placeholder {
+  color: #9a94a6;
+}
+
+.focusly-select__options {
+  max-height: 235px;
+  overflow-y: auto;
+  padding: 5px;
+}
+
+.focusly-select__option {
+  width: 100%;
+  min-height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 10px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--select-text);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.75rem;
+  text-align: left;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+}
+
+.focusly-select__option:hover:not(:disabled),
+.focusly-select__option:focus-visible {
+  outline: none;
+  background: var(--select-option-hover);
+}
+
+.focusly-select__option.is-selected {
+  background: var(--select-purple-light);
+  color: var(--select-purple);
+  font-weight: 800;
+}
+
+.focusly-select__option.is-option-disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.focusly-select__check {
+  width: 17px;
+  height: 17px;
+  flex: 0 0 17px;
+}
+
+.focusly-select__empty {
+  padding: 18px 10px;
+  color: var(--select-muted);
+  font-size: 0.72rem;
+  text-align: center;
+}
+
+.focusly-select__message {
+  margin: 6px 1px 0;
+  color: var(--select-muted);
+  font-size: 0.67rem;
+  line-height: 1.35;
+}
+
+.focusly-select__message.is-error {
+  color: var(--select-danger);
+  font-weight: 700;
+}
+
+@keyframes focusly-select-menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.99);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 520px) {
+  .focusly-select__menu {
+    max-height: 50vh;
+  }
+
+  .focusly-select__options {
+    max-height: 40vh;
+  }
+}
