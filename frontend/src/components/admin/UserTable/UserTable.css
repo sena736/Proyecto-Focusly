@@ -1,0 +1,275 @@
+
+.user-table {
+  width: 100%;
+  background-color: #ffffff;
+  border: 1px solid #e3ecea;
+  border-radius: 16px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* =========================================
+   HEADER
+========================================= */
+
+.user-table__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 20px 22px;
+
+  border-bottom: 1px solid #edf2f1;
+}
+
+.user-table__header h2 {
+  margin: 0;
+
+  color: #38565b;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.user-table__header p {
+  margin: 4px 0 0;
+
+  color: #94a2a4;
+  font-size: 11px;
+}
+
+.user-table__count {
+  padding: 6px 10px;
+
+  background-color: #f0f6f5;
+  color: #4e767d;
+
+  border-radius: 7px;
+
+  font-size: 10px;
+  font-weight: 600;
+}
+
+/* =========================================
+   TABLE
+========================================= */
+
+.user-table__wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.user-table__table {
+  width: 100%;
+  min-width: 650px;
+
+  border-collapse: collapse;
+}
+
+.user-table__table th {
+  padding: 13px 20px;
+
+  background-color: #fafcfc;
+
+  color: #98a6a8;
+
+  font-size: 9px;
+  font-weight: 700;
+
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.user-table__table td {
+  padding: 14px 20px;
+
+  border-top: 1px solid #edf2f1;
+
+  color: #718386;
+
+  font-size: 11px;
+}
+
+.user-table__table tbody tr {
+  transition: background-color 0.2s ease;
+}
+
+.user-table__table tbody tr:hover {
+  background-color: #fbfdfc;
+}
+
+/* =========================================
+   USER
+========================================= */
+
+.user-table__user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  color: #526b6f;
+  font-weight: 600;
+}
+
+.user-table__avatar {
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  background-color: #eaf2f1;
+  color: #4e767d;
+
+  border-radius: 50%;
+}
+
+/* =========================================
+   ROLE
+========================================= */
+
+.user-table__role {
+  display: inline-flex;
+
+  padding: 5px 9px;
+
+  background-color: #f0f6f5;
+  color: #4e767d;
+
+  border-radius: 6px;
+
+  font-size: 9px;
+  font-weight: 600;
+}
+
+/* =========================================
+   STATUS
+========================================= */
+
+.user-table__status {
+  display: inline-flex;
+
+  padding: 5px 10px;
+
+  border-radius: 20px;
+
+  font-size: 9px;
+  font-weight: 600;
+}
+
+.user-table__status--active {
+  background-color: #eaf4ee;
+  color: #56806a;
+}
+
+.user-table__status--inactive {
+  background-color: #f3eeee;
+  color: #9a7373;
+}
+
+/* =========================================
+   ACTIONS
+========================================= */
+
+.user-table__actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.user-table__action {
+  width: 32px;
+  height: 32px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+  border-radius: 8px;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.user-table__action--edit {
+  background-color: #f0f6f5;
+  color: #4e767d;
+}
+
+.user-table__action--edit:hover {
+  background-color: #e1edeb;
+}
+
+.user-table__action--delete {
+  background-color: #faf2f2;
+  color: #a06f6f;
+}
+
+.user-table__action--delete:hover {
+  background-color: #f4e5e5;
+}
+
+/* =========================================
+   EMPTY
+========================================= */
+
+.user-table__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 45px 20px;
+
+  text-align: center;
+  color: #9aa8aa;
+}
+
+.user-table__empty svg {
+  margin-bottom: 10px;
+  color: #4e767d;
+}
+
+.user-table__empty h3 {
+  margin: 0 0 5px;
+
+  color: #526b6f;
+  font-size: 14px;
+}
+
+.user-table__empty p {
+  margin: 0;
+
+  font-size: 11px;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 600px) {
+  .user-table__header {
+    padding: 17px;
+  }
+
+  .user-table__header h2 {
+    font-size: 15px;
+  }
+
+  .user-table__header p {
+    font-size: 10px;
+  }
+
+  .user-table__count {
+    font-size: 9px;
+  }
+
+  .user-table__table th,
+  .user-table__table td {
+    padding: 12px 14px;
+  }
+}
+
