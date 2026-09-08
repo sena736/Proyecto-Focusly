@@ -1,0 +1,61 @@
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  cursor: pointer;
+  user-select: none;
+
+  font-size: 14px;
+  color: #25245a;
+}
+
+.checkbox-container input {
+  display: none;
+}
+
+.checkmark {
+  width: 20px;
+  height: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1.5px solid #b8b4e8;
+  background: white;
+
+  transition: all 0.2s ease;
+
+  box-sizing: border-box;
+}
+
+/* Checkbox circular para las tareas */
+.checkbox-container.circle .checkmark {
+  border-radius: 50%;
+}
+
+/* Checkbox cuadrado para configuración */
+.checkbox-container.square .checkmark {
+  border-radius: 4px;
+}
+
+/* Cuando está marcado */
+.checkbox-container input:checked + .checkmark {
+  background: #5b3fd1;
+  border-color: #5b3fd1;
+
+  color: white;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.checkbox-label {
+  transition: 0.2s ease;
+}
+
+/* Tarea completada */
+.checkbox-label.completed {
+  text-decoration: line-through;
+  opacity: 0.55;
+}
