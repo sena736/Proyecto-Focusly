@@ -1,0 +1,307 @@
+/* =========================================
+   SIDEBAR FOCUSLY
+========================================= */
+
+.sidebar {
+  position: fixed;
+
+  top: 0;
+  left: 0;
+
+  width: 240px;
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+
+  background: #ffffff;
+
+  border-right: 1px solid #e8e4f5;
+
+  box-sizing: border-box;
+
+  z-index: 100;
+}
+
+/* =========================================
+   HEADER / LOGO
+========================================= */
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 22px 20px;
+
+  border-bottom: 1px solid #eeeaf8;
+}
+
+.sidebar-logo {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background: #5b3fd1;
+
+  color: white;
+
+  font-size: 24px;
+  font-weight: 700;
+
+  box-shadow: 0 4px 10px rgba(91, 63, 209, 0.2);
+}
+
+.sidebar-brand h2 {
+  margin: 0;
+
+  color: #4b36a8;
+
+  font-size: 19px;
+  font-weight: 800;
+
+  letter-spacing: 0.5px;
+}
+
+.sidebar-brand span {
+  display: block;
+
+  margin-top: 2px;
+
+  color: #88849b;
+
+  font-size: 10px;
+}
+
+/* =========================================
+   MENÚ
+========================================= */
+
+.sidebar-menu {
+  display: flex;
+  flex-direction: column;
+
+  gap: 5px;
+
+  padding: 22px 12px;
+
+  flex: 1;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+
+  gap: 13px;
+
+  padding: 12px 14px;
+
+  border-radius: 11px;
+
+  color: #55516c;
+
+  text-decoration: none;
+
+  font-size: 14px;
+  font-weight: 500;
+
+  transition: all 0.2s ease;
+}
+
+.sidebar-link svg {
+  flex-shrink: 0;
+}
+
+/* Hover */
+
+.sidebar-link:hover {
+  background: #f4f1ff;
+
+  color: #5b3fd1;
+}
+
+/* Página activa */
+
+.sidebar-link.active {
+  background: #eeeaff;
+
+  color: #5b3fd1;
+
+  font-weight: 600;
+}
+
+.sidebar-link.active svg {
+  stroke-width: 2.5;
+}
+
+/* =========================================
+   PARTE INFERIOR
+========================================= */
+
+.sidebar-bottom {
+  padding: 15px 12px;
+
+  border-top: 1px solid #eeeaf8;
+}
+
+/* Usuario */
+
+.sidebar-user {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 10px;
+
+  margin-bottom: 10px;
+}
+
+.sidebar-user-avatar {
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background: #e9e4ff;
+
+  color: #5b3fd1;
+
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.sidebar-user-info {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-user-info strong {
+  color: #29264b;
+
+  font-size: 12px;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar-user-info span {
+  margin-top: 2px;
+
+  color: #88849b;
+
+  font-size: 10px;
+}
+
+/* =========================================
+   CERRAR SESIÓN
+========================================= */
+
+.sidebar-logout {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  padding: 11px 14px;
+
+  border: 1px solid #e6e1f4;
+
+  border-radius: 10px;
+
+  background: transparent;
+
+  color: #777287;
+
+  font-size: 13px;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.sidebar-logout:hover {
+  background: #fff1f1;
+
+  border-color: #f0caca;
+
+  color: #d95353;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 800px) {
+  .sidebar {
+    width: 75px;
+  }
+
+  .sidebar-header {
+    justify-content: center;
+
+    padding: 20px 10px;
+  }
+
+  .sidebar-brand {
+    display: none;
+  }
+
+  .sidebar-menu {
+    padding: 20px 10px;
+  }
+
+  .sidebar-link {
+    justify-content: center;
+
+    padding: 13px 10px;
+  }
+
+  .sidebar-link span {
+    display: none;
+  }
+
+  .sidebar-bottom {
+    padding: 10px;
+  }
+
+  .sidebar-user {
+    justify-content: center;
+
+    padding: 8px;
+  }
+
+  .sidebar-user-info {
+    display: none;
+  }
+
+  .sidebar-logout {
+    justify-content: center;
+
+    padding: 11px;
+  }
+
+  .sidebar-logout span {
+    display: none;
+  }
+}

@@ -1,0 +1,263 @@
+/* =========================================
+   TASK LIST
+========================================= */
+
+.task-list {
+  width: 100%;
+  max-width: 750px;
+
+  margin: 0 auto;
+}
+
+/* =========================================
+   ENCABEZADO
+========================================= */
+
+.task-list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 22px;
+}
+
+.task-list-header h2 {
+  margin: 0;
+
+  color: #25245a;
+
+  font-size: 25px;
+}
+
+.task-list-header p {
+  margin: 6px 0 0;
+
+  color: #88849b;
+
+  font-size: 14px;
+}
+
+.task-counter {
+  padding: 8px 13px;
+
+  border-radius: 20px;
+
+  background: #eeeaff;
+
+  color: #5b3fd1;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* =========================================
+   FORMULARIO
+========================================= */
+
+.task-form {
+  display: flex;
+
+  gap: 10px;
+
+  margin-bottom: 20px;
+}
+
+.task-form input {
+  flex: 1;
+
+  padding: 13px 15px;
+
+  border: 1px solid #ddd9ed;
+
+  border-radius: 12px;
+
+  outline: none;
+
+  color: #333;
+
+  font-size: 14px;
+
+  transition: 0.2s;
+}
+
+.task-form input:focus {
+  border-color: #5b3fd1;
+
+  box-shadow: 0 0 0 3px rgba(91, 63, 209, 0.1);
+}
+
+.task-form button {
+  padding: 13px 18px;
+
+  border: none;
+
+  border-radius: 12px;
+
+  background: #5b3fd1;
+
+  color: white;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.task-form button:hover {
+  background: #4931b5;
+
+  transform: translateY(-1px);
+}
+
+/* =========================================
+   CONTENEDOR DE TAREAS
+========================================= */
+
+.tasks-container {
+  display: flex;
+  flex-direction: column;
+
+  gap: 10px;
+}
+
+/* =========================================
+   TAREA
+========================================= */
+
+.task-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 16px 18px;
+
+  background: #ffffff;
+
+  border: 1px solid #ebe8f5;
+
+  border-radius: 14px;
+
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.03);
+
+  transition: all 0.2s ease;
+}
+
+.task-item:hover {
+  border-color: #d8d1f5;
+
+  box-shadow: 0 5px 15px rgba(91, 63, 209, 0.08);
+}
+
+.task-item.completed {
+  background: #faf9ff;
+
+  opacity: 0.75;
+}
+
+/* =========================================
+   BOTÓN ELIMINAR
+========================================= */
+
+.delete-task {
+  width: 30px;
+  height: 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border: none;
+
+  border-radius: 8px;
+
+  background: transparent;
+
+  color: #aaa6b8;
+
+  font-size: 21px;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.delete-task:hover {
+  background: #fff0f0;
+
+  color: #d95353;
+}
+
+/* =========================================
+   LISTA VACÍA
+========================================= */
+
+.empty-tasks {
+  padding: 45px 20px;
+
+  text-align: center;
+
+  border: 1px dashed #dcd7ee;
+
+  border-radius: 16px;
+
+  background: #faf9ff;
+}
+
+.empty-tasks span {
+  display: block;
+
+  margin-bottom: 10px;
+
+  font-size: 32px;
+}
+
+.empty-tasks p {
+  margin: 0 0 5px;
+
+  color: #55516c;
+
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.empty-tasks small {
+  color: #9995a8;
+
+  font-size: 12px;
+}
+
+/* =========================================
+   CELULARES
+========================================= */
+
+@media (max-width: 600px) {
+  .task-list-header {
+    align-items: flex-start;
+
+    gap: 10px;
+  }
+
+  .task-list-header h2 {
+    font-size: 21px;
+  }
+
+  .task-list-header p {
+    font-size: 12px;
+  }
+
+  .task-form {
+    flex-direction: column;
+  }
+
+  .task-form button {
+    width: 100%;
+  }
+
+  .task-item {
+    padding: 13px;
+  }
+}
