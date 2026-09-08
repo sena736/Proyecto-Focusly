@@ -1,0 +1,436 @@
+/* Header Focusly
+   Basado en los mockups: logo FOCUSLY, navegación limpia,
+   avatar de usuario y menú responsive.
+*/
+
+:root {
+  --header-purple: #4d378f;
+  --header-purple-dark: #35236f;
+  --header-purple-light: #eee9ff;
+  --header-text: #29263a;
+  --header-muted: #777187;
+  --header-border: #e6e0f1;
+  --header-white: #ffffff;
+}
+
+.focusly-header {
+  position: relative;
+  z-index: 1000;
+  width: 100%;
+  min-height: 72px;
+  border-bottom: 1px solid var(--header-border);
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 4px 18px rgba(50, 34, 87, 0.06);
+  font-family: "Nunito", "Segoe UI", sans-serif;
+}
+
+.focusly-header__container {
+  width: min(1240px, calc(100% - 40px));
+  min-height: 72px;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  margin: 0 auto;
+}
+
+/* Marca */
+.focusly-header__brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  color: inherit;
+  text-decoration: none;
+}
+
+.focusly-header__logo {
+  position: relative;
+  width: 45px;
+  height: 45px;
+  display: grid;
+  place-items: center;
+  border: 2px solid var(--header-purple);
+  border-radius: 50%;
+  background: linear-gradient(145deg, #f7f4ff, #e9e2ff);
+  color: var(--header-purple);
+  box-shadow: inset 0 0 0 4px rgba(96, 66, 163, 0.05);
+}
+
+.focusly-header__logo span {
+  font-size: 25px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.focusly-header__logo i {
+  position: absolute;
+  right: -2px;
+  bottom: 1px;
+  color: var(--header-purple);
+  font-size: 9px;
+  font-style: normal;
+}
+
+.focusly-header__brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.focusly-header__brand-text strong {
+  color: var(--header-purple);
+  font-size: 1.16rem;
+  font-weight: 900;
+  letter-spacing: 0.045em;
+  line-height: 1;
+}
+
+.focusly-header__brand-text small {
+  margin-top: 4px;
+  color: var(--header-muted);
+  font-size: 0.59rem;
+  line-height: 1;
+}
+
+/* Navegación */
+.focusly-header__nav {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.focusly-header__nav-link {
+  position: relative;
+  padding: 9px 11px;
+  border-radius: 9px;
+  color: var(--header-text);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: 0.2s ease;
+}
+
+.focusly-header__nav-link:hover {
+  background: var(--header-purple-light);
+  color: var(--header-purple);
+}
+
+.focusly-header__nav-link.is-active {
+  background: var(--header-purple-light);
+  color: var(--header-purple);
+  font-weight: 900;
+}
+
+.focusly-header__public-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 8px;
+  padding-left: 12px;
+  border-left: 1px solid var(--header-border);
+}
+
+.focusly-header__login,
+.focusly-header__register {
+  min-height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 13px;
+  border-radius: 8px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-decoration: none;
+  transition: 0.2s ease;
+}
+
+.focusly-header__login {
+  border: 1px solid var(--header-purple);
+  color: var(--header-purple);
+  background: var(--header-white);
+}
+
+.focusly-header__login:hover {
+  background: var(--header-purple-light);
+}
+
+.focusly-header__register {
+  border: 1px solid var(--header-purple);
+  background: var(--header-purple);
+  color: white;
+}
+
+.focusly-header__register:hover {
+  background: var(--header-purple-dark);
+}
+
+/* Usuario */
+.focusly-header__user {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: auto;
+}
+
+.focusly-header__notification {
+  position: relative;
+  width: 35px;
+  height: 35px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--header-purple);
+  cursor: pointer;
+}
+
+.focusly-header__notification:hover {
+  background: var(--header-purple-light);
+}
+
+.focusly-header__notification svg {
+  width: 19px;
+  height: 19px;
+}
+
+.focusly-header__notification > span {
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  width: 5px;
+  height: 5px;
+  border: 1px solid white;
+  border-radius: 50%;
+  background: #db6384;
+}
+
+.focusly-header__profile {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--header-text);
+  cursor: pointer;
+  text-align: left;
+}
+
+.focusly-header__profile:hover {
+  background: var(--header-purple-light);
+}
+
+.focusly-header__avatar {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #eee8ff, #dcd2ff);
+  color: var(--header-purple);
+  font-size: 0.83rem;
+  font-weight: 900;
+}
+
+.focusly-header__user-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 72px;
+}
+
+.focusly-header__user-info strong {
+  font-size: 0.69rem;
+  font-weight: 900;
+  line-height: 1.15;
+}
+
+.focusly-header__user-info small {
+  margin-top: 2px;
+  color: var(--header-muted);
+  font-size: 0.57rem;
+  line-height: 1;
+}
+
+.focusly-header__chevron {
+  width: 15px;
+  height: 15px;
+  margin-left: 2px;
+  color: var(--header-muted);
+}
+
+.focusly-header__user-menu {
+  position: absolute;
+  top: calc(100% + 9px);
+  right: 0;
+  width: 155px;
+  display: none;
+  padding: 6px;
+  border: 1px solid var(--header-border);
+  border-radius: 11px;
+  background: white;
+  box-shadow: 0 12px 30px rgba(56, 38, 91, 0.14);
+}
+
+.focusly-header__user:hover .focusly-header__user-menu,
+.focusly-header__user:focus-within .focusly-header__user-menu {
+  display: grid;
+}
+
+.focusly-header__user-menu button {
+  padding: 9px 10px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--header-text);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.69rem;
+  text-align: left;
+}
+
+.focusly-header__user-menu button:hover {
+  background: var(--header-purple-light);
+  color: var(--header-purple);
+}
+
+/* Botón móvil */
+.focusly-header__menu-button {
+  display: none;
+  width: 38px;
+  height: 38px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin-left: auto;
+  border: 0;
+  border-radius: 9px;
+  background: var(--header-purple-light);
+  cursor: pointer;
+}
+
+.focusly-header__menu-button span {
+  width: 19px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--header-purple);
+  transition: 0.2s ease;
+}
+
+.focusly-header__menu-button.is-open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.focusly-header__menu-button.is-open span:nth-child(2) {
+  opacity: 0;
+}
+
+.focusly-header__menu-button.is-open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Tablet */
+@media (max-width: 980px) {
+  .focusly-header__container {
+    gap: 16px;
+  }
+
+  .focusly-header__brand-text small {
+    display: none;
+  }
+
+  .focusly-header__nav-link {
+    padding-inline: 8px;
+    font-size: 0.67rem;
+  }
+}
+
+/* Móvil */
+@media (max-width: 760px) {
+  .focusly-header {
+    min-height: 64px;
+  }
+
+  .focusly-header__container {
+    min-height: 64px;
+    width: min(100% - 28px, 600px);
+  }
+
+  .focusly-header__logo {
+    width: 39px;
+    height: 39px;
+  }
+
+  .focusly-header__logo span {
+    font-size: 22px;
+  }
+
+  .focusly-header__brand-text strong {
+    font-size: 1rem;
+  }
+
+  .focusly-header__nav {
+    position: absolute;
+    top: calc(100% + 1px);
+    left: 0;
+    right: 0;
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4px;
+    padding: 14px;
+    border-bottom: 1px solid var(--header-border);
+    background: white;
+    box-shadow: 0 14px 25px rgba(50, 34, 87, 0.1);
+  }
+
+  .focusly-header__nav.is-open {
+    display: flex;
+  }
+
+  .focusly-header__nav-link {
+    width: 100%;
+    padding: 12px;
+  }
+
+  .focusly-header__public-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: 6px 0 0;
+    padding: 10px 0 0;
+    border-top: 1px solid var(--header-border);
+    border-left: 0;
+  }
+
+  .focusly-header__menu-button {
+    display: flex;
+  }
+
+  .focusly-header__user {
+    margin-left: auto;
+  }
+
+  .focusly-header__user-info,
+  .focusly-header__chevron {
+    display: none;
+  }
+}
+
+@media (max-width: 430px) {
+  .focusly-header__container {
+    width: calc(100% - 20px);
+  }
+
+  .focusly-header__brand-text strong {
+    font-size: 0.9rem;
+  }
+
+  .focusly-header__notification {
+    display: none;
+  }
+}

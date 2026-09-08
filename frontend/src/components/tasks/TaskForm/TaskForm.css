@@ -1,0 +1,312 @@
+/* =========================================
+   TASK FORM
+   ========================================= */
+
+.task-form {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+
+  gap: 18px;
+
+  font-family: "Poppins", "Segoe UI", sans-serif;
+}
+
+/* =========================================
+   FIELD
+   ========================================= */
+
+.task-form__field {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 7px;
+}
+
+/* =========================================
+   LABEL
+   ========================================= */
+
+.task-form__field label {
+  color: #25245a;
+
+  font-size: 13px;
+
+  font-weight: 600;
+}
+
+/* =========================================
+   REQUIRED
+   ========================================= */
+
+.task-form__required {
+  margin-left: 3px;
+
+  color: #dc2626;
+}
+
+/* =========================================
+   INPUT / SELECT / TEXTAREA
+   ========================================= */
+
+.task-form__field input,
+.task-form__field textarea,
+.task-form__field select {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  padding: 11px 13px;
+
+  background: #ffffff;
+
+  border: 1px solid #d8d5e7;
+
+  border-radius: 8px;
+
+  color: #25245a;
+
+  font-family: "Poppins", "Segoe UI", sans-serif;
+
+  font-size: 13px;
+
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+/* =========================================
+   PLACEHOLDER
+   ========================================= */
+
+.task-form__field input::placeholder,
+.task-form__field textarea::placeholder {
+  color: #aaa8bd;
+}
+
+/* =========================================
+   TEXTAREA
+   ========================================= */
+
+.task-form__field textarea {
+  min-height: 100px;
+
+  resize: vertical;
+
+  line-height: 1.5;
+}
+
+/* =========================================
+   SELECT
+   ========================================= */
+
+.task-form__field select {
+  cursor: pointer;
+
+  appearance: auto;
+}
+
+/* =========================================
+   FOCUS
+   ========================================= */
+
+.task-form__field input:focus,
+.task-form__field textarea:focus,
+.task-form__field select:focus {
+  border-color: #6546c7;
+
+  box-shadow: 0 0 0 3px rgba(101, 70, 199, 0.1);
+}
+
+/* =========================================
+   ERROR
+   ========================================= */
+
+.task-form__input--error {
+  border-color: #dc2626 !important;
+}
+
+.task-form__input--error:focus {
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1) !important;
+}
+
+/* =========================================
+   ERROR MESSAGE
+   ========================================= */
+
+.task-form__error {
+  color: #dc2626;
+
+  font-size: 11px;
+
+  line-height: 1.3;
+}
+
+/* =========================================
+   CHARACTER COUNTER
+   ========================================= */
+
+.task-form__counter {
+  align-self: flex-end;
+
+  margin-top: -3px;
+
+  color: #9997ad;
+
+  font-size: 10px;
+}
+
+/* =========================================
+   ACTIONS
+   ========================================= */
+
+.task-form__actions {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: flex-end;
+
+  gap: 10px;
+
+  margin-top: 8px;
+
+  padding-top: 18px;
+
+  border-top: 1px solid #ebe8f5;
+}
+
+/* =========================================
+   CANCEL BUTTON
+   ========================================= */
+
+.task-form__cancel,
+.task-form__submit {
+  min-height: 40px;
+
+  padding: 9px 20px;
+
+  border-radius: 8px;
+
+  font-family: "Poppins", "Segoe UI", sans-serif;
+
+  font-size: 13px;
+
+  font-weight: 500;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.15s ease;
+}
+
+/* =========================================
+   CANCEL
+   ========================================= */
+
+.task-form__cancel {
+  background: #ffffff;
+
+  border: 1px solid #d1cee0;
+
+  color: #5c5b77;
+}
+
+.task-form__cancel:hover:not(:disabled) {
+  background: #f7f5fc;
+
+  border-color: #aaa6c1;
+}
+
+/* =========================================
+   SUBMIT
+   ========================================= */
+
+.task-form__submit {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 8px;
+
+  min-width: 130px;
+
+  background: #6546c7;
+
+  border: 1px solid #6546c7;
+
+  color: #ffffff;
+}
+
+.task-form__submit:hover:not(:disabled) {
+  background: #5436b1;
+
+  border-color: #5436b1;
+
+  transform: translateY(-1px);
+}
+
+.task-form__submit:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+/* =========================================
+   DISABLED
+   ========================================= */
+
+.task-form__cancel:disabled,
+.task-form__submit:disabled {
+  opacity: 0.55;
+
+  cursor: not-allowed;
+}
+
+/* =========================================
+   SPINNER
+   ========================================= */
+
+.task-form__spinner {
+  width: 14px;
+  height: 14px;
+
+  border: 2px solid rgba(255, 255, 255, 0.4);
+
+  border-top-color: #ffffff;
+
+  border-radius: 50%;
+
+  animation: task-form-spin 0.7s linear infinite;
+}
+
+@keyframes task-form-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+
+@media (max-width: 520px) {
+  .task-form__actions {
+    flex-direction: column-reverse;
+
+    align-items: stretch;
+  }
+
+  .task-form__cancel,
+  .task-form__submit {
+    width: 100%;
+  }
+}

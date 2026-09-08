@@ -1,0 +1,158 @@
+.pomodoro-controls {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-family: "Nunito", "Segoe UI", sans-serif;
+}
+
+/* Botones */
+
+.pomodoro-controls__button {
+  min-height: 44px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  padding: 10px 18px;
+
+  border-radius: 10px;
+
+  font-family: inherit;
+  font-size: 0.75rem;
+  font-weight: 800;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+/* Botón principal */
+
+.pomodoro-controls__button--primary {
+  min-width: 120px;
+
+  border: 1px solid #6042a3;
+
+  background: #6042a3;
+
+  color: #ffffff;
+
+  box-shadow: 0 6px 16px rgba(96, 66, 163, 0.2);
+}
+
+.pomodoro-controls__button--primary:hover:not(:disabled) {
+  background: #4e328d;
+  border-color: #4e328d;
+
+  transform: translateY(-1px);
+
+  box-shadow: 0 8px 20px rgba(96, 66, 163, 0.25);
+}
+
+/* Botones secundarios */
+
+.pomodoro-controls__button--secondary {
+  border: 1px solid #ded8ea;
+
+  background: #ffffff;
+
+  color: #302c3d;
+}
+
+.pomodoro-controls__button--secondary:hover:not(:disabled) {
+  border-color: #c9bce0;
+
+  background: #eee9ff;
+
+  color: #6042a3;
+
+  transform: translateY(-1px);
+}
+
+/* Iconos */
+
+.pomodoro-controls__icon {
+  width: 17px;
+  height: 17px;
+
+  flex-shrink: 0;
+}
+
+/* Play / Pause utiliza SVG relleno */
+
+.pomodoro-controls__button--primary .pomodoro-controls__icon path,
+.pomodoro-controls__button--primary .pomodoro-controls__icon rect {
+  fill: currentColor;
+}
+
+/* Accesibilidad */
+
+.pomodoro-controls__button:focus-visible {
+  outline: none;
+
+  box-shadow:
+    0 0 0 3px rgba(96, 66, 163, 0.15),
+    0 6px 16px rgba(96, 66, 163, 0.15);
+}
+
+.pomodoro-controls__button:disabled {
+  opacity: 0.5;
+
+  cursor: not-allowed;
+
+  transform: none;
+
+  box-shadow: none;
+}
+
+/* Responsive */
+
+@media (max-width: 520px) {
+  .pomodoro-controls {
+    gap: 7px;
+  }
+
+  .pomodoro-controls__button {
+    flex: 1;
+
+    padding: 10px 8px;
+
+    font-size: 0.68rem;
+  }
+
+  .pomodoro-controls__button--primary {
+    min-width: 0;
+  }
+
+  .pomodoro-controls__icon {
+    width: 15px;
+    height: 15px;
+  }
+}
+
+@media (max-width: 360px) {
+  .pomodoro-controls__button {
+    width: 42px;
+    min-width: 42px;
+
+    padding: 10px;
+  }
+
+  .pomodoro-controls__button span {
+    display: none;
+  }
+
+  .pomodoro-controls__icon {
+    width: 18px;
+    height: 18px;
+  }
+}

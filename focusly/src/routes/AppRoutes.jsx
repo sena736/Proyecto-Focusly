@@ -83,6 +83,8 @@ const AppRoutes = () => {
 
         <Route path="/registro" element={<Register />} />
 
+        <Route path="/recuperar-contrasenia" element={<ForgotPassword />} />
+
         {/* =========================================
             RUTAS PROTEGIDAS
             ========================================= */}

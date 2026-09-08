@@ -18,26 +18,7 @@ import {
 import { Link } from "react-router-dom";
 
 const Home = () => {
-  const [tareas, setTareas] = useState([
-    {
-      id: 1,
-      titulo: "Tarea 1",
-      descripcion: "Revisar matemáticas",
-      completada: false,
-    },
-    {
-      id: 2,
-      titulo: "Tarea 2",
-      descripcion: "Repasar inglés",
-      completada: false,
-    },
-    {
-      id: 3,
-      titulo: "Tarea 3",
-      descripcion: "Resolver ejercicios de biología",
-      completada: true,
-    },
-  ]);
+  
 
   const [tiempo, setTiempo] = useState("25:00");
 
