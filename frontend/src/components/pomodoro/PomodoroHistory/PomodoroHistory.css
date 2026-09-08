@@ -1,0 +1,259 @@
+.pomodoro-history {
+  width: 100%;
+  background-color: #ffffff;
+  border: 1px solid #e4eceb;
+  border-radius: 18px;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+/* =========================================
+   HEADER
+========================================= */
+
+.pomodoro-history__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 22px;
+}
+
+.pomodoro-history__title {
+  margin: 0;
+  color: #294b51;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.pomodoro-history__subtitle {
+  margin: 5px 0 0;
+  color: #829396;
+  font-size: 13px;
+}
+
+.pomodoro-history__calendar {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: #f0f6f5;
+  color: #4e767d;
+  border-radius: 10px;
+}
+
+/* =========================================
+   LIST
+========================================= */
+
+.pomodoro-history__list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* =========================================
+   ITEM
+========================================= */
+
+.pomodoro-history__item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  min-height: 68px;
+  padding: 10px 12px;
+
+  background-color: #f8fbfa;
+  border: 1px solid transparent;
+  border-radius: 13px;
+
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+
+.pomodoro-history__item:hover {
+  border-color: #dce9e7;
+  transform: translateY(-1px);
+}
+
+/* =========================================
+   ICON
+========================================= */
+
+.pomodoro-history__icon {
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 11px;
+}
+
+.pomodoro-history__icon--focus {
+  background-color: #e5f0ef;
+  color: #4e767d;
+}
+
+.pomodoro-history__icon--break {
+  background-color: #f1f3f3;
+  color: #7d8d90;
+}
+
+/* =========================================
+   INFORMATION
+========================================= */
+
+.pomodoro-history__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.pomodoro-history__task {
+  margin: 0 0 5px;
+
+  color: #38565b;
+  font-size: 14px;
+  font-weight: 600;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pomodoro-history__details {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  color: #8a999b;
+  font-size: 11px;
+}
+
+/* =========================================
+   DURATION
+========================================= */
+
+.pomodoro-history__duration {
+  display: flex;
+  align-items: baseline;
+  gap: 3px;
+
+  color: #4e767d;
+}
+
+.pomodoro-history__duration strong {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.pomodoro-history__duration span {
+  font-size: 10px;
+}
+
+/* =========================================
+   COMPLETED
+========================================= */
+
+.pomodoro-history__completed {
+  color: #4e767d;
+  flex-shrink: 0;
+}
+
+/* =========================================
+   EMPTY STATE
+========================================= */
+
+.pomodoro-history__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding: 45px 20px;
+
+  color: #9aa8aa;
+  text-align: center;
+}
+
+.pomodoro-history__empty svg {
+  margin-bottom: 12px;
+  color: #4e767d;
+}
+
+.pomodoro-history__empty h3 {
+  margin: 0 0 6px;
+
+  color: #526b6f;
+  font-size: 15px;
+}
+
+.pomodoro-history__empty p {
+  margin: 0;
+
+  max-width: 280px;
+
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 600px) {
+  .pomodoro-history {
+    padding: 18px;
+    border-radius: 15px;
+  }
+
+  .pomodoro-history__title {
+    font-size: 18px;
+  }
+
+  .pomodoro-history__subtitle {
+    font-size: 12px;
+  }
+
+  .pomodoro-history__item {
+    gap: 10px;
+    padding: 9px;
+  }
+
+  .pomodoro-history__icon {
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+  }
+
+  .pomodoro-history__task {
+    font-size: 13px;
+  }
+
+  .pomodoro-history__duration strong {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 400px) {
+  .pomodoro-history {
+    padding: 15px;
+  }
+
+  .pomodoro-history__details {
+    font-size: 10px;
+  }
+
+  .pomodoro-history__completed {
+    display: none;
+  }
+
+  .pomodoro-history__calendar {
+    width: 36px;
+    height: 36px;
+  }
+}
