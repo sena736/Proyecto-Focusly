@@ -1,0 +1,156 @@
+.pomodoro-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px 20px;
+  box-sizing: border-box;
+}
+
+.pomodoro-card {
+  width: 100%;
+  max-width: 520px;
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 35px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+.pomodoro-header h2 {
+  margin: 0;
+  font-size: 28px;
+  color: #222;
+}
+
+.pomodoro-header p {
+  margin-top: 8px;
+  color: #777;
+  font-size: 15px;
+}
+
+.pomodoro-modes {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin: 25px 0;
+  flex-wrap: wrap;
+}
+
+.pomodoro-modes button {
+  border: none;
+  background: #f1f3f5;
+  color: #555;
+  padding: 10px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.2s ease;
+}
+
+.pomodoro-modes button:hover {
+  background: #e5e7eb;
+}
+
+.pomodoro-modes button.active {
+  background: #8ecae6;
+  color: white;
+}
+
+.pomodoro-time {
+  font-size: 82px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: #222;
+  margin: 25px 0;
+}
+
+.pomodoro-controls {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.pomodoro-main-button,
+.pomodoro-reset-button {
+  border: none;
+  padding: 13px 28px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.pomodoro-main-button {
+  background: #8ecae6;
+  color: white;
+}
+
+.pomodoro-main-button:hover {
+  transform: translateY(-2px);
+}
+
+.pomodoro-reset-button {
+  background: #f1f3f5;
+  color: #555;
+}
+
+.pomodoro-reset-button:hover {
+  background: #e5e7eb;
+}
+
+.pomodoro-progress {
+  margin-top: 30px;
+  padding: 16px;
+  background: #f8fafc;
+  border-radius: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pomodoro-progress span {
+  color: #666;
+  font-size: 14px;
+}
+
+.pomodoro-progress strong {
+  font-size: 20px;
+  color: #8ecae6;
+}
+
+.pomodoro-info {
+  margin-top: 20px;
+}
+
+.pomodoro-info p {
+  color: #888;
+  font-size: 13px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+@media (max-width: 600px) {
+  .pomodoro-card {
+    padding: 25px 18px;
+  }
+
+  .pomodoro-time {
+    font-size: 62px;
+  }
+
+  .pomodoro-modes button {
+    font-size: 13px;
+    padding: 9px 12px;
+  }
+
+  .pomodoro-controls {
+    flex-direction: column;
+  }
+
+  .pomodoro-main-button,
+  .pomodoro-reset-button {
+    width: 100%;
+  }
+}
