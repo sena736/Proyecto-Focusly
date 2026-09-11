@@ -1,7 +1,14 @@
 import React, { useState } from "react";
+import { useAuth } from "../../context/AuthContext";
 import "./Login.css";
 
 const Login = ({ onLogin, onRegister }) => {
+  const { login, loading } = useAuth();
+
+  const handleGoogleLogin = () => {
+    login();
+  };
+
   const [formData, setFormData] = useState({
     correo: "",
     password: "",
@@ -10,7 +17,6 @@ const Login = ({ onLogin, onRegister }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({});
   const [serverError, setServerError] = useState("");
-  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -82,7 +88,7 @@ const Login = ({ onLogin, onRegister }) => {
 
       if (!response.ok) {
         throw new Error(
-          data.mensaje || "Las credenciales ingresadas no son válidas."
+          data.mensaje || "Las credenciales ingresadas no son válidas.",
         );
       }
 
@@ -103,7 +109,7 @@ const Login = ({ onLogin, onRegister }) => {
 
       localStorage.setItem(
         "focusly_usuario",
-        JSON.stringify(data.usuario || {})
+        JSON.stringify(data.usuario || {}),
       );
 
       // Permite que App.jsx/Router controle la navegación
@@ -112,8 +118,7 @@ const Login = ({ onLogin, onRegister }) => {
       }
     } catch (error) {
       setServerError(
-        error.message ||
-          "No fue posible iniciar sesión. Intenta nuevamente."
+        error.message || "No fue posible iniciar sesión. Intenta nuevamente.",
       );
     } finally {
       setLoading(false);
@@ -133,20 +138,14 @@ const Login = ({ onLogin, onRegister }) => {
             <span className="brand-f">F</span>
 
             <span className="brand-clock">
-              <svg
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
                 <circle cx="12" cy="12" r="9" />
                 <path d="M12 7v5l3 2" />
               </svg>
             </span>
 
             <span className="brand-book">
-              <svg
-                viewBox="0 0 40 28"
-                aria-hidden="true"
-              >
+              <svg viewBox="0 0 40 28" aria-hidden="true">
                 <path d="M20 25C15 20 10 18 4 18V3c7 0 12 2 16 6z" />
                 <path d="M20 25c5-5 10-7 16-7V3c-7 0-12 2-16 6z" />
                 <path d="M20 9v16" />
@@ -173,9 +172,7 @@ const Login = ({ onLogin, onRegister }) => {
             <label htmlFor="correo">Correo electrónico</label>
 
             <div
-              className={`input-wrapper ${
-                errors.correo ? "input-error" : ""
-              }`}
+              className={`input-wrapper ${errors.correo ? "input-error" : ""}`}
             >
               <svg
                 className="input-icon"
@@ -235,9 +232,7 @@ const Login = ({ onLogin, onRegister }) => {
                 className="password-toggle"
                 onClick={() => setShowPassword(!showPassword)}
                 aria-label={
-                  showPassword
-                    ? "Ocultar contraseña"
-                    : "Mostrar contraseña"
+                  showPassword ? "Ocultar contraseña" : "Mostrar contraseña"
                 }
               >
                 {showPassword ? (
@@ -280,11 +275,7 @@ const Login = ({ onLogin, onRegister }) => {
           )}
 
           {/* Botón principal */}
-          <button
-            type="submit"
-            className="login-button"
-            disabled={loading}
-          >
+          <button type="submit" className="login-button" disabled={loading}>
             {loading ? "INICIANDO..." : "INICIAR SESIÓN"}
           </button>
 
@@ -309,10 +300,7 @@ const Login = ({ onLogin, onRegister }) => {
           <div className="register-link">
             <span>¿No tienes cuenta?</span>
 
-            <button
-              type="button"
-              onClick={onRegister}
-            >
+            <button type="button" onClick={onRegister}>
               Registrarse
             </button>
           </div>
