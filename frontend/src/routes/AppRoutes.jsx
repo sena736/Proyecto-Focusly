@@ -14,7 +14,7 @@ import Profile from "../pages/Profile/Profile";
 import Settings from "../pages/Settings/Settings";
 
 // Páginas administrativas
-import Users from "../pages/Users/Users";
+import Users from "../pages/admin/Users/Users";
 
 // Protección de rutas
 import ProtectedRoute from "./ProtectedRoute";

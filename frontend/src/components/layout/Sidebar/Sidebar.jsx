@@ -1,117 +1,131 @@
-import { NavLink } from "react-router-dom";
-import {
-  Home,
-  Clock3,
-  ClipboardList,
-  Star,
-  User,
-  Users,
-  Settings,
-  LogOut,
-} from "lucide-react";
-
+import { NavLink, useNavigate } from "react-router-dom";
 import "./Sidebar.css";
 
-function Sidebar({ role = "user", onLogout }) {
-  const isAdmin = role === "admin";
+function Sidebar({ isAdmin = false, onClose }) {
+  const navigate = useNavigate();
 
   const menuItems = [
     {
-      name: "Inicio",
-      path: isAdmin ? "/admin/dashboard" : "/dashboard",
-      icon: Home,
-    },
-    {
-      name: "Pomodoro",
-      path: isAdmin ? "/admin/pomodoro" : "/pomodoro",
-      icon: Clock3,
+      name: "Dashboard",
+      path: "/dashboard",
+      icon: "⌂",
     },
     {
       name: "Tareas",
-      path: isAdmin ? "/admin/tareas" : "/tareas",
-      icon: ClipboardList,
+      path: "/tasks",
+      icon: "✓",
+    },
+    {
+      name: "Pomodoro",
+      path: "/pomodoro",
+      icon: "◷",
     },
     {
       name: "Motivación",
-      path: isAdmin ? "/admin/motivacion" : "/motivacion",
-      icon: Star,
+      path: "/motivation",
+      icon: "✦",
+    },
+    {
+      name: "Configuración",
+      path: "/settings",
+      icon: "⚙",
     },
   ];
 
-  // Perfil para usuarios y Usuarios para administradores
-  if (isAdmin) {
-    menuItems.push({
-      name: "Usuarios",
-      path: "/admin/usuarios",
-      icon: Users,
-    });
-  } else {
-    menuItems.push({
-      name: "Perfil",
-      path: "/perfil",
-      icon: User,
-    });
-  }
+  const handleLogout = () => {
+    // Eliminar información de autenticación
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
 
-  menuItems.push({
-    name: "Configuración",
-    path: isAdmin ? "/admin/configuracion" : "/configuracion",
-    icon: Settings,
-  });
+    // Redireccionar al Login
+    navigate("/login");
+
+    // Cerrar Sidebar en dispositivos móviles
+    if (onClose) {
+      onClose();
+    }
+  };
+
+  const handleNavigation = () => {
+    if (onClose) {
+      onClose();
+    }
+  };
 
   return (
     <aside className="sidebar">
       {/* Logo */}
-      <div className="sidebar-header">
-        <div className="sidebar-logo">F</div>
+      <div className="sidebar__header">
+        <div className="sidebar__logo">
+          <div className="sidebar__logo-icon">F</div>
 
-        <div className="sidebar-brand">
-          <h2>FOCUSLY</h2>
-          <span>{isAdmin ? "Panel administrativo" : "Organiza tu tiempo"}</span>
-        </div>
-      </div>
-
-      {/* Menú */}
-      <nav className="sidebar-menu">
-        {menuItems.map((item) => {
-          const Icon = item.icon;
-
-          return (
-            <NavLink
-              key={item.name}
-              to={item.path}
-              className={({ isActive }) =>
-                `sidebar-link ${isActive ? "active" : ""}`
-              }
-            >
-              <Icon size={20} strokeWidth={2} />
-
-              <span>{item.name}</span>
-            </NavLink>
-          );
-        })}
-      </nav>
-
-      {/* Usuario / parte inferior */}
-      <div className="sidebar-bottom">
-        <div className="sidebar-user">
-          <div className="sidebar-user-avatar">{isAdmin ? "A" : "U"}</div>
-
-          <div className="sidebar-user-info">
-            <strong>{isAdmin ? "Administrador" : "Usuario"}</strong>
-
-            <span>{isAdmin ? "Administrador" : "Estudiante"}</span>
-          </div>
+          <span className="sidebar__logo-text">Focusly</span>
         </div>
 
-        {/* Cerrar sesión */}
-        {onLogout && (
-          <button className="sidebar-logout" onClick={onLogout}>
-            <LogOut size={18} />
-
-            <span>Cerrar sesión</span>
+        {onClose && (
+          <button
+            type="button"
+            className="sidebar__close"
+            onClick={onClose}
+            aria-label="Cerrar menú"
+          >
+            ×
           </button>
         )}
+      </div>
+
+      {/* Navegación */}
+      <nav className="sidebar__nav">
+        <span className="sidebar__section-title">MENÚ</span>
+
+        {menuItems.map((item) => (
+          <NavLink
+            key={item.path}
+            to={item.path}
+            onClick={handleNavigation}
+            className={({ isActive }) =>
+              `sidebar__link ${isActive ? "sidebar__link--active" : ""}`
+            }
+          >
+            <span className="sidebar__link-icon">{item.icon}</span>
+
+            <span className="sidebar__link-text">{item.name}</span>
+          </NavLink>
+        ))}
+
+        {/* Administración */}
+        {isAdmin && (
+          <>
+            <span className="sidebar__section-title sidebar__section-title--admin">
+              ADMINISTRACIÓN
+            </span>
+
+            <NavLink
+              to="/admin"
+              onClick={handleNavigation}
+              className={({ isActive }) =>
+                `sidebar__link ${isActive ? "sidebar__link--active" : ""}`
+              }
+            >
+              <span className="sidebar__link-icon">◈</span>
+
+              <span className="sidebar__link-text">Administrar usuarios</span>
+            </NavLink>
+          </>
+        )}
+      </nav>
+
+      {/* Parte inferior */}
+      <div className="sidebar__footer">
+        <button
+          type="button"
+          className="sidebar__logout"
+          onClick={handleLogout}
+        >
+          <span className="sidebar__link-icon">↪</span>
+
+          <span>Cerrar sesión</span>
+        </button>
       </div>
     </aside>
   );
