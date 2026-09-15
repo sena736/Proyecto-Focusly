@@ -25,6 +25,15 @@ const userRepository = {
     });
   },
 
+  async getUserById(id) {
+    return {
+      id,
+      name: "Usuario Focusly",
+      email: "usuario@focusly.com",
+      role: "user",
+    };
+  },
+
   /**
    * Crear nuevo usuario
    */

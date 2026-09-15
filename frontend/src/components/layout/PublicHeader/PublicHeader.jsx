@@ -1,3 +1,6 @@
+<<<<<<< HEAD
+ 
+=======
 import { Link } from "react-router-dom";
 import "./PublicHeader.css";
 
@@ -39,3 +42,4 @@ function PublicHeader() {
 }
 
 export default PublicHeader;
+>>>>>>> 38b08db9645275a147886f0335a30a9d428a8dfc
