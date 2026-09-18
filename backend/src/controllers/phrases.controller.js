@@ -1,6 +1,4 @@
-const { PrismaClient } = require("@prisma/client");
-
-const prisma = new PrismaClient();
+const prisma = require("../config/prisma");
 
 /**
  * Obtener una frase motivacional aleatoria
@@ -8,7 +6,7 @@ const prisma = new PrismaClient();
 const getRandomPhrase = async (req, res) => {
   try {
     // Obtener las frases activas
-    const phrases = await prisma.phrase.findMany({
+    const phrases = await prisma.motivationalPhrase.findMany({
       where: {
         active: true,
       },

@@ -1,0 +1,11 @@
+.atl/
+.claude/
+.agents/
+.cursor/
+.devin/
+dist/
+node_modules/
+
+.env
+.env.local
+

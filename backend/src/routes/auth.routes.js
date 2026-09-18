@@ -1,10 +1,10 @@
-import { Router } from "express";
-import {
+const { Router } = require("express");
+const {
   googleLogin,
   getProfile,
   refreshToken,
   logout,
-} from "../controllers/auth.controller.js";
+} = require("../controllers/auth.controller");
 
 const router = Router();
 
@@ -28,4 +28,4 @@ router.post("/refresh", refreshToken);
  */
 router.post("/logout", logout);
 
-export default router;
+module.exports = router;

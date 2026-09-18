@@ -1,8 +1,8 @@
 const express = require("express");
-const { PrismaClient } = require("@prisma/client");
+
+const prisma = require("../config/prisma");
 
 const router = express.Router();
-const prisma = new PrismaClient();
 
 /**
  * GET /api/phrases/random
@@ -12,7 +12,7 @@ const prisma = new PrismaClient();
 router.get("/random", async (req, res) => {
   try {
     // Obtener todas las frases disponibles
-    const phrases = await prisma.phrase.findMany({
+    const phrases = await prisma.motivationalPhrase.findMany({
       where: {
         active: true,
       },

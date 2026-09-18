@@ -1,6 +1,4 @@
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+const prisma = require("../config/prisma");
 
 const userRepository = {
   /**
@@ -26,12 +24,11 @@ const userRepository = {
   },
 
   async getUserById(id) {
-    return {
-      id,
-      name: "Usuario Focusly",
-      email: "usuario@focusly.com",
-      role: "user",
-    };
+    return prisma.user.findUnique({
+      where: {
+        id,
+      },
+    });
   },
 
   /**
@@ -44,4 +41,4 @@ const userRepository = {
   },
 };
 
-export default userRepository;
+module.exports = userRepository;

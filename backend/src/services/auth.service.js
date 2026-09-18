@@ -1,7 +1,7 @@
-import jwt from "jsonwebtoken";
-import { OAuth2Client } from "google-auth-library";
+const jwt = require("jsonwebtoken");
+const { OAuth2Client } = require("google-auth-library");
 
-import userRepository from "../repositories/user.repository.js";
+const userRepository = require("../repositories/user.repository");
 
 const googleClient = new OAuth2Client(
   process.env.GOOGLE_CLIENT_ID
@@ -79,8 +79,8 @@ const googleLogin = async (idToken) => {
       email,
       googleId,
       name: name || email.split("@")[0],
-      avatar: picture || null,
-      role: "STUDENT",
+      avatarUrl: picture || null,
+      role: "USER",
     });
   }
 
@@ -161,7 +161,7 @@ const logout = async () => {
   };
 };
 
-export default {
+module.exports = {
   googleLogin,
   getProfile,
   refreshToken,
