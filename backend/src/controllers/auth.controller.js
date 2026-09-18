@@ -1,9 +1,9 @@
-import authService from "../services/auth.service.js";
+const authService = require("../services/auth.service");
 
 /**
  * POST /api/v1/auth/google
  */
-export const googleLogin = async (req, res) => {
+const googleLogin = async (req, res) => {
   try {
     const { id_token } = req.body;
 
@@ -29,7 +29,7 @@ export const googleLogin = async (req, res) => {
 /**
  * GET /api/v1/auth/profile
  */
-export const getProfile = async (req, res) => {
+const getProfile = async (req, res) => {
   try {
     const authorization =
       req.headers.authorization;
@@ -65,7 +65,7 @@ export const getProfile = async (req, res) => {
 /**
  * POST /api/v1/auth/refresh
  */
-export const refreshToken = async (req, res) => {
+const refreshToken = async (req, res) => {
   try {
     const authorization =
       req.headers.authorization;
@@ -103,7 +103,7 @@ export const refreshToken = async (req, res) => {
 /**
  * POST /api/v1/auth/logout
  */
-export const logout = async (req, res) => {
+const logout = async (req, res) => {
   try {
     const result = await authService.logout();
 
@@ -119,4 +119,11 @@ export const logout = async (req, res) => {
       message: "No se pudo cerrar la sesión",
     });
   }
+};
+
+module.exports = {
+  googleLogin,
+  getProfile,
+  refreshToken,
+  logout,
 };

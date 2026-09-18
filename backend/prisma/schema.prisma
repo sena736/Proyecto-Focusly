@@ -1,0 +1,68 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum PomodoroType {
+  WORK
+  BREAK
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  googleId  String   @unique
+  email     String   @unique
+  name      String
+  avatarUrl String?
+  nickname  String?
+  role      Role     @default(USER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  tasks            Task[]
+  pomodoroSessions PomodoroSession[]
+}
+
+model Task {
+  id          Int       @id @default(autoincrement())
+  userId      Int
+  title       String
+  description String?
+  dueDate     DateTime?
+  completed   Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+}
+
+model PomodoroSession {
+  id              Int          @id @default(autoincrement())
+  userId          Int
+  type            PomodoroType
+  startedAt       DateTime
+  endedAt         DateTime
+  durationMinutes Int
+  createdAt       DateTime     @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+}
+
+model MotivationalPhrase {
+  id     Int     @id @default(autoincrement())
+  text   String
+  author String?
+  active Boolean @default(true)
+}
