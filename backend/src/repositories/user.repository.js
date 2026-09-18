@@ -23,10 +23,34 @@ const userRepository = {
     });
   },
 
+  /**
+   * Buscar usuario por ID
+   */
   async getUserById(id) {
     return prisma.user.findUnique({
       where: {
         id,
+      },
+    });
+  },
+
+  /**
+   * Obtener todos los usuarios
+   */
+  async findAll() {
+    return prisma.user.findMany();
+  },
+
+  /**
+   * Actualizar el rol de un usuario
+   */
+  async updateRole(id, role) {
+    return prisma.user.update({
+      where: {
+        id,
+      },
+      data: {
+        role,
       },
     });
   },
