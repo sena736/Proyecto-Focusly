@@ -1,0 +1,74 @@
+{
+  "generatedAt": "2026-09-18T20:29:04.140Z",
+  "baseUrl": "http://localhost:3000",
+  "connections": 100,
+  "durationSeconds": 30,
+  "results": [
+    {
+      "endpoint": "/tasks",
+      "method": "GET",
+      "connections": 100,
+      "durationSeconds": 30,
+      "requests": {
+        "total": 0,
+        "averagePerSecond": 0,
+        "minPerSecond": 0,
+        "maxPerSecond": 0
+      },
+      "latency": {
+        "averageMs": 0,
+        "minMs": 0,
+        "maxMs": 0,
+        "p95Ms": 0,
+        "p99Ms": 0
+      },
+      "errors": 51921,
+      "timeouts": 0,
+      "non2xx": 0
+    },
+    {
+      "endpoint": "/pomodoro-sessions",
+      "method": "POST",
+      "connections": 100,
+      "durationSeconds": 30,
+      "requests": {
+        "total": 0,
+        "averagePerSecond": 0,
+        "minPerSecond": 0,
+        "maxPerSecond": 0
+      },
+      "latency": {
+        "averageMs": 0,
+        "minMs": 0,
+        "maxMs": 0,
+        "p95Ms": 0,
+        "p99Ms": 0
+      },
+      "errors": 62385,
+      "timeouts": 0,
+      "non2xx": 0
+    },
+    {
+      "endpoint": "/phrases/random",
+      "method": "GET",
+      "connections": 100,
+      "durationSeconds": 30,
+      "requests": {
+        "total": 0,
+        "averagePerSecond": 0,
+        "minPerSecond": 0,
+        "maxPerSecond": 0
+      },
+      "latency": {
+        "averageMs": 0,
+        "minMs": 0,
+        "maxMs": 0,
+        "p95Ms": 0,
+        "p99Ms": 0
+      },
+      "errors": 62786,
+      "timeouts": 0,
+      "non2xx": 0
+    }
+  ]
+}
