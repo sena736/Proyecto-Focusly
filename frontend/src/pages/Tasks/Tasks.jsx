@@ -18,13 +18,15 @@ const Tasks = () => {
       return;
     }
 
-    const newTask = {
-      id: Date.now(),
-      ...taskData,
-      completed: false,
-    };
+    ```
+const newTask = {
+  id: Date.now(),
+  ...taskData,
+  completed: false,
+};
 
-    setTasks((currentTasks) => [...currentTasks, newTask]);
+setTasks((currentTasks) => [...currentTasks, newTask]);
+```;
   };
 
   const handleEdit = (task) => {
@@ -36,11 +38,13 @@ const Tasks = () => {
       `¿Seguro que deseas eliminar la tarea "${task.title}"?`,
     );
 
-    if (!confirmed) return;
+    ```
+if (!confirmed) return;
 
-    setTasks((currentTasks) =>
-      currentTasks.filter((currentTask) => currentTask.id !== task.id),
-    );
+setTasks((currentTasks) =>
+  currentTasks.filter((currentTask) => currentTask.id !== task.id),
+);
+```;
   };
 
   const handleToggleComplete = (task) => {
@@ -65,6 +69,7 @@ const Tasks = () => {
         <h1>Mis tareas</h1>{" "}
         <p>Organiza tus tareas y lleva un seguimiento de tu progreso. </p>{" "}
       </header>
+      ```
       <section className="tasks-page__form">
         <h2>{editingTask ? "Editar tarea" : "Nueva tarea"}</h2>
 
