@@ -1,0 +1,156 @@
+.profile-page {
+  width: 100%;
+  min-height: 100%;
+  padding: 32px;
+  box-sizing: border-box;
+  font-family: "Nunito", "Segoe UI", sans-serif;
+}
+
+.profile-container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.profile-header {
+  margin-bottom: 24px;
+}
+
+.profile-header__label {
+  display: block;
+  margin-bottom: 6px;
+  color: #6042a3;
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+}
+
+.profile-header h1 {
+  margin: 0;
+  color: #302c3d;
+  font-size: 1.8rem;
+  font-weight: 900;
+}
+
+.profile-header p {
+  max-width: 600px;
+  margin: 7px 0 0;
+  color: #817b8d;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  font-weight: 600;
+}
+
+.profile-content {
+  width: 100%;
+}
+
+.profile-edit-message {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 18px;
+  padding: 16px 20px;
+  border: 1px solid #e9e5ef;
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+.profile-edit-message p {
+  margin: 0;
+  color: #817b8d;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.profile-edit-message button {
+  padding: 8px 14px;
+  border: 1px solid #ded8ea;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #6042a3;
+  font-family: inherit;
+  font-size: 0.75rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.profile-edit-message button:hover {
+  background: #eee9ff;
+}
+
+/* =========================================
+   768 PX
+========================================= */
+
+@media (max-width: 768px) {
+  .profile-page {
+    padding: 24px;
+  }
+
+  .profile-header h1 {
+    font-size: 1.6rem;
+  }
+
+  .profile-header p {
+    font-size: 0.85rem;
+  }
+
+  .profile-edit-message {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+/* =========================================
+   375 PX - TELÉFONO
+========================================= */
+
+@media (max-width: 600px) {
+  .profile-page {
+    padding: 18px 14px;
+  }
+
+  .profile-header {
+    margin-bottom: 18px;
+  }
+
+  .profile-header__label {
+    font-size: 0.62rem;
+  }
+
+  .profile-header h1 {
+    font-size: 1.45rem;
+  }
+
+  .profile-header p {
+    margin-top: 5px;
+    font-size: 0.8rem;
+    line-height: 1.45;
+  }
+
+  .profile-edit-message {
+    padding: 14px;
+  }
+}
+
+/* =========================================
+   375 PX EXACTO
+   El ProfileCard se apila mediante
+   su propio responsive.
+========================================= */
+
+@media (max-width: 400px) {
+  .profile-page {
+    padding: 16px 12px;
+  }
+
+  .profile-header h1 {
+    font-size: 1.35rem;
+  }
+
+  .profile-header p {
+    font-size: 0.76rem;
+  }
+}
