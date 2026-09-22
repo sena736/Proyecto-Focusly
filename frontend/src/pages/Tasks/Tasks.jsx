@@ -1,11 +1,13 @@
 import { useState } from "react";
-import TaskForm from "../components/TaskForm";
-import TaskCard from "../components/TaskCard";
+import TaskForm from "../../components/TaskForm";
+import TaskCard from "../../components/TaskCard";
+import ConfirmDeleteModal from "../../components/ConfirmDeleteModal";
 import "./Tasks.css";
 
 const Tasks = () => {
   const [tasks, setTasks] = useState([]);
   const [editingTask, setEditingTask] = useState(null);
+  const [taskToDelete, setTaskToDelete] = useState(null);
 
   const handleSubmit = (taskData) => {
     if (editingTask) {
@@ -31,16 +33,28 @@ const Tasks = () => {
     setEditingTask(task);
   };
 
+  // Solo abre el modal. No elimina la tarea.
   const handleDelete = (task) => {
-    const confirmed = window.confirm(
-      `¿Seguro que deseas eliminar la tarea "${task.title}"?`,
-    );
+    setTaskToDelete(task);
+  };
 
-    if (!confirmed) return;
-
+  // Aquí se realizará el borrado real.
+  // Actualmente usa el estado local como simulación.
+  const deleteTask = (task) => {
     setTasks((currentTasks) =>
       currentTasks.filter((currentTask) => currentTask.id !== task.id),
     );
+  };
+
+  const handleConfirmDelete = () => {
+    if (!taskToDelete) return;
+
+    deleteTask(taskToDelete);
+    setTaskToDelete(null);
+  };
+
+  const handleCancelDelete = () => {
+    setTaskToDelete(null);
   };
 
   const handleToggleComplete = (task) => {
@@ -98,6 +112,13 @@ const Tasks = () => {
           </div>
         )}
       </section>
+      {taskToDelete && (
+        <ConfirmDeleteModal
+          task={taskToDelete}
+          onConfirm={handleConfirmDelete}
+          onCancel={handleCancelDelete}
+        />
+      )}
     </main>
   );
 };
