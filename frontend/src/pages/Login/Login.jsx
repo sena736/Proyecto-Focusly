@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import {
   FiMail,
@@ -7,9 +7,13 @@ import {
   FiEye,
   FiEyeOff,
 } from "react-icons/fi";
+import { googleLogin } from "../../api/auth.api";
+import { AuthContext } from "../../context/AuthContext";
 import "./Login.css";
 
 const Login = () => {
+  const { establishSession } = useContext(AuthContext);
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -35,8 +39,23 @@ const Login = () => {
     // Conectar posteriormente con el endpoint de autenticación.
   };
 
-  const handleGoogleLogin = () => {
-    // Conectar posteriormente con autenticación mediante Google.
+  const handleGoogleLogin = async (idToken) => {
+    setError("");
+
+    try {
+      const data = await googleLogin(idToken);
+
+      if (!data.token) {
+        throw new Error("El servidor no devolvió un token.");
+      }
+
+      await establishSession(data.token);
+    } catch (loginError) {
+      setError(
+        loginError.message ||
+          "No fue posible iniciar sesión con Google. Intenta nuevamente.",
+      );
+    }
   };
 
   return (
@@ -54,10 +73,15 @@ const Login = () => {
           </p>
         </div>
 
+        {/*
+          TODO: reemplazar por el flujo real de Google Identity Services
+          (google.accounts.id.renderButton + callback con el credential/idToken).
+          Por ahora el click no tiene forma de obtener un idToken real.
+        */}
         <button
           type="button"
           className="login__google-button"
-          onClick={handleGoogleLogin}
+          onClick={() => handleGoogleLogin()}
         >
           <span className="login__google-icon" aria-hidden="true">
             G
