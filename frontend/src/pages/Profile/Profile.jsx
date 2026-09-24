@@ -1,6 +1,6 @@
 import React from "react";
 import useProfile from "../../hooks/useProfile";
-import ProfileCard from "../../components/ProfileCard/ProfileCard";
+import ProfileCard from "../../components/profile/ProfileCard/ProfileCard";
 import "./Profile.css";
 
 const Profile = () => {
