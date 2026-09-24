@@ -1,10 +1,11 @@
+import React from "react";
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import { AuthProvider, AuthContext } from "./AuthContext";
 import api from "../api/api";
-import * as tokenService from "../services/token.service";
+import * as tokenService from "../services/token.services";
 
 vi.mock("../api/api", () => ({
   default: {
@@ -21,7 +22,6 @@ const TestConsumer = () => {
     <div>
       {" "}
       <span data-testid="loading">{loading ? "loading" : "ready"} </span>
-      ```
       <span data-testid="authenticated">
         {isAuthenticated ? "authenticated" : "unauthenticated"}
       </span>
@@ -47,41 +47,39 @@ describe("AuthContext", () => {
   beforeEach(() => {
     vi.clearAllMocks();
 
-    ```
-vi.spyOn(tokenService, "getToken").mockReturnValue(null);
-vi.spyOn(tokenService, "setToken").mockImplementation(() => {});
-vi.spyOn(tokenService, "removeToken").mockImplementation(() => {});
+    vi.spyOn(tokenService, "getToken").mockReturnValue(null);
+    vi.spyOn(tokenService, "setToken").mockImplementation(() => {});
+    vi.spyOn(tokenService, "removeToken").mockImplementation(() => {});
 
-localStorageSetItemSpy = vi.spyOn(
-  Storage.prototype,
-  "setItem",
-);
+    localStorageSetItemSpy = vi.spyOn(
+      Storage.prototype,
+      "setItem",
+    );
 
-localStorageGetItemSpy = vi.spyOn(
-  Storage.prototype,
-  "getItem",
-);
+    localStorageGetItemSpy = vi.spyOn(
+      Storage.prototype,
+      "getItem",
+    );
 
-localStorageRemoveItemSpy = vi.spyOn(
-  Storage.prototype,
-  "removeItem",
-);
+    localStorageRemoveItemSpy = vi.spyOn(
+      Storage.prototype,
+      "removeItem",
+    );
 
-sessionStorageSetItemSpy = vi.spyOn(
-  sessionStorage,
-  "setItem",
-);
+    sessionStorageSetItemSpy = vi.spyOn(
+      sessionStorage,
+      "setItem",
+    );
 
-sessionStorageGetItemSpy = vi.spyOn(
-  sessionStorage,
-  "getItem",
-);
+    sessionStorageGetItemSpy = vi.spyOn(
+      sessionStorage,
+      "getItem",
+    );
 
-sessionStorageRemoveItemSpy = vi.spyOn(
-  sessionStorage,
-  "removeItem",
-);
-```;
+    sessionStorageRemoveItemSpy = vi.spyOn(
+      sessionStorage,
+      "removeItem",
+    );
   });
 
   afterEach(() => {
@@ -101,100 +99,96 @@ sessionStorageRemoveItemSpy = vi.spyOn(
     const user = {
       id: 1,
       name: "Usuario de prueba",
-      email: "[usuario@test.com](mailto:usuario@test.com)",
+      email: "usuario@test.com",
       avatarUrl: "https://example.com/avatar.jpg",
       role: "USER",
     };
 
-    ```
-api.get.mockResolvedValueOnce({
-  data: {
-    user,
-  },
-});
+    api.get.mockResolvedValueOnce({
+      data: {
+        user,
+      },
+    });
 
-const userEventInstance = userEvent.setup();
+    const userEventInstance = userEvent.setup();
 
-renderAuthContext();
+    renderAuthContext();
 
-await userEventInstance.click(
-  screen.getByRole("button", {
-    name: "Login",
-  }),
-);
+    await userEventInstance.click(
+      screen.getByRole("button", {
+        name: "Login",
+      }),
+    );
 
-await waitFor(() => {
-  expect(screen.getByTestId("user")).toHaveTextContent(
-    "Usuario de prueba",
-  );
-});
+    await waitFor(() => {
+      expect(screen.getByTestId("user")).toHaveTextContent(
+        "Usuario de prueba",
+      );
+    });
 
-expect(
-  screen.getByTestId("authenticated"),
-).toHaveTextContent("authenticated");
+    expect(
+      screen.getByTestId("authenticated"),
+    ).toHaveTextContent("authenticated");
 
-expect(tokenService.setToken).toHaveBeenCalledWith(
-  "test-jwt-token",
-);
+    expect(tokenService.setToken).toHaveBeenCalledWith(
+      "test-jwt-token",
+    );
 
-expect(api.get).toHaveBeenCalled();
-```;
+    expect(api.get).toHaveBeenCalled();
   });
 
   it("limpia el usuario después de hacer logout", async () => {
     const user = {
       id: 1,
       name: "Usuario de prueba",
-      email: "[usuario@test.com](mailto:usuario@test.com)",
+      email: "usuario@test.com",
       role: "USER",
     };
 
-    ```
-api.get.mockResolvedValueOnce({
-  data: {
-    user,
-  },
-});
+    api.get.mockResolvedValueOnce({
+      data: {
+        user,
+      },
+    });
 
-api.post.mockResolvedValueOnce({
-  data: {},
-});
+    api.post.mockResolvedValueOnce({
+      data: {},
+    });
 
-const userEventInstance = userEvent.setup();
+    const userEventInstance = userEvent.setup();
 
-renderAuthContext();
+    renderAuthContext();
 
-await userEventInstance.click(
-  screen.getByRole("button", {
-    name: "Login",
-  }),
-);
+    await userEventInstance.click(
+      screen.getByRole("button", {
+        name: "Login",
+      }),
+    );
 
-await waitFor(() => {
-  expect(screen.getByTestId("user")).toHaveTextContent(
-    "Usuario de prueba",
-  );
-});
+    await waitFor(() => {
+      expect(screen.getByTestId("user")).toHaveTextContent(
+        "Usuario de prueba",
+      );
+    });
 
-await userEventInstance.click(
-  screen.getByRole("button", {
-    name: "Logout",
-  }),
-);
+    await userEventInstance.click(
+      screen.getByRole("button", {
+        name: "Logout",
+      }),
+    );
 
-await waitFor(() => {
-  expect(screen.getByTestId("user")).toHaveTextContent(
-    "null",
-  );
-});
+    await waitFor(() => {
+      expect(screen.getByTestId("user")).toHaveTextContent(
+        "null",
+      );
+    });
 
-expect(
-  screen.getByTestId("authenticated"),
-).toHaveTextContent("unauthenticated");
+    expect(
+      screen.getByTestId("authenticated"),
+    ).toHaveTextContent("unauthenticated");
 
-expect(tokenService.removeToken).toHaveBeenCalled();
-expect(api.post).toHaveBeenCalled();
-```;
+    expect(tokenService.removeToken).toHaveBeenCalled();
+    expect(api.post).toHaveBeenCalled();
   });
 
   it("no utiliza localStorage ni sessionStorage para guardar el token", async () => {
@@ -203,52 +197,50 @@ expect(api.post).toHaveBeenCalled();
         user: {
           id: 1,
           name: "Usuario de prueba",
-          email: "[usuario@test.com](mailto:usuario@test.com)",
+          email: "usuario@test.com",
           role: "USER",
         },
       },
     });
 
-    ```
-const userEventInstance = userEvent.setup();
+    const userEventInstance = userEvent.setup();
 
-renderAuthContext();
+    renderAuthContext();
 
-await userEventInstance.click(
-  screen.getByRole("button", {
-    name: "Login",
-  }),
-);
+    await userEventInstance.click(
+      screen.getByRole("button", {
+        name: "Login",
+      }),
+    );
 
-await waitFor(() => {
-  expect(screen.getByTestId("user")).toHaveTextContent(
-    "Usuario de prueba",
-  );
-});
+    await waitFor(() => {
+      expect(screen.getByTestId("user")).toHaveTextContent(
+        "Usuario de prueba",
+      );
+    });
 
-expect(
-  localStorageSetItemSpy,
-).not.toHaveBeenCalled();
+    expect(
+      localStorageSetItemSpy,
+    ).not.toHaveBeenCalled();
 
-expect(
-  sessionStorageSetItemSpy,
-).not.toHaveBeenCalled();
+    expect(
+      sessionStorageSetItemSpy,
+    ).not.toHaveBeenCalled();
 
-expect(
-  localStorageGetItemSpy,
-).not.toHaveBeenCalled();
+    expect(
+      localStorageGetItemSpy,
+    ).not.toHaveBeenCalled();
 
-expect(
-  sessionStorageGetItemSpy,
-).not.toHaveBeenCalled();
+    expect(
+      sessionStorageGetItemSpy,
+    ).not.toHaveBeenCalled();
 
-expect(
-  localStorageRemoveItemSpy,
-).not.toHaveBeenCalled();
+    expect(
+      localStorageRemoveItemSpy,
+    ).not.toHaveBeenCalled();
 
-expect(
-  sessionStorageRemoveItemSpy,
-).not.toHaveBeenCalled();
-```;
+    expect(
+      sessionStorageRemoveItemSpy,
+    ).not.toHaveBeenCalled();
   });
 });
