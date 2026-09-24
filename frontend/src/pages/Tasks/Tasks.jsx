@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import TaskCard from "../../components/TaskCard/TaskCard";
-import TaskForm from "../../components/TaskForm/TaskForm";
-import ConfirmDeleteModal from "../../components/ConfirmDeleteModal/ConfirmDeleteModal";
+import TaskCard from "../../components/tasks/TaskCard/TaskCard";
+import TaskForm from "../../components/tasks/TaskForm/TaskForm";
+import ConfirmDeleteModal from "../../components/ConfirmDeleteModal";
 import useTask from "../../hooks/useTask";
-import { getToken } from "../../services/token.service";
+import { getToken } from "../../services/token.services";
 import "./Tasks.css";
 
 const Tasks = () => {
