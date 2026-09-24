@@ -14,7 +14,7 @@ import {
   getToken,
   setToken,
   removeToken,
-} from "../services/token.service";
+} from "../services/token.services";
 
 import {
   API_ENDPOINTS,
