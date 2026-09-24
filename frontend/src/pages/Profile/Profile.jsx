@@ -1,39 +1,73 @@
-import { useState } from "react";
-import ProfileCard from "../../components/ProfileCard/ProfileCard";
-import { useAuth } from "../../context/AuthContext";
+import React from "react";
+import useProfile from "../../hooks/useProfile";
+import ProfileCard from "../../components/profile/ProfileCard/ProfileCard";
 import "./Profile.css";
 
 const Profile = () => {
-  const { user, updateUser } = useAuth();
+  const { profile, isLoading, isError, error, updateProfile, isUpdating } =
+    useProfile();
 
-  const [isEditing, setIsEditing] = useState(false);
+  if (isLoading) {
+    return (
+      <main className="profile-page">
+        <section className="profile-container">
+          <div className="profile-state">
+            <div className="profile-loader"></div>
+            <p>Cargando perfil...</p>
+          </div>
+        </section>
+      </main>
+    );
+  }
 
-  const name = user?.name || user?.nombre || "Usuario Focusly";
+  if (isError) {
+    return (
+      <main className="profile-page">
+        <section className="profile-container">
+          <div className="profile-state profile-state-error">
+            <h2>No se pudo cargar el perfil</h2>
+            <p>
+              {error?.message || "Ocurrió un error al obtener tu información."}
+            </p>
+          </div>
+        </section>
+      </main>
+    );
+  }
 
-  const email = user?.email || user?.correo || "usuario@email.com";
+  if (!profile) {
+    return (
+      <main className="profile-page">
+        <section className="profile-container">
+          <div className="profile-state">
+            <h2>No hay información del perfil</h2>
+            <p>No se encontró información para mostrar.</p>
+          </div>
+        </section>
+      </main>
+    );
+  }
 
-  const role = user?.role || user?.rol || "Usuario";
+  const name = profile.name || profile.nombre || "Usuario Focusly";
 
-  const avatar = user?.avatar || user?.photo || user?.picture || "";
+  const email = profile.email || profile.correo || "usuario@email.com";
 
-  const handleEdit = () => {
-    setIsEditing((current) => !current);
-  };
+  const role = profile.role || profile.rol || "Usuario";
+
+  const avatar = profile.avatar || profile.photo || profile.picture || "";
 
   return (
     <main className="profile-page">
       <section className="profile-container">
         <header className="profile-header">
-          <div>
-            <span className="profile-header__label">CUENTA</span>
+          <span className="profile-header__label">CUENTA</span>
 
-            <h1>Mi perfil</h1>
+          <h1>Mi perfil</h1>
 
-            <p>
-              Consulta tu información personal y administra los datos de tu
-              cuenta.
-            </p>
-          </div>
+          <p>
+            Consulta tu información personal y administra los datos de tu
+            cuenta.
+          </p>
         </header>
 
         <section className="profile-content">
@@ -42,18 +76,9 @@ const Profile = () => {
             email={email}
             role={role}
             avatar={avatar}
-            onEdit={handleEdit}
+            onEdit={updateProfile}
+            loading={isUpdating}
           />
-
-          {isEditing && (
-            <div className="profile-edit-message">
-              <p>La edición del perfil estará disponible próximamente.</p>
-
-              <button type="button" onClick={() => setIsEditing(false)}>
-                Cerrar
-              </button>
-            </div>
-          )}
         </section>
       </section>
     </main>

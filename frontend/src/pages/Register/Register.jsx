@@ -1,424 +1,167 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { FiUser, FiMail, FiLock, FiUserPlus } from "react-icons/fi";
 import "./Register.css";
 
-/**
- * Register
- *
- * Componente de registro de Focusly.
- *
- * Props:
- * - onRegister(formData): función que conecta el formulario con el servicio/API.
- * - onLogin(): navega a la pantalla de inicio de sesión.
- * - isLoading: muestra el estado de procesamiento.
- * - serverError: mensaje devuelto por el backend.
- * - successMessage: mensaje de registro exitoso.
- */
-export default function Register({
-  onRegister,
-  onLogin,
-  isLoading = false,
-  serverError = "",
-  successMessage = "",
-}) {
-  const [form, setForm] = useState({
+const Register = () => {
+  const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
     confirmPassword: "",
-    dataConsent: false,
   });
 
-  const [errors, setErrors] = useState({});
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   const handleChange = (event) => {
-    const { name, value, type, checked } = event.target;
+    const { name, value } = event.target;
 
-    setForm((current) => ({
-      ...current,
-      [name]: type === "checkbox" ? checked : value,
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
     }));
 
-    if (errors[name]) {
-      setErrors((current) => ({
-        ...current,
-        [name]: "",
-      }));
-    }
+    setError("");
+    setSuccess("");
   };
 
-  const validate = () => {
-    const nextErrors = {};
-
-    if (!form.name.trim()) {
-      nextErrors.name = "Ingresa tu nombre.";
-    }
-
-    if (!form.email.trim()) {
-      nextErrors.email = "Ingresa tu correo electrónico.";
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
-      nextErrors.email = "Ingresa un correo electrónico válido.";
-    }
-
-    if (!form.password) {
-      nextErrors.password = "Ingresa una contraseña.";
-    }
-
-    if (!form.confirmPassword) {
-      nextErrors.confirmPassword = "Confirma tu contraseña.";
-    } else if (form.password !== form.confirmPassword) {
-      nextErrors.confirmPassword = "Las contraseñas no coinciden.";
-    }
-
-    if (!form.dataConsent) {
-      nextErrors.dataConsent =
-        "Debes aceptar el tratamiento de tus datos para registrarte.";
-    }
-
-    setErrors(nextErrors);
-
-    return Object.keys(nextErrors).length === 0;
-  };
-
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
 
-    if (!validate()) return;
-
-    const payload = {
-      name: form.name.trim(),
-      email: form.email.trim().toLowerCase(),
-      password: form.password,
-    };
-
-    if (typeof onRegister === "function") {
-      await onRegister(payload);
+    if (formData.password !== formData.confirmPassword) {
+      setError("Las contraseñas no coinciden.");
+      return;
     }
+
+    setError("");
+    setSuccess("Registro realizado correctamente.");
+
+    // Aquí puedes conectar posteriormente el formulario
+    // con el endpoint de registro de tu API.
   };
 
   return (
-    <main className="register-page">
-      <div className="register-decoration register-decoration--top" />
-      <div className="register-decoration register-decoration--bottom" />
-
-      <section
-        className="register-card"
-        aria-labelledby="register-title"
-      >
-        <div className="register-brand" aria-label="Focusly">
-          <div className="register-logo" aria-hidden="true">
-            F
+    <main className="register">
+      <section className="register__card">
+        <div className="register__header">
+          <div className="register__icon">
+            <FiUserPlus />
           </div>
 
-          <span className="register-brand-name">
-            FOCUSLY
-          </span>
-        </div>
-
-        <div className="register-heading">
-          <span className="register-eyebrow">
-            CREA TU CUENTA
-          </span>
-
-          <h1 id="register-title">
-            REGISTRO
-          </h1>
+          <h1>Crear cuenta</h1>
 
           <p>
-            Completa tus datos para comenzar a organizar
-            tu tiempo.
+            Regístrate en Focusly y comienza a organizar mejor tu tiempo.
           </p>
         </div>
 
-        {serverError && (
-          <div
-            className="register-alert register-alert--error"
-            role="alert"
-          >
-            {serverError}
-          </div>
-        )}
+        <form className="register__form" onSubmit={handleSubmit}>
+          <div className="register__fields">
+            <div className="register__field">
+              <label htmlFor="name">Nombre</label>
 
-        {successMessage && (
-          <div
-            className="register-alert register-alert--success"
-            role="status"
-          >
-            {successMessage}
-          </div>
-        )}
+              <div className="register__input-wrapper">
+                <FiUser />
 
-        <form
-          className="register-form"
-          onSubmit={handleSubmit}
-          noValidate
-        >
-          {/* Nombre */}
-          <div className="register-field">
-            <label htmlFor="register-name">
-              Nombre completo
-            </label>
-
-            <div
-              className={`register-input-wrap ${
-                errors.name ? "has-error" : ""
-              }`}
-            >
-              <span
-                className="register-input-icon"
-                aria-hidden="true"
-              >
-                <svg viewBox="0 0 24 24">
-                  <path d="M20 21a8 8 0 0 0-16 0" />
-                  <circle cx="12" cy="7" r="4" />
-                </svg>
-              </span>
-
-              <input
-                id="register-name"
-                name="name"
-                type="text"
-                value={form.name}
-                onChange={handleChange}
-                placeholder="Ej. Juan Pérez"
-                autoComplete="name"
-                aria-invalid={Boolean(errors.name)}
-                aria-describedby={
-                  errors.name ? "name-error" : undefined
-                }
-                required
-              />
+                <input
+                  id="name"
+                  name="name"
+                  type="text"
+                  value={formData.name}
+                  onChange={handleChange}
+                  placeholder="Ingresa tu nombre"
+                  autoComplete="name"
+                  required
+                />
+              </div>
             </div>
 
-            {errors.name && (
-              <span
-                id="name-error"
-                className="register-error"
-              >
-                {errors.name}
-              </span>
-            )}
-          </div>
+            <div className="register__field">
+              <label htmlFor="email">Correo electrónico</label>
 
-          {/* Correo */}
-          <div className="register-field">
-            <label htmlFor="register-email">
-              Correo electrónico
-            </label>
+              <div className="register__input-wrapper">
+                <FiMail />
 
-            <div
-              className={`register-input-wrap ${
-                errors.email ? "has-error" : ""
-              }`}
-            >
-              <span
-                className="register-input-icon"
-                aria-hidden="true"
-              >
-                <svg viewBox="0 0 24 24">
-                  <rect
-                    x="3"
-                    y="5"
-                    width="18"
-                    height="14"
-                    rx="2"
-                  />
-                  <path d="m4 7 8 6 8-6" />
-                </svg>
-              </span>
-
-              <input
-                id="register-email"
-                name="email"
-                type="email"
-                value={form.email}
-                onChange={handleChange}
-                placeholder="Ej. juan@gmail.com"
-                autoComplete="email"
-                aria-invalid={Boolean(errors.email)}
-                aria-describedby={
-                  errors.email ? "email-error" : undefined
-                }
-                required
-              />
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="Ingresa tu correo"
+                  autoComplete="email"
+                  required
+                />
+              </div>
             </div>
 
-            {errors.email && (
-              <span
-                id="email-error"
-                className="register-error"
-              >
-                {errors.email}
-              </span>
-            )}
-          </div>
+            <div className="register__field">
+              <label htmlFor="password">Contraseña</label>
 
-          {/* Contraseña */}
-          <div className="register-field">
-            <label htmlFor="register-password">
-              Contraseña
-            </label>
+              <div className="register__input-wrapper">
+                <FiLock />
 
-            <div
-              className={`register-input-wrap ${
-                errors.password ? "has-error" : ""
-              }`}
-            >
-              <span
-                className="register-input-icon"
-                aria-hidden="true"
-              >
-                <svg viewBox="0 0 24 24">
-                  <rect
-                    x="5"
-                    y="10"
-                    width="14"
-                    height="10"
-                    rx="2"
-                  />
-                  <path d="M8 10V7a4 4 0 0 1 8 0v3" />
-                </svg>
-              </span>
-
-              <input
-                id="register-password"
-                name="password"
-                type="password"
-                value={form.password}
-                onChange={handleChange}
-                placeholder="Crea una contraseña"
-                autoComplete="new-password"
-                aria-invalid={Boolean(errors.password)}
-                aria-describedby={
-                  errors.password
-                    ? "password-error"
-                    : undefined
-                }
-                required
-              />
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  placeholder="Crea una contraseña"
+                  autoComplete="new-password"
+                  required
+                />
+              </div>
             </div>
 
-            {errors.password && (
-              <span
-                id="password-error"
-                className="register-error"
-              >
-                {errors.password}
-              </span>
-            )}
-          </div>
+            <div className="register__field">
+              <label htmlFor="confirmPassword">
+                Confirmar contraseña
+              </label>
 
-          {/* Confirmar contraseña */}
-          <div className="register-field">
-            <label htmlFor="register-confirm-password">
-              Confirmar contraseña
-            </label>
+              <div className="register__input-wrapper">
+                <FiLock />
 
-            <div
-              className={`register-input-wrap ${
-                errors.confirmPassword ? "has-error" : ""
-              }`}
-            >
-              <span
-                className="register-input-icon"
-                aria-hidden="true"
-              >
-                <svg viewBox="0 0 24 24">
-                  <rect
-                    x="5"
-                    y="10"
-                    width="14"
-                    height="10"
-                    rx="2"
-                  />
-                  <path d="M8 10V7a4 4 0 0 1 8 0v3" />
-                  <path d="m9 15 2 2 4-4" />
-                </svg>
-              </span>
-
-              <input
-                id="register-confirm-password"
-                name="confirmPassword"
-                type="password"
-                value={form.confirmPassword}
-                onChange={handleChange}
-                placeholder="Repite tu contraseña"
-                autoComplete="new-password"
-                aria-invalid={Boolean(
-                  errors.confirmPassword
-                )}
-                aria-describedby={
-                  errors.confirmPassword
-                    ? "confirm-password-error"
-                    : undefined
-                }
-                required
-              />
+                <input
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  type="password"
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
+                  placeholder="Repite tu contraseña"
+                  autoComplete="new-password"
+                  required
+                />
+              </div>
             </div>
-
-            {errors.confirmPassword && (
-              <span
-                id="confirm-password-error"
-                className="register-error"
-              >
-                {errors.confirmPassword}
-              </span>
-            )}
           </div>
 
-          {/* Tratamiento de datos */}
-          <label
-            className={`register-consent ${
-              errors.dataConsent ? "has-error" : ""
-            }`}
-          >
-            <input
-              type="checkbox"
-              name="dataConsent"
-              checked={form.dataConsent}
-              onChange={handleChange}
-              aria-invalid={Boolean(errors.dataConsent)}
-            />
-
-            <span>
-              Acepto el tratamiento de mis datos personales
-              de acuerdo con la política de privacidad de
-              Focusly.
-            </span>
-          </label>
-
-          {errors.dataConsent && (
-            <span className="register-error register-consent-error">
-              {errors.dataConsent}
-            </span>
+          {error && (
+            <p className="register__message register__message--error">
+              {error}
+            </p>
           )}
 
-          {/* Botón */}
-          <button
-            className="register-submit"
-            type="submit"
-            disabled={isLoading}
-          >
-            {isLoading
-              ? "CREANDO CUENTA..."
-              : "REGISTRARSE"}
+          {success && (
+            <p className="register__message register__message--success">
+              {success}
+            </p>
+          )}
+
+          <button type="submit" className="register__button">
+            <FiUserPlus />
+            Crear cuenta
           </button>
         </form>
 
-        {/* Inicio de sesión */}
-        <div className="register-footer">
-          <span>
-            ¿Ya tienes cuenta?
-          </span>
-
-          <button
-            type="button"
-            onClick={onLogin}
-            className="register-login"
-          >
-            Iniciar sesión
-          </button>
-        </div>
+        <p className="register__login">
+          ¿Ya tienes una cuenta?{" "}
+          <Link to="/login">Inicia sesión</Link>
+        </p>
       </section>
     </main>
   );
-} 
+};
+
+export default Register;

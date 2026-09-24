@@ -1,0 +1,243 @@
+.user-table-card {
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  border: 1px solid #e9e5ef;
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 8px 28px rgba(48, 44, 61, 0.06);
+  font-family: "Nunito", "Segoe UI", sans-serif;
+}
+
+.user-table-scroll {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+
+.user-table {
+  width: 100%;
+  min-width: 760px;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.user-table th,
+.user-table td {
+  padding: 17px 20px;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.user-table thead {
+  background: #f8f6fc;
+}
+
+.user-table th {
+  color: #817b8d;
+  font-size: 0.68rem;
+  font-weight: 900;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.user-table td {
+  border-top: 1px solid #eeeaf2;
+  color: #302c3d;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.user-table tbody tr {
+  transition: background 0.2s ease;
+}
+
+.user-table tbody tr:hover {
+  background: #fbfaff;
+}
+
+.user-table-user {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  min-width: 190px;
+}
+
+.user-table-avatar {
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #eee9ff;
+  color: #6042a3;
+  font-size: 0.72rem;
+  font-weight: 900;
+}
+
+.user-table-email {
+  color: #817b8d;
+}
+
+.user-table-role,
+.user-table-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 20px;
+  padding: 6px 10px;
+  font-size: 0.68rem;
+  font-weight: 800;
+}
+
+.user-table-role-student {
+  background: #eef5ff;
+  color: #4672ad;
+}
+
+.user-table-role-admin {
+  background: #eee9ff;
+  color: #6042a3;
+}
+
+.user-table-status-active {
+  background: #edf8f1;
+  color: #39845a;
+}
+
+.user-table-status-inactive {
+  background: #f5f3f5;
+  color: #817b8d;
+}
+
+.user-table-status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.user-table-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.user-table-action {
+  padding: 7px 10px;
+  border: 1px solid #ded8ea;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #6042a3;
+  font-family: inherit;
+  font-size: 0.68rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.user-table-action:hover {
+  background: #eee9ff;
+  border-color: #c9bce0;
+}
+
+.user-table-action-delete {
+  color: #a34f62;
+}
+
+.user-table-action-delete:hover {
+  background: #fff1f3;
+  border-color: #e5b9c2;
+}
+
+.user-table-action:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(96, 66, 163, 0.15);
+}
+
+.user-table-empty {
+  min-height: 260px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+  text-align: center;
+}
+
+.user-table-empty-icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+  border-radius: 50%;
+  background: #eee9ff;
+  color: #6042a3;
+  font-size: 1.3rem;
+}
+
+.user-table-empty h2 {
+  margin: 0;
+  color: #302c3d;
+  font-size: 1rem;
+  font-weight: 900;
+}
+
+.user-table-empty p {
+  max-width: 380px;
+  margin: 7px 0 0;
+  color: #817b8d;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  font-weight: 600;
+}
+
+/* Tablet */
+@media (max-width: 768px) {
+  .user-table th,
+  .user-table td {
+    padding: 15px 16px;
+  }
+
+  .user-table {
+    min-width: 720px;
+  }
+}
+
+/* Celular */
+@media (max-width: 600px) {
+  .user-table-card {
+    border-radius: 12px;
+  }
+
+  .user-table {
+    min-width: 700px;
+  }
+
+  .user-table th,
+  .user-table td {
+    padding: 13px 14px;
+  }
+}
+
+/* 375px */
+@media (max-width: 400px) {
+  .user-table-scroll {
+    overflow-x: auto;
+  }
+
+  .user-table {
+    min-width: 680px;
+  }
+
+  .user-table th,
+  .user-table td {
+    padding: 12px;
+  }
+}
