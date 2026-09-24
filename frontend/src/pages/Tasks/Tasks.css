@@ -1,0 +1,265 @@
+.tasks-page {
+  width: 100%;
+  min-height: calc(100vh - var(--header-height));
+  padding: var(--space-2xl);
+  box-sizing: border-box;
+  background: var(--background);
+  color: var(--text-primary);
+  overflow-x: hidden;
+}
+
+/* Contenedor principal */
+
+.tasks-page__header,
+.tasks-page__form,
+.tasks-page__list {
+  width: 100%;
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
+}
+
+/* Encabezado */
+
+.tasks-page__header {
+  margin-bottom: var(--space-xl);
+}
+
+.tasks-page__header h1 {
+  margin: 0 0 var(--space-xs);
+  color: var(--text-primary);
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.tasks-page__header p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* Formulario */
+
+.tasks-page__form {
+  margin-bottom: var(--space-xl);
+  padding: var(--space-xl);
+  background: var(--surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  box-sizing: border-box;
+}
+
+.tasks-page__form h2 {
+  margin: 0 0 var(--space-lg);
+  color: var(--text-primary);
+  font-size: 20px;
+  font-weight: 600;
+}
+
+/*
+
+* El formulario no se presenta como modal actualmente.
+* Se mantiene dentro de la página y ocupa el ancho disponible.
+  */
+
+.tasks-page__form .task-form {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Lista */
+
+.tasks-page__list {
+  margin-bottom: var(--space-2xl);
+}
+
+.tasks-page__list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+.tasks-page__list-header h2 {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.tasks-page__list-header span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 32px;
+  padding: 0 var(--space-md);
+  box-sizing: border-box;
+  border-radius: var(--radius-round);
+  background: var(--primary-light);
+  color: var(--primary);
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* Grilla de tareas */
+
+.tasks-page__cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-lg);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/*
+
+* Evita que una TaskCard con contenido largo
+* fuerce el ancho de la grilla.
+  */
+
+.tasks-page__cards > * {
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Estado vacío */
+
+.tasks-page__empty {
+  width: 100%;
+  margin: 0;
+  padding: var(--space-2xl) var(--space-lg);
+  box-sizing: border-box;
+  background: var(--surface);
+  border: 1px dashed var(--border-color);
+  border-radius: var(--radius-lg);
+  color: var(--text-muted);
+  font-size: 15px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+/* =========================================
+TABLET - 768px
+========================================= */
+
+@media (max-width: 768px) {
+  .tasks-page {
+    padding: var(--space-xl);
+  }
+
+  .tasks-page__header h1 {
+    font-size: 28px;
+  }
+
+  .tasks-page__form {
+    padding: var(--space-lg);
+  }
+
+  /*
+
+* En tablet se utiliza una sola columna
+* para evitar tarjetas demasiado estrechas.
+  */
+
+  .tasks-page__cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================
+TELÉFONO - 375px / hasta 480px
+========================================= */
+
+@media (max-width: 480px) {
+  .tasks-page {
+    width: 100%;
+    padding: var(--space-lg) var(--space-md);
+  }
+
+  .tasks-page__header {
+    margin-bottom: var(--space-lg);
+  }
+
+  .tasks-page__header h1 {
+    font-size: 25px;
+  }
+
+  .tasks-page__header p {
+    font-size: 14px;
+  }
+
+  .tasks-page__form {
+    width: 100%;
+    margin-bottom: var(--space-lg);
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+  }
+
+  .tasks-page__form h2 {
+    margin-bottom: var(--space-md);
+    font-size: 18px;
+  }
+
+  /*
+
+* El formulario conserva el ancho de la pantalla
+* sin provocar desplazamiento horizontal.
+  */
+
+  .tasks-page__form .task-form,
+  .tasks-page__form input,
+  .tasks-page__form textarea,
+  .tasks-page__form select {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .tasks-page__list-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .tasks-page__list-header h2 {
+    font-size: 20px;
+  }
+
+  .tasks-page__cards {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+
+  .tasks-page__empty {
+    padding: var(--space-xl) var(--space-md);
+  }
+}
+
+/* =========================================
+TELÉFONOS MUY PEQUEÑOS
+========================================= */
+
+@media (max-width: 375px) {
+  .tasks-page {
+    padding: var(--space-md) var(--space-sm);
+  }
+
+  .tasks-page__form {
+    padding: var(--space-md);
+  }
+
+  .tasks-page__header h1 {
+    font-size: 23px;
+  }
+
+  .tasks-page__list-header h2 {
+    font-size: 19px;
+  }
+}

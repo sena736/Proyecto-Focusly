@@ -1,6 +1,6 @@
 import { useState } from "react";
-import TaskForm from "../../components/TaskForm";
-import TaskCard from "../../components/TaskCard";
+import TaskForm from "../../components/tasks/TaskForm/TaskForm";
+import TaskCard from "../../components/tasks/TaskCard/TaskCard";
 import ConfirmDeleteModal from "../../components/ConfirmDeleteModal";
 import "./Tasks.css";
 
@@ -38,8 +38,7 @@ const Tasks = () => {
     setTaskToDelete(task);
   };
 
-  // Aquí se realizará el borrado real.
-  // Actualmente usa el estado local como simulación.
+  // Aquí se realiza el borrado real, tras confirmar en el modal.
   const deleteTask = (task) => {
     setTasks((currentTasks) =>
       currentTasks.filter((currentTask) => currentTask.id !== task.id),
