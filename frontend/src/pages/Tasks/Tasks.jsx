@@ -1,11 +1,13 @@
 import { useState } from "react";
-import TaskForm from "../components/TaskForm";
-import TaskCard from "../components/TaskCard";
+import TaskForm from "../../components/tasks/TaskForm/TaskForm";
+import TaskCard from "../../components/tasks/TaskCard/TaskCard";
+import ConfirmDeleteModal from "../../components/ConfirmDeleteModal";
 import "./Tasks.css";
 
 const Tasks = () => {
   const [tasks, setTasks] = useState([]);
   const [editingTask, setEditingTask] = useState(null);
+  const [taskToDelete, setTaskToDelete] = useState(null);
 
   const handleSubmit = (taskData) => {
     if (editingTask) {
@@ -18,33 +20,40 @@ const Tasks = () => {
       return;
     }
 
-    ```
-const newTask = {
-  id: Date.now(),
-  ...taskData,
-  completed: false,
-};
+    const newTask = {
+      id: Date.now(),
+      ...taskData,
+      completed: false,
+    };
 
-setTasks((currentTasks) => [...currentTasks, newTask]);
-```;
+    setTasks((currentTasks) => [...currentTasks, newTask]);
   };
 
   const handleEdit = (task) => {
     setEditingTask(task);
   };
 
+  // Solo abre el modal. No elimina la tarea.
   const handleDelete = (task) => {
-    const confirmed = window.confirm(
-      `¿Seguro que deseas eliminar la tarea "${task.title}"?`,
+    setTaskToDelete(task);
+  };
+
+  // Aquí se realiza el borrado real, tras confirmar en el modal.
+  const deleteTask = (task) => {
+    setTasks((currentTasks) =>
+      currentTasks.filter((currentTask) => currentTask.id !== task.id),
     );
+  };
 
-    ```
-if (!confirmed) return;
+  const handleConfirmDelete = () => {
+    if (!taskToDelete) return;
 
-setTasks((currentTasks) =>
-  currentTasks.filter((currentTask) => currentTask.id !== task.id),
-);
-```;
+    deleteTask(taskToDelete);
+    setTaskToDelete(null);
+  };
+
+  const handleCancelDelete = () => {
+    setTaskToDelete(null);
   };
 
   const handleToggleComplete = (task) => {
@@ -69,7 +78,6 @@ setTasks((currentTasks) =>
         <h1>Mis tareas</h1>{" "}
         <p>Organiza tus tareas y lleva un seguimiento de tu progreso. </p>{" "}
       </header>
-      ```
       <section className="tasks-page__form">
         <h2>{editingTask ? "Editar tarea" : "Nueva tarea"}</h2>
 
@@ -103,6 +111,13 @@ setTasks((currentTasks) =>
           </div>
         )}
       </section>
+      {taskToDelete && (
+        <ConfirmDeleteModal
+          task={taskToDelete}
+          onConfirm={handleConfirmDelete}
+          onCancel={handleCancelDelete}
+        />
+      )}
     </main>
   );
 };
