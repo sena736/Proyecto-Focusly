@@ -2,9 +2,27 @@ import { useEffect, useMemo, useState } from "react";
 import "./Dashboard.css";
 
 const INITIAL_TASKS = [
-  { id: 1, title: "Repasar fundamentos de React", subject: "Desarrollo web", date: "Hoy", completed: false },
-  { id: 2, title: "Entregar informe de proyecto", subject: "Proyecto Focusly", date: "Hoy", completed: false },
-  { id: 3, title: "Leer capítulo de bases de datos", subject: "Bases de datos", date: "Mañana", completed: true },
+  {
+    id: 1,
+    title: "Repasar fundamentos de React",
+    subject: "Desarrollo web",
+    date: "Hoy",
+    completed: false,
+  },
+  {
+    id: 2,
+    title: "Entregar informe de proyecto",
+    subject: "Proyecto Focusly",
+    date: "Hoy",
+    completed: false,
+  },
+  {
+    id: 3,
+    title: "Leer capítulo de bases de datos",
+    subject: "Bases de datos",
+    date: "Mañana",
+    completed: true,
+  },
 ];
 
 const MOTIVATIONAL_QUOTES = [
@@ -14,8 +32,12 @@ const MOTIVATIONAL_QUOTES = [
 ];
 
 const formatTime = (seconds) => {
-  const minutes = Math.floor(seconds / 60).toString().padStart(2, "0");
+  const minutes = Math.floor(seconds / 60)
+    .toString()
+    .padStart(2, "0");
+
   const secs = (seconds % 60).toString().padStart(2, "0");
+
   return `${minutes}:${secs}`;
 };
 
@@ -33,11 +55,13 @@ export default function Dashboard({
 
   const pendingTasks = useMemo(
     () => tasks.filter((task) => !task.completed),
-    [tasks]
+    [tasks],
   );
 
   useEffect(() => {
-    if (!pomodoroRunning) return;
+    if (!pomodoroRunning) {
+      return;
+    }
 
     const interval = window.setInterval(() => {
       setPomodoroSeconds((seconds) => {
@@ -45,6 +69,7 @@ export default function Dashboard({
           setPomodoroRunning(false);
           return 25 * 60;
         }
+
         return seconds - 1;
       });
     }, 1000);
@@ -55,8 +80,13 @@ export default function Dashboard({
   const toggleTask = (id) => {
     setTasks((current) =>
       current.map((task) =>
-        task.id === id ? { ...task, completed: !task.completed } : task
-      )
+        task.id === id
+          ? {
+              ...task,
+              completed: !task.completed,
+            }
+          : task,
+      ),
     );
   };
 
@@ -67,8 +97,12 @@ export default function Dashboard({
 
   const addTask = (event) => {
     event.preventDefault();
+
     const title = newTaskTitle.trim();
-    if (!title) return;
+
+    if (!title) {
+      return;
+    }
 
     setTasks((current) => [
       {
@@ -92,35 +126,59 @@ export default function Dashboard({
           <div className="focusly-brand-mark" aria-hidden="true">
             F
           </div>
+
           <span>FOCUSLY</span>
         </div>
 
         <nav className="focusly-nav" aria-label="Navegación principal">
-          <button className="focusly-nav-item is-active" onClick={() => onNavigate("dashboard")}>
+          <button
+            className="focusly-nav-item is-active"
+            onClick={() => onNavigate("dashboard")}
+          >
             <span>⌂</span>
             Inicio
           </button>
-          <button className="focusly-nav-item" onClick={() => onNavigate("pomodoro")}>
+
+          <button
+            className="focusly-nav-item"
+            onClick={() => onNavigate("pomodoro")}
+          >
             <span>◷</span>
             Pomodoro
           </button>
-          <button className="focusly-nav-item" onClick={() => onNavigate("tasks")}>
+
+          <button
+            className="focusly-nav-item"
+            onClick={() => onNavigate("tasks")}
+          >
             <span>☑</span>
             Tareas
           </button>
-          <button className="focusly-nav-item" onClick={() => onNavigate("motivation")}>
+
+          <button
+            className="focusly-nav-item"
+            onClick={() => onNavigate("motivation")}
+          >
             <span>✦</span>
             Motivación
           </button>
-          <button className="focusly-nav-item" onClick={() => onNavigate("settings")}>
+
+          <button
+            className="focusly-nav-item"
+            onClick={() => onNavigate("settings")}
+          >
             <span>⚙</span>
             Configuración
           </button>
         </nav>
 
         <div className="focusly-sidebar-footer">
-          <button className="focusly-theme-toggle" onClick={() => setDarkMode((value) => !value)}>
+          <button
+            className="focusly-theme-toggle"
+            onClick={() => setDarkMode((value) => !value)}
+          >
             <span>{darkMode ? "☀" : "☾"}</span>
+
             {darkMode ? "Modo claro" : "Modo oscuro"}
           </button>
         </div>
@@ -130,7 +188,9 @@ export default function Dashboard({
         <header className="focusly-header">
           <div>
             <p className="focusly-eyebrow">Panel principal</p>
+
             <h1>¡Hola, {userName.split(" ")[0]}!</h1>
+
             <p className="focusly-subtitle">
               Organiza tu tiempo, mantén el enfoque y avanza en tus metas.
             </p>
@@ -148,10 +208,12 @@ export default function Dashboard({
                 .slice(0, 2)
                 .join("")}
             </span>
+
             <span className="focusly-profile-info">
               <strong>{userName}</strong>
               <small>Estudiante</small>
             </span>
+
             <span className="focusly-chevron">⌄</span>
           </button>
         </header>
@@ -161,8 +223,10 @@ export default function Dashboard({
             <div className="focusly-card-heading">
               <div>
                 <span className="focusly-kicker">POMODORO</span>
+
                 <h2>Sesión de enfoque</h2>
               </div>
+
               <span className="focusly-status-dot">● Enfoque</span>
             </div>
 
@@ -170,6 +234,7 @@ export default function Dashboard({
               <div className="focusly-timer-ring">
                 <div className="focusly-timer-content">
                   <strong>{formatTime(pomodoroSeconds)}</strong>
+
                   <span>minutos restantes</span>
                 </div>
               </div>
@@ -182,7 +247,11 @@ export default function Dashboard({
               >
                 {pomodoroRunning ? "Pausar" : "Iniciar"}
               </button>
-              <button className="focusly-secondary-button" onClick={resetPomodoro}>
+
+              <button
+                className="focusly-secondary-button"
+                onClick={resetPomodoro}
+              >
                 Reiniciar
               </button>
             </div>
@@ -192,20 +261,25 @@ export default function Dashboard({
             <div className="focusly-card-heading">
               <div>
                 <span className="focusly-kicker">MOTIVACIÓN</span>
+
                 <h2>Tu impulso de hoy</h2>
               </div>
+
               <span className="focusly-sparkle">✦</span>
             </div>
 
             <div className="focusly-quote">
               <span className="focusly-quote-mark">“</span>
+
               <p>{MOTIVATIONAL_QUOTES[quoteIndex]}</p>
             </div>
 
             <button
               className="focusly-link-button"
               onClick={() =>
-                setQuoteIndex((index) => (index + 1) % MOTIVATIONAL_QUOTES.length)
+                setQuoteIndex(
+                  (index) => (index + 1) % MOTIVATIONAL_QUOTES.length,
+                )
               }
             >
               Nueva frase <span>→</span>
@@ -217,8 +291,10 @@ export default function Dashboard({
           <div className="focusly-section-heading">
             <div>
               <span className="focusly-kicker">ORGANIZACIÓN</span>
+
               <h2>Mis tareas</h2>
             </div>
+
             <button
               className="focusly-add-button"
               onClick={() => setShowNewTask((value) => !value)}
@@ -236,9 +312,11 @@ export default function Dashboard({
                 placeholder="Escribe el nombre de la tarea"
                 aria-label="Nombre de la nueva tarea"
               />
+
               <button type="submit" className="focusly-primary-button">
                 Guardar
               </button>
+
               <button
                 type="button"
                 className="focusly-secondary-button"
@@ -255,13 +333,16 @@ export default function Dashboard({
                 <span>
                   <strong>{pendingTasks.length}</strong> pendientes
                 </span>
+
                 <span>{tasks.length - pendingTasks.length} completadas</span>
               </div>
 
               <div className="focusly-task-list">
                 {tasks.map((task) => (
                   <label
-                    className={`focusly-task ${task.completed ? "is-completed" : ""}`}
+                    className={`focusly-task ${
+                      task.completed ? "is-completed" : ""
+                    }`}
                     key={task.id}
                   >
                     <input
@@ -269,10 +350,12 @@ export default function Dashboard({
                       checked={task.completed}
                       onChange={() => toggleTask(task.id)}
                     />
+
                     <span className="focusly-checkmark">✓</span>
 
                     <span className="focusly-task-copy">
                       <strong>{task.title}</strong>
+
                       <small>
                         {task.subject} · {task.date}
                       </small>
@@ -293,13 +376,15 @@ export default function Dashboard({
 
             <aside className="focusly-card focusly-progress-card">
               <span className="focusly-kicker">RESUMEN</span>
+
               <h3>Tu progreso</h3>
 
               <div className="focusly-progress-circle">
                 <span>
                   {tasks.length
                     ? Math.round(
-                        ((tasks.length - pendingTasks.length) / tasks.length) * 100
+                        ((tasks.length - pendingTasks.length) / tasks.length) *
+                          100,
                       )
                     : 0}
                   %
@@ -307,7 +392,8 @@ export default function Dashboard({
               </div>
 
               <p>
-                Sigue así. Completar pequeñas tareas mantiene tu ritmo de estudio.
+                Sigue así. Completar pequeñas tareas mantiene tu ritmo de
+                estudio.
               </p>
             </aside>
           </div>
