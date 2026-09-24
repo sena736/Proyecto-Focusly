@@ -1,10 +1,14 @@
-const API_URL = "http://localhost:3000/api/v1/profile";
+import { getToken } from "../services/token.services";
 
-export const getProfile = async (token) => {
+const API_URL =
+  (import.meta.env.VITE_API_URL || "http://localhost:3000/api/v1") +
+  "/profile";
+
+export const getProfile = async () => {
   const response = await fetch(API_URL, {
     method: "GET",
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${getToken()}`,
       "Content-Type": "application/json",
     },
   });
@@ -18,11 +22,11 @@ export const getProfile = async (token) => {
   return data;
 };
 
-export const updateProfile = async (data, token) => {
+export const updateProfile = async (data) => {
   const response = await fetch(API_URL, {
     method: "PATCH",
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${getToken()}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
