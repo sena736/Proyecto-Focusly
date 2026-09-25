@@ -57,16 +57,10 @@ cd backend
 npm install
 ```
 
-Creá un archivo `.env` en `backend/` con estas variables (no hay `.env.example` en el repo todavía — pedíselo a alguien del equipo o armalo con estos nombres):
+Copiá `backend/.env.example` a `backend/.env` y completá los valores (base de datos, JWT y credenciales de Google OAuth):
 
-```
-DATABASE_URL=
-PORT=3000
-JWT_SECRET=
-JWT_EXPIRES_IN=
-GOOGLE_CLIENT_ID=
-GOOGLE_CLIENT_SECRET=
-FRONTEND_URL=
+```bash
+cp backend/.env.example backend/.env
 ```
 
 ```bash
@@ -85,10 +79,10 @@ npm install
 npm run dev
 ```
 
-Necesita saber dónde está el backend — creá `frontend/.env` con:
+Necesita saber dónde está el backend — copiá `frontend/.env.example` a `frontend/.env`:
 
-```
-VITE_API_URL=http://localhost:3000/api/v1
+```bash
+cp frontend/.env.example frontend/.env
 ```
 
 ## Endpoints principales
