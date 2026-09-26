@@ -1,6 +1,7 @@
 import React from "react";
 import { usePhrase } from "../../hooks/usePhrase";
 import MotivationCard from "../../components/MotivationCard/MotivationCard";
+import "./Motivation.css";
 
 const Motivation = () => {
   const {
@@ -12,8 +13,14 @@ const Motivation = () => {
   if (isLoading) {
     return (
       <main className="motivation-page">
-        <div className="motivation-page__loader">
-          <span>Cargando frase motivacional...</span>
+        <div className="motivation-page__container">
+          <div
+            className="motivation-page__loader"
+            role="status"
+            aria-live="polite"
+          >
+            <span>Cargando frase motivacional...</span>
+          </div>
         </div>
       </main>
     );
@@ -22,10 +29,12 @@ const Motivation = () => {
   if (isError) {
     return (
       <main className="motivation-page">
-        <div className="motivation-page__error">
-          <p>
-            No se pudo cargar la frase motivacional.
-          </p>
+        <div className="motivation-page__container">
+          <div className="motivation-page__message" role="alert">
+            <p>
+              No se pudo cargar la frase motivacional.
+            </p>
+          </div>
         </div>
       </main>
     );
@@ -33,20 +42,30 @@ const Motivation = () => {
 
   return (
     <main className="motivation-page">
-      <header className="motivation-page__header">
-        <h1>Motivación</h1>
-        <p>
-          Encuentra inspiración para continuar con tus objetivos.
-        </p>
-      </header>
+      <div className="motivation-page__container">
+        <header className="motivation-page__header">
+          <h1>Motivación</h1>
 
-      {phrase ? (
-        <MotivationCard phrase={phrase} />
-      ) : (
-        <div className="motivation-page__error">
-          <p>No hay frases motivacionales disponibles.</p>
-        </div>
-      )}
+          <p>
+            Encuentra inspiración para continuar con tus
+            objetivos.
+          </p>
+        </header>
+
+        <section className="motivation-page__content">
+          {phrase ? (
+            <div className="motivation-page__card">
+              <MotivationCard phrase={phrase} />
+            </div>
+          ) : (
+            <div className="motivation-page__message">
+              <p>
+                No hay frases motivacionales disponibles.
+              </p>
+            </div>
+          )}
+        </section>
+      </div>
     </main>
   );
 };
