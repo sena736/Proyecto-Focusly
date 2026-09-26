@@ -5,12 +5,14 @@ Aplicación web de gestión de tareas y productividad con técnica Pomodoro. Pro
 ## Stack
 
 **Backend**
+
 - Node.js + Express 5
 - Prisma ORM 7 (`@prisma/adapter-mariadb`) sobre MySQL
 - Autenticación con Google OAuth (`google-auth-library`) + JWT
 - Bcrypt para hashing de contraseñas
 
 **Frontend**
+
 - React 19 + Vite
 - React Router 7
 - TanStack Query (React Query) para estado del servidor
@@ -88,7 +90,7 @@ cp frontend/.env.example frontend/.env
 ## Endpoints principales
 
 | Ruta | Módulo |
-|---|---|
+| --- | --- |
 | `/api/v1/auth` | Autenticación (Google OAuth + JWT) |
 | `/api/v1/profile` | Perfil del usuario autenticado |
 | `/api/v1/tasks` | CRUD de tareas |
@@ -106,6 +108,7 @@ Administración (requiere rol `ADMIN`): `/admin/users`.
 ## Documentación
 
 Los documentos formales del proyecto están en [`docs/`](docs/):
+
 - `Focusly_ERS_v1.1.docx` — Especificación de Requisitos de Software
 - `Focusly_DDS_v1.0.docx` — Diseño Detallado de Software
 - `Focusly_Plan_de_Trabajo_v1.0.docx` — planificación por sprints
@@ -114,4 +117,4 @@ El seguimiento de tareas del equipo se lleva en el tablero Kanban de Notion del 
 
 ## Equipo
 
-Proyecto desarrollado en el marco de un curso de ingeniería de software, con roles de Scrum Master/Líder Técnico, Backend, Frontend (x2) y UX/QA.
+Proyecto desarrollado en el marco del técnico en programación de software del programa Senatic, con roles de Scrum Master/Líder Técnico, Backend, Frontend (x2) y UX/QA.
