@@ -1,9 +1,14 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { FiUser, FiMail, FiLock, FiUserPlus } from "react-icons/fi";
+import { registerUser } from "../../api/auth.api";
+import { AuthContext } from "../../context/AuthContext";
 import "./Register.css";
 
 const Register = () => {
+  const { establishSession } = useContext(AuthContext);
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -13,6 +18,7 @@ const Register = () => {
 
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -26,7 +32,7 @@ const Register = () => {
     setSuccess("");
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     if (formData.password !== formData.confirmPassword) {
@@ -35,10 +41,35 @@ const Register = () => {
     }
 
     setError("");
-    setSuccess("Registro realizado correctamente.");
+    setSuccess("");
+    setIsSubmitting(true);
 
-    // Aquí puedes conectar posteriormente el formulario
-    // con el endpoint de registro de tu API.
+    try {
+      const data = await registerUser({
+        name: formData.name,
+        email: formData.email,
+        password: formData.password,
+      });
+
+      if (!data.token) {
+        throw new Error("El servidor no devolvió un token.");
+      }
+
+      setSuccess("Cuenta creada correctamente.");
+
+      const user = await establishSession(data.token);
+
+      if (user) {
+        navigate("/dashboard");
+      }
+    } catch (registerError) {
+      setError(
+        registerError.message ||
+          "No se pudo crear la cuenta. Intenta nuevamente.",
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -149,9 +180,13 @@ const Register = () => {
             </p>
           )}
 
-          <button type="submit" className="register__button">
+          <button
+            type="submit"
+            className="register__button"
+            disabled={isSubmitting}
+          >
             <FiUserPlus />
-            Crear cuenta
+            {isSubmitting ? "Creando cuenta..." : "Crear cuenta"}
           </button>
         </form>
 

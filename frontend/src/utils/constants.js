@@ -43,7 +43,7 @@ export const API_ENDPOINTS = {
     GOOGLE: "/auth/google",
     GOOGLE_CALLBACK: "/auth/google/callback",
     LOGOUT: "/auth/logout",
-    ME: "/auth/me",
+    ME: "/auth/profile",
   },
 
   PROFILE: {

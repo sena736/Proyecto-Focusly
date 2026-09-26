@@ -1,6 +1,8 @@
 const { Router } = require("express");
 const {
   googleLogin,
+  register,
+  emailLogin,
   getProfile,
   refreshToken,
   logout,
@@ -12,6 +14,16 @@ const router = Router();
  * Autenticación con Google
  */
 router.post("/google", googleLogin);
+
+/**
+ * Registro con correo y contraseña
+ */
+router.post("/register", register);
+
+/**
+ * Login con correo y contraseña
+ */
+router.post("/login", emailLogin);
 
 /**
  * Obtener perfil del usuario autenticado

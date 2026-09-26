@@ -27,6 +27,61 @@ const googleLogin = async (req, res) => {
 };
 
 /**
+ * POST /api/v1/auth/register
+ */
+const register = async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
+
+    const result = await authService.register({
+      name,
+      email,
+      password,
+    });
+
+    return res.status(201).json({
+      success: true,
+      message: "Cuenta creada correctamente",
+      data: result,
+    });
+  } catch (error) {
+    console.error("Register Error:", error);
+
+    return res.status(400).json({
+      success: false,
+      message: error.message || "No se pudo crear la cuenta",
+    });
+  }
+};
+
+/**
+ * POST /api/v1/auth/login
+ */
+const emailLogin = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    const result = await authService.emailLogin({
+      email,
+      password,
+    });
+
+    return res.status(200).json({
+      success: true,
+      message: "Autenticación exitosa",
+      data: result,
+    });
+  } catch (error) {
+    console.error("Email Login Error:", error);
+
+    return res.status(401).json({
+      success: false,
+      message: error.message || "Credenciales inválidas",
+    });
+  }
+};
+
+/**
  * GET /api/v1/auth/profile
  */
 const getProfile = async (req, res) => {
@@ -123,6 +178,8 @@ const logout = async (req, res) => {
 
 module.exports = {
   googleLogin,
+  register,
+  emailLogin,
   getProfile,
   refreshToken,
   logout,
