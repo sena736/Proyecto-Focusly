@@ -12,6 +12,8 @@ const pomodoroSessionsRoutes = require("./routes/pomodoroSessions.routes");
 
 const phrasesRoutes = require("./routes/phrases.routes");
 
+const usersRoutes = require("./routes/users.routes");
+
 const app = express();
 
 // ======================================
@@ -20,7 +22,19 @@ const app = express();
 
 // ======================================
 
-app.use(cors({ origin: process.env.FRONTEND_URL }));
+const allowedOrigins = [process.env.FRONTEND_URL, "http://localhost:5173"].filter(Boolean);
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Origen no permitido por CORS"));
+      }
+    },
+  }),
+);
 
 app.use(express.json());
 
@@ -66,5 +80,7 @@ app.use("/api/v1/tasks", tasksRoutes);
 app.use("/api/v1/pomodoro-sessions", pomodoroSessionsRoutes);
 
 app.use("/api/v1/phrases", phrasesRoutes);
+
+app.use("/api/v1/users", usersRoutes);
 
 module.exports = app;
