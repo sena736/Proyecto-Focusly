@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   FiMail,
   FiLock,
@@ -7,12 +7,13 @@ import {
   FiEye,
   FiEyeOff,
 } from "react-icons/fi";
-import { googleLogin } from "../../api/auth.api";
+import { googleLogin, emailLogin } from "../../api/auth.api";
 import { AuthContext } from "../../context/AuthContext";
 import "./Login.css";
 
 const Login = () => {
   const { establishSession } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -33,10 +34,32 @@ const Login = () => {
     setError("");
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Conectar posteriormente con el endpoint de autenticación.
+    setError("");
+
+    try {
+      const data = await emailLogin({
+        email: formData.email,
+        password: formData.password,
+      });
+
+      if (!data.token) {
+        throw new Error("El servidor no devolvió un token.");
+      }
+
+      const user = await establishSession(data.token);
+
+      if (user) {
+        navigate("/dashboard");
+      }
+    } catch (loginError) {
+      setError(
+        loginError.message ||
+          "No fue posible iniciar sesión. Verifica tus credenciales.",
+      );
+    }
   };
 
   const handleGoogleLogin = async (idToken) => {
@@ -49,7 +72,11 @@ const Login = () => {
         throw new Error("El servidor no devolvió un token.");
       }
 
-      await establishSession(data.token);
+      const user = await establishSession(data.token);
+
+      if (user) {
+        navigate("/dashboard");
+      }
     } catch (loginError) {
       setError(
         loginError.message ||

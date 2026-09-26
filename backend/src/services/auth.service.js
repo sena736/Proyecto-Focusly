@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 const { OAuth2Client } = require("google-auth-library");
 
 const userRepository = require("../repositories/user.repository");
@@ -22,6 +23,15 @@ const generateToken = (user) => {
       expiresIn: process.env.JWT_EXPIRES_IN || "1d",
     }
   );
+};
+
+/**
+ * Quitar el hash de contraseña antes de devolver el usuario
+ */
+const sanitizeUser = (user) => {
+  const { password, ...safeUser } = user;
+
+  return safeUser;
 };
 
 /**
@@ -90,7 +100,70 @@ const googleLogin = async (idToken) => {
   const token = generateToken(user);
 
   return {
-    user,
+    user: sanitizeUser(user),
+    token,
+  };
+};
+
+/**
+ * Registro con correo y contraseña
+ */
+const register = async ({ name, email, password }) => {
+  if (!name || !email || !password) {
+    throw new Error("Nombre, correo y contraseña son obligatorios");
+  }
+
+  const existingUser = await userRepository.findByEmail(email);
+
+  if (existingUser) {
+    throw new Error("Ya existe una cuenta con ese correo");
+  }
+
+  const passwordHash = await bcrypt.hash(password, 10);
+
+  const user = await userRepository.create({
+    name,
+    email,
+    password: passwordHash,
+    role: "USER",
+  });
+
+  const token = generateToken(user);
+
+  return {
+    user: sanitizeUser(user),
+    token,
+  };
+};
+
+/**
+ * Login con correo y contraseña
+ */
+const emailLogin = async ({ email, password }) => {
+  if (!email || !password) {
+    throw new Error("Correo y contraseña son obligatorios");
+  }
+
+  const user = await userRepository.findByEmail(email);
+
+  /**
+   * Mismo mensaje genérico tanto si el correo no existe
+   * como si la cuenta fue creada solo con Google (sin password).
+   */
+  if (!user || !user.password) {
+    throw new Error("Credenciales inválidas");
+  }
+
+  const isValidPassword = await bcrypt.compare(password, user.password);
+
+  if (!isValidPassword) {
+    throw new Error("Credenciales inválidas");
+  }
+
+  const token = generateToken(user);
+
+  return {
+    user: sanitizeUser(user),
     token,
   };
 };
@@ -116,7 +189,7 @@ const getProfile = async (token) => {
     throw new Error("Usuario no encontrado");
   }
 
-  return user;
+  return sanitizeUser(user);
 };
 
 /**
@@ -145,7 +218,7 @@ const refreshToken = async (token) => {
 
   return {
     token: generateToken(user),
-    user,
+    user: sanitizeUser(user),
   };
 };
 
@@ -163,6 +236,8 @@ const logout = async () => {
 
 module.exports = {
   googleLogin,
+  register,
+  emailLogin,
   getProfile,
   refreshToken,
   logout,
