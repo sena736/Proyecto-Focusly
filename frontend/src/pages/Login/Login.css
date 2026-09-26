@@ -102,6 +102,27 @@
   font-weight: 700;
 }
 
+.login__google-button-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.login__google-button--loading,
+.login__google-button--disabled {
+  cursor: default;
+}
+
+.login__google-button--loading {
+  color: var(--text-secondary);
+}
+
+.login__google-button--disabled {
+  color: var(--text-muted);
+  font-size: 12px;
+  text-align: center;
+}
+
 /* ========================================
    DIVIDER
 ======================================== */
