@@ -1,8 +1,10 @@
 import { NavLink, useNavigate } from "react-router-dom";
+import useAuth from "../../../hooks/useAuth";
 import "./Sidebar.css";
 
-function Sidebar({ isAdmin = false, onClose }) {
+function Sidebar({ isAdmin = false, isOpen = false, onClose }) {
   const navigate = useNavigate();
+  const { logout } = useAuth();
 
   const menuItems = [
     {
@@ -32,12 +34,9 @@ function Sidebar({ isAdmin = false, onClose }) {
     },
   ];
 
-  const handleLogout = () => {
-    // Eliminar información de autenticación
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+  const handleLogout = async () => {
+    await logout();
 
-    // Redireccionar al Login
     navigate("/login");
 
     // Cerrar Sidebar en dispositivos móviles
@@ -53,7 +52,7 @@ function Sidebar({ isAdmin = false, onClose }) {
   };
 
   return (
-    <aside className="sidebar">
+    <aside className={`sidebar ${isOpen ? "sidebar--open" : ""}`}>
       {/* Logo */}
       <div className="sidebar__header">
         <div className="sidebar__logo">
@@ -101,7 +100,7 @@ function Sidebar({ isAdmin = false, onClose }) {
             </span>
 
             <NavLink
-              to="/admin"
+              to="/admin/users"
               onClick={handleNavigation}
               className={({ isActive }) =>
                 `sidebar__link ${isActive ? "sidebar__link--active" : ""}`

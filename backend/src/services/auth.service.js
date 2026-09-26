@@ -14,7 +14,7 @@ const googleClient = new OAuth2Client(
 const generateToken = (user) => {
   return jwt.sign(
     {
-      id: user.id,
+      sub: user.id,
       email: user.email,
       role: user.role,
     },
