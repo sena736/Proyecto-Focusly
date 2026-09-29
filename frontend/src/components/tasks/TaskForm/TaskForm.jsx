@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "./TaskForm.css";
 
+const EMPTY_TASK_DATA = {};
+
 const TaskForm = ({
-  initialData = {},
+  initialData = EMPTY_TASK_DATA,
   onSubmit,
   onCancel,
   loading = false,

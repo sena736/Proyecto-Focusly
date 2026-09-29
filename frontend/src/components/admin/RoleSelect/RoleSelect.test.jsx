@@ -1,6 +1,18 @@
+import React from "react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import RoleSelect from "./RoleSelect";
+
+const ControlledRoleSelect = ({ onChange }) => {
+  const [value, setValue] = React.useState("Usuario");
+
+  const handleChange = (event) => {
+    setValue(event.target.value);
+    onChange(event);
+  };
+
+  return <RoleSelect value={value} onChange={handleChange} />;
+};
 
 describe("RoleSelect", () => {
   test("muestra el rol actual del usuario correctamente", () => {
@@ -24,8 +36,7 @@ describe("RoleSelect", () => {
     });
 
     render(
-      <RoleSelect
-        value="Usuario"
+      <ControlledRoleSelect
         onChange={handleChange}
       />
     );

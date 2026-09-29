@@ -19,7 +19,12 @@ const useProfile = () => {
   });
 
   return {
-    ...profileQuery,
+    profile: profileQuery.data,
+
+    isLoading: profileQuery.isLoading,
+    isError: profileQuery.isError,
+    error: profileQuery.error,
+
     updateProfile: updateProfileMutation.mutate,
     updateProfileAsync: updateProfileMutation.mutateAsync,
     isUpdating: updateProfileMutation.isPending,

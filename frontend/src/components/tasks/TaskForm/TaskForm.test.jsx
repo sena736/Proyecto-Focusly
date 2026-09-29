@@ -4,7 +4,7 @@ import { describe, test, expect, vi } from "vitest";
 import TaskForm from "./TaskForm";
 
 describe("TaskForm", () => {
-  test("no invoca onSubmit si el título está vacío", () => {
+  test("no llama a onSubmit y muestra un error de validación si title está vacío", () => {
     const onSubmit = vi.fn();
 
     render(
@@ -20,6 +20,10 @@ describe("TaskForm", () => {
     fireEvent.click(submitButton);
 
     expect(onSubmit).not.toHaveBeenCalled();
+
+    expect(
+      screen.getByText(/el título de la tarea es obligatorio/i)
+    ).toBeInTheDocument();
   });
 
   test("precarga los campos cuando recibe una tarea por prop", () => {
@@ -67,6 +71,8 @@ describe("TaskForm", () => {
       /descripción/i
     );
 
+    const dueDateInput = screen.getByLabelText(/fecha de entrega/i);
+
     fireEvent.change(titleInput, {
       target: {
         value: "Completar proyecto",
@@ -79,11 +85,9 @@ describe("TaskForm", () => {
       },
     });
 
-    const dueDateInput = screen.getByLabelText(/fecha de entrega/i);
-
     fireEvent.change(dueDateInput, {
       target: {
-        value: "2026-10-01",
+        value: "2026-12-31",
       },
     });
 
@@ -99,6 +103,7 @@ describe("TaskForm", () => {
       expect.objectContaining({
         title: "Completar proyecto",
         description: "Terminar la implementación de Focusly",
+        dueDate: "2026-12-31",
       })
     );
   });
