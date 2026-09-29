@@ -130,6 +130,39 @@
   box-sizing: border-box;
 }
 
+/* Error de una acción (crear, editar, eliminar) */
+
+.tasks-action-error {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  max-width: 1100px;
+  margin: 0 auto var(--space-lg);
+  padding: var(--space-md) var(--space-lg);
+  box-sizing: border-box;
+  background: var(--danger-light, #fdecea);
+  border: 1px solid var(--danger, #d32f2f);
+  border-radius: var(--radius-md);
+  color: var(--danger, #d32f2f);
+}
+
+.tasks-action-error p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.tasks-action-error button {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  color: inherit;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+}
+
 /* Estado vacío */
 
 .tasks-page__empty {

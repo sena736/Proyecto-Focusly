@@ -24,6 +24,8 @@ const Tasks = () => {
     isDeleting,
   } = useTask(token);
 
+  const [actionError, setActionError] = useState("");
+
   const [showForm, setShowForm] = useState(false);
   const [editingTask, setEditingTask] = useState(null);
   const [taskToDelete, setTaskToDelete] = useState(null);
@@ -52,6 +54,8 @@ const Tasks = () => {
 
   // Crear o actualizar tarea
   const handleSubmit = async (formData) => {
+    setActionError("");
+
     try {
       if (editingTask) {
         await updateTaskAsync({
@@ -66,11 +70,17 @@ const Tasks = () => {
       setEditingTask(null);
     } catch (error) {
       console.error("Error al guardar la tarea:", error);
+
+      setActionError(
+        error?.message || "No se pudo guardar la tarea. Intentá de nuevo."
+      );
     }
   };
 
   // Marcar tarea como completada o pendiente
   const handleToggle = async (task, completed) => {
+    setActionError("");
+
     try {
       await updateTaskAsync({
         id: task.id,
@@ -80,6 +90,10 @@ const Tasks = () => {
       });
     } catch (error) {
       console.error("Error al actualizar la tarea:", error);
+
+      setActionError(
+        error?.message || "No se pudo actualizar la tarea. Intentá de nuevo."
+      );
     }
   };
 
@@ -103,11 +117,17 @@ const Tasks = () => {
       return;
     }
 
+    setActionError("");
+
     try {
       await deleteTaskAsync(taskToDelete.id);
       setTaskToDelete(null);
     } catch (error) {
       console.error("Error al eliminar la tarea:", error);
+
+      setActionError(
+        error?.message || "No se pudo eliminar la tarea. Intentá de nuevo."
+      );
     }
   };
 
@@ -139,6 +159,21 @@ const Tasks = () => {
           + Nueva tarea
         </button>
       </div>
+
+      {/* Error de una acción (crear, editar, eliminar) */}
+      {actionError && (
+        <div className="tasks-action-error" role="alert">
+          <p>{actionError}</p>
+
+          <button
+            type="button"
+            onClick={() => setActionError("")}
+            aria-label="Cerrar mensaje de error"
+          >
+            ×
+          </button>
+        </div>
+      )}
 
       {/* Estado de carga */}
       {isLoading && (
