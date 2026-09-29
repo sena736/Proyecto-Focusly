@@ -1,189 +1,62 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Dashboard.css";
 
-const INITIAL_TASKS = [
-  {
-    id: 1,
-    title: "Repasar fundamentos de React",
-    subject: "Desarrollo web",
-    date: "Hoy",
-    completed: false,
-  },
-  {
-    id: 2,
-    title: "Entregar informe de proyecto",
-    subject: "Proyecto Focusly",
-    date: "Hoy",
-    completed: false,
-  },
-  {
-    id: 3,
-    title: "Leer capítulo de bases de datos",
-    subject: "Bases de datos",
-    date: "Mañana",
-    completed: true,
-  },
-];
+import useAuth from "../../hooks/useAuth";
+import useTask from "../../hooks/useTask";
+import usePomodoro from "../../hooks/usePomodoro";
+import { usePhrase } from "../../hooks/usePhrase";
+import { getToken } from "../../services/token.services";
 
-const MOTIVATIONAL_QUOTES = [
-  "La constancia de hoy construye tus resultados de mañana.",
-  "Un paso a la vez también es avanzar.",
-  "Concéntrate en lo que puedes completar ahora.",
-];
+export default function Dashboard() {
+  const navigate = useNavigate();
+  const { user } = useAuth();
 
-const formatTime = (seconds) => {
-  const minutes = Math.floor(seconds / 60)
-    .toString()
-    .padStart(2, "0");
+  const userName = user?.name || "Usuario";
 
-  const secs = (seconds % 60).toString().padStart(2, "0");
+  const {
+    tasks = [],
+    isLoading: isLoadingTasks,
+    isError: isTasksError,
+    updateTask,
+  } = useTask(getToken());
 
-  return `${minutes}:${secs}`;
-};
+  const {
+    formattedTime,
+    isRunning,
+    start: startPomodoro,
+    pause: pausePomodoro,
+    reset: resetPomodoro,
+  } = usePomodoro();
 
-export default function Dashboard({
-  userName = "Juan Pérez",
-  onNavigate = () => {},
-}) {
-  const [tasks, setTasks] = useState(INITIAL_TASKS);
-  const [quoteIndex, setQuoteIndex] = useState(0);
-  const [darkMode, setDarkMode] = useState(false);
-  const [pomodoroSeconds, setPomodoroSeconds] = useState(25 * 60);
-  const [pomodoroRunning, setPomodoroRunning] = useState(false);
-  const [showNewTask, setShowNewTask] = useState(false);
-  const [newTaskTitle, setNewTaskTitle] = useState("");
+  const {
+    data: phrase,
+    isLoading: isLoadingPhrase,
+    isError: isPhraseError,
+    refetch: refetchPhrase,
+    isRefetching: isRefetchingPhrase,
+  } = usePhrase();
 
   const pendingTasks = useMemo(
     () => tasks.filter((task) => !task.completed),
     [tasks],
   );
 
-  useEffect(() => {
-    if (!pomodoroRunning) {
-      return;
-    }
+  const previewTasks = useMemo(() => tasks.slice(0, 5), [tasks]);
 
-    const interval = window.setInterval(() => {
-      setPomodoroSeconds((seconds) => {
-        if (seconds <= 1) {
-          setPomodoroRunning(false);
-          return 25 * 60;
-        }
+  const progressPercent = tasks.length
+    ? Math.round(((tasks.length - pendingTasks.length) / tasks.length) * 100)
+    : 0;
 
-        return seconds - 1;
-      });
-    }, 1000);
-
-    return () => window.clearInterval(interval);
-  }, [pomodoroRunning]);
-
-  const toggleTask = (id) => {
-    setTasks((current) =>
-      current.map((task) =>
-        task.id === id
-          ? {
-              ...task,
-              completed: !task.completed,
-            }
-          : task,
-      ),
-    );
-  };
-
-  const resetPomodoro = () => {
-    setPomodoroRunning(false);
-    setPomodoroSeconds(25 * 60);
-  };
-
-  const addTask = (event) => {
-    event.preventDefault();
-
-    const title = newTaskTitle.trim();
-
-    if (!title) {
-      return;
-    }
-
-    setTasks((current) => [
-      {
-        id: Date.now(),
-        title,
-        subject: "Nueva tarea",
-        date: "Hoy",
-        completed: false,
-      },
-      ...current,
-    ]);
-
-    setNewTaskTitle("");
-    setShowNewTask(false);
+  const toggleTask = (task) => {
+    updateTask({
+      id: task.id,
+      data: { ...task, completed: !task.completed },
+    });
   };
 
   return (
-    <div className={`focusly-dashboard ${darkMode ? "is-dark" : ""}`}>
-      <aside className="focusly-sidebar">
-        <div className="focusly-brand">
-          <div className="focusly-brand-mark" aria-hidden="true">
-            F
-          </div>
-
-          <span>FOCUSLY</span>
-        </div>
-
-        <nav className="focusly-nav" aria-label="Navegación principal">
-          <button
-            className="focusly-nav-item is-active"
-            onClick={() => onNavigate("dashboard")}
-          >
-            <span>⌂</span>
-            Inicio
-          </button>
-
-          <button
-            className="focusly-nav-item"
-            onClick={() => onNavigate("pomodoro")}
-          >
-            <span>◷</span>
-            Pomodoro
-          </button>
-
-          <button
-            className="focusly-nav-item"
-            onClick={() => onNavigate("tasks")}
-          >
-            <span>☑</span>
-            Tareas
-          </button>
-
-          <button
-            className="focusly-nav-item"
-            onClick={() => onNavigate("motivation")}
-          >
-            <span>✦</span>
-            Motivación
-          </button>
-
-          <button
-            className="focusly-nav-item"
-            onClick={() => onNavigate("settings")}
-          >
-            <span>⚙</span>
-            Configuración
-          </button>
-        </nav>
-
-        <div className="focusly-sidebar-footer">
-          <button
-            className="focusly-theme-toggle"
-            onClick={() => setDarkMode((value) => !value)}
-          >
-            <span>{darkMode ? "☀" : "☾"}</span>
-
-            {darkMode ? "Modo claro" : "Modo oscuro"}
-          </button>
-        </div>
-      </aside>
-
+    <div className="focusly-dashboard">
       <main className="focusly-main">
         <header className="focusly-header">
           <div>
@@ -198,7 +71,7 @@ export default function Dashboard({
 
           <button
             className="focusly-profile"
-            onClick={() => onNavigate("profile")}
+            onClick={() => navigate("/profile")}
             aria-label="Abrir perfil"
           >
             <span className="focusly-avatar">
@@ -211,7 +84,7 @@ export default function Dashboard({
 
             <span className="focusly-profile-info">
               <strong>{userName}</strong>
-              <small>Estudiante</small>
+              <small>{user?.role === "ADMIN" ? "Administrador" : "Estudiante"}</small>
             </span>
 
             <span className="focusly-chevron">⌄</span>
@@ -227,13 +100,15 @@ export default function Dashboard({
                 <h2>Sesión de enfoque</h2>
               </div>
 
-              <span className="focusly-status-dot">● Enfoque</span>
+              <span className="focusly-status-dot">
+                {isRunning ? "● Enfoque" : "○ Pausado"}
+              </span>
             </div>
 
             <div className="focusly-timer">
               <div className="focusly-timer-ring">
                 <div className="focusly-timer-content">
-                  <strong>{formatTime(pomodoroSeconds)}</strong>
+                  <strong>{formattedTime}</strong>
 
                   <span>minutos restantes</span>
                 </div>
@@ -243,9 +118,9 @@ export default function Dashboard({
             <div className="focusly-timer-actions">
               <button
                 className="focusly-primary-button"
-                onClick={() => setPomodoroRunning((value) => !value)}
+                onClick={() => (isRunning ? pausePomodoro() : startPomodoro())}
               >
-                {pomodoroRunning ? "Pausar" : "Iniciar"}
+                {isRunning ? "Pausar" : "Iniciar"}
               </button>
 
               <button
@@ -271,16 +146,19 @@ export default function Dashboard({
             <div className="focusly-quote">
               <span className="focusly-quote-mark">“</span>
 
-              <p>{MOTIVATIONAL_QUOTES[quoteIndex]}</p>
+              <p>
+                {isLoadingPhrase
+                  ? "Cargando frase..."
+                  : isPhraseError
+                    ? "No se pudo cargar la frase motivacional."
+                    : phrase?.text}
+              </p>
             </div>
 
             <button
               className="focusly-link-button"
-              onClick={() =>
-                setQuoteIndex(
-                  (index) => (index + 1) % MOTIVATIONAL_QUOTES.length,
-                )
-              }
+              onClick={() => refetchPhrase()}
+              disabled={isRefetchingPhrase}
             >
               Nueva frase <span>→</span>
             </button>
@@ -297,35 +175,11 @@ export default function Dashboard({
 
             <button
               className="focusly-add-button"
-              onClick={() => setShowNewTask((value) => !value)}
+              onClick={() => navigate("/tasks")}
             >
               + Nueva tarea
             </button>
           </div>
-
-          {showNewTask && (
-            <form className="focusly-new-task" onSubmit={addTask}>
-              <input
-                autoFocus
-                value={newTaskTitle}
-                onChange={(event) => setNewTaskTitle(event.target.value)}
-                placeholder="Escribe el nombre de la tarea"
-                aria-label="Nombre de la nueva tarea"
-              />
-
-              <button type="submit" className="focusly-primary-button">
-                Guardar
-              </button>
-
-              <button
-                type="button"
-                className="focusly-secondary-button"
-                onClick={() => setShowNewTask(false)}
-              >
-                Cancelar
-              </button>
-            </form>
-          )}
 
           <div className="focusly-task-layout">
             <div className="focusly-card focusly-tasks-card">
@@ -338,7 +192,31 @@ export default function Dashboard({
               </div>
 
               <div className="focusly-task-list">
-                {tasks.map((task) => (
+                {isLoadingTasks && (
+                  <div className="focusly-task">
+                    <span className="focusly-task-copy">
+                      <strong>Cargando tareas...</strong>
+                    </span>
+                  </div>
+                )}
+
+                {isTasksError && (
+                  <div className="focusly-task">
+                    <span className="focusly-task-copy">
+                      <strong>No se pudieron cargar las tareas.</strong>
+                    </span>
+                  </div>
+                )}
+
+                {!isLoadingTasks && !isTasksError && previewTasks.length === 0 && (
+                  <div className="focusly-task">
+                    <span className="focusly-task-copy">
+                      <strong>No tenés tareas todavía.</strong>
+                    </span>
+                  </div>
+                )}
+
+                {previewTasks.map((task) => (
                   <label
                     className={`focusly-task ${
                       task.completed ? "is-completed" : ""
@@ -348,7 +226,7 @@ export default function Dashboard({
                     <input
                       type="checkbox"
                       checked={task.completed}
-                      onChange={() => toggleTask(task.id)}
+                      onChange={() => toggleTask(task)}
                     />
 
                     <span className="focusly-checkmark">✓</span>
@@ -357,7 +235,10 @@ export default function Dashboard({
                       <strong>{task.title}</strong>
 
                       <small>
-                        {task.subject} · {task.date}
+                        {task.description || "Sin descripción"}
+                        {task.dueDate
+                          ? ` · ${new Date(task.dueDate).toLocaleDateString()}`
+                          : ""}
                       </small>
                     </span>
 
@@ -368,7 +249,7 @@ export default function Dashboard({
 
               <button
                 className="focusly-view-all"
-                onClick={() => onNavigate("tasks")}
+                onClick={() => navigate("/tasks")}
               >
                 Ver todas las tareas <span>→</span>
               </button>
@@ -380,15 +261,7 @@ export default function Dashboard({
               <h3>Tu progreso</h3>
 
               <div className="focusly-progress-circle">
-                <span>
-                  {tasks.length
-                    ? Math.round(
-                        ((tasks.length - pendingTasks.length) / tasks.length) *
-                          100,
-                      )
-                    : 0}
-                  %
-                </span>
+                <span>{progressPercent}%</span>
               </div>
 
               <p>

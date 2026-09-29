@@ -102,7 +102,7 @@ export const AuthProvider = ({
          */
 
         const currentUser =
-          response.data?.data ??
+          response.data?.user ??
           response.data;
 
         setUser(currentUser);

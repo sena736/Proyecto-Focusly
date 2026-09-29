@@ -6,6 +6,8 @@ import useTask from "../../hooks/useTask";
 import { getToken } from "../../services/token.services";
 import "./Tasks.css";
 
+const EMPTY_TASK = {};
+
 const Tasks = () => {
   const token = getToken();
 
@@ -217,7 +219,7 @@ const Tasks = () => {
             </div>
 
             <TaskForm
-              initialData={editingTask || {}}
+              initialData={editingTask || EMPTY_TASK}
               onSubmit={handleSubmit}
               onCancel={handleCloseForm}
               loading={isCreating || isUpdating}

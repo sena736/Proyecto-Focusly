@@ -1,9 +1,8 @@
-const API_URL = import.meta.env.VITE_API_URL || "";
+const API_URL =
+  import.meta.env.VITE_API_URL || "http://localhost:3000/api/v1";
 
 export const getRandomPhrase = async () => {
-  const response = await fetch(
-    `${API_URL}/api/v1/phrases/random`
-  );
+  const response = await fetch(`${API_URL}/phrases/random`);
 
   if (!response.ok) {
     throw new Error("No se pudo obtener la frase motivacional");

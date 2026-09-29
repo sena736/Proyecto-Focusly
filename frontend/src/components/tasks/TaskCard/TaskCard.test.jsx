@@ -13,8 +13,14 @@ describe("TaskCard", () => {
   };
 
   const renderTaskCard = (overrides = {}) => {
+    const task = { ...baseTask, ...overrides };
+
     const props = {
-      task: { ...baseTask, ...overrides },
+      title: task.title,
+      description: task.description,
+      date: task.dueDate,
+      completed: task.completed,
+      priority: task.priority,
       onToggle: vi.fn(),
       onEdit: vi.fn(),
       onDelete: vi.fn(),
@@ -36,7 +42,7 @@ describe("TaskCard", () => {
     expect(screen.getByText(/25\/09\/2026|2026-09-25/)).toBeInTheDocument();
 
     expect(
-      screen.getByText(/pendiente/i)
+      screen.getByRole("button", { name: /marcar.*como completada/i })
     ).toBeInTheDocument();
   });
 
@@ -46,7 +52,7 @@ describe("TaskCard", () => {
     });
 
     expect(
-      screen.getByText(/completada/i)
+      screen.getByRole("button", { name: /marcar.*como pendiente/i })
     ).toBeInTheDocument();
   });
 
@@ -54,7 +60,7 @@ describe("TaskCard", () => {
     const user = userEvent.setup();
     const props = renderTaskCard();
 
-    const checkbox = screen.getByRole("checkbox");
+    const checkbox = screen.getByRole("button", { name: /marcar/i });
 
     await user.click(checkbox);
 

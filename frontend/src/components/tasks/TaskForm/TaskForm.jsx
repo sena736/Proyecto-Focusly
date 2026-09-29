@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "./TaskForm.css";
 
+const EMPTY_TASK_DATA = {};
+
 const TaskForm = ({
-  initialData = {},
+  initialData = EMPTY_TASK_DATA,
   onSubmit,
   onCancel,
   loading = false,
@@ -30,7 +32,13 @@ const TaskForm = ({
       priority: initialData.priority || "MEDIUM",
       status: initialData.status || "PENDING",
     });
-  }, [initialData]);
+  }, [
+    initialData.title,
+    initialData.description,
+    initialData.dueDate,
+    initialData.priority,
+    initialData.status,
+  ]);
 
   // =========================================
   // MANEJAR CAMBIOS

@@ -44,12 +44,22 @@ describe("AuthContext", () => {
   let sessionStorageGetItemSpy;
   let sessionStorageRemoveItemSpy;
 
+  let mockAuthToken;
+
   beforeEach(() => {
     vi.clearAllMocks();
 
-    vi.spyOn(tokenService, "getToken").mockReturnValue(null);
-    vi.spyOn(tokenService, "setToken").mockImplementation(() => {});
-    vi.spyOn(tokenService, "removeToken").mockImplementation(() => {});
+    mockAuthToken = null;
+
+    vi.spyOn(tokenService, "getToken").mockImplementation(
+      () => mockAuthToken,
+    );
+    vi.spyOn(tokenService, "setToken").mockImplementation((token) => {
+      mockAuthToken = token;
+    });
+    vi.spyOn(tokenService, "removeToken").mockImplementation(() => {
+      mockAuthToken = null;
+    });
 
     localStorageSetItemSpy = vi.spyOn(
       Storage.prototype,

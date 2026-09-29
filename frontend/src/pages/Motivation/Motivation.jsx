@@ -3,7 +3,7 @@ import { usePhrase } from "../../hooks/usePhrase";
 import MotivationCard from "../../components/motivation/MotivationCard/MotivationCard";
 
 const Motivation = () => {
-	const { data: phrase, isLoading, isError } = usePhrase();
+	const { data: phrase, isLoading, isError, refetch, isRefetching } = usePhrase();
 
 	if (isLoading) {
 		return (
@@ -33,7 +33,11 @@ const Motivation = () => {
 			</header>
 
 			{phrase ? (
-				<MotivationCard phrase={phrase} />
+				<MotivationCard
+					phrase={phrase}
+					onNewPhrase={refetch}
+					isRefreshing={isRefetching}
+				/>
 			) : (
 				<div className="motivation-page__error">
 					<p>No hay frases motivacionales disponibles.</p>

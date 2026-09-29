@@ -20,6 +20,9 @@ import Users from "../pages/admin/Users/Users";
 import ProtectedRoute from "./ProtectedRoute";
 import AdminRoute from "./AdminRoute";
 
+// Layout de usuario autenticado
+import UserLayout from "../layouts/UserLayout/UserLayout";
+
 const AppRoutes = () => {
 	return (
 		<BrowserRouter>
@@ -34,74 +37,36 @@ const AppRoutes = () => {
 
 				{/* =========================
             USUARIO REGISTRADO
+            (comparten el layout con sidebar real)
         ========================== */}
 
 				<Route
-					path="/dashboard"
 					element={
 						<ProtectedRoute>
-							<Dashboard />
+							<UserLayout />
 						</ProtectedRoute>
 					}
-				/>
+				>
+					<Route path="/dashboard" element={<Dashboard />} />
+					<Route path="/pomodoro" element={<Pomodoro />} />
+					<Route path="/tasks" element={<Tasks />} />
+					<Route path="/motivation" element={<Motivation />} />
+					<Route path="/profile" element={<Profile />} />
+					<Route path="/settings" element={<Settings />} />
 
-				<Route
-					path="/pomodoro"
-					element={
-						<ProtectedRoute>
-							<Pomodoro />
-						</ProtectedRoute>
-					}
-				/>
+					{/* =========================
+              ADMINISTRADOR
+          ========================== */}
 
-				<Route
-					path="/tasks"
-					element={
-						<ProtectedRoute>
-							<Tasks />
-						</ProtectedRoute>
-					}
-				/>
-
-				<Route
-					path="/motivation"
-					element={
-						<ProtectedRoute>
-							<Motivation />
-						</ProtectedRoute>
-					}
-				/>
-
-				<Route
-					path="/profile"
-					element={
-						<ProtectedRoute>
-							<Profile />
-						</ProtectedRoute>
-					}
-				/>
-
-				<Route
-					path="/settings"
-					element={
-						<ProtectedRoute>
-							<Settings />
-						</ProtectedRoute>
-					}
-				/>
-
-				{/* =========================
-            ADMINISTRADOR
-        ========================== */}
-
-				<Route
-					path="/admin/users"
-					element={
-						<AdminRoute>
-							<Users />
-						</AdminRoute>
-					}
-				/>
+					<Route
+						path="/admin/users"
+						element={
+							<AdminRoute>
+								<Users />
+							</AdminRoute>
+						}
+					/>
+				</Route>
 
 				{/* =========================
             RUTA NO ENCONTRADA

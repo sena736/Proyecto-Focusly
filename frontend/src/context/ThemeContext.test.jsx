@@ -1,7 +1,8 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { ThemeProvider } from "./ThemeContext";
-import { useTheme } from "./useTheme";
+import useTheme from "../hooks/useTheme";
+import { STORAGE_KEYS } from "../utils/constants";
 
 const ThemeConsumer = () => {
   const { theme, toggleTheme } = useTheme();
@@ -33,7 +34,7 @@ describe("ThemeContext", () => {
   });
 
   test("usa la preferencia de tema guardada", () => {
-    localStorage.setItem("theme", "dark");
+    localStorage.setItem(STORAGE_KEYS.THEME, JSON.stringify("dark"));
 
     render(
       <ThemeProvider>

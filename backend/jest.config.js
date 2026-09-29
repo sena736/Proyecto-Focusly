@@ -5,6 +5,8 @@ module.exports = {
     "**/tests/**/*.test.js"
   ],
 
+  setupFiles: ["<rootDir>/tests/setupEnv.js"],
+
   verbose: true,
 
   clearMocks: true
