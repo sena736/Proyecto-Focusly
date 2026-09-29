@@ -8,25 +8,21 @@
   overflow-x: hidden;
 }
 
-/* Contenedor principal */
-
-.tasks-page__header,
-.tasks-page__form,
-.tasks-page__list {
-  width: 100%;
-  max-width: 1100px;
-  margin-left: auto;
-  margin-right: auto;
-  box-sizing: border-box;
-}
-
 /* Encabezado */
 
-.tasks-page__header {
-  margin-bottom: var(--space-xl);
+.tasks-header {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto var(--space-xl);
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-md);
 }
 
-.tasks-page__header h1 {
+.tasks-header h1 {
   margin: 0 0 var(--space-xs);
   color: var(--text-primary);
   font-size: 32px;
@@ -34,100 +30,33 @@
   line-height: 1.2;
 }
 
-.tasks-page__header p {
+.tasks-header p {
   margin: 0;
   color: var(--text-secondary);
   font-size: 15px;
   line-height: 1.6;
 }
 
-/* Formulario */
+.tasks-create-button {
+  flex-shrink: 0;
+  min-height: 44px;
+  padding: var(--space-sm) var(--space-lg);
+  border: none;
+  border-radius: var(--radius-md);
+  background: var(--primary);
+  color: var(--surface);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
 
-.tasks-page__form {
-  margin-bottom: var(--space-xl);
-  padding: var(--space-xl);
-  background: var(--surface);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-lg);
+.tasks-create-button:hover {
+  background: var(--primary-hover);
   box-shadow: var(--shadow-sm);
-  box-sizing: border-box;
-}
-
-.tasks-page__form h2 {
-  margin: 0 0 var(--space-lg);
-  color: var(--text-primary);
-  font-size: 20px;
-  font-weight: 600;
-}
-
-/*
-
-* El formulario no se presenta como modal actualmente.
-* Se mantiene dentro de la página y ocupa el ancho disponible.
-  */
-
-.tasks-page__form .task-form {
-  width: 100%;
-  max-width: 100%;
-  box-sizing: border-box;
-}
-
-/* Lista */
-
-.tasks-page__list {
-  margin-bottom: var(--space-2xl);
-}
-
-.tasks-page__list-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-md);
-  margin-bottom: var(--space-lg);
-}
-
-.tasks-page__list-header h2 {
-  margin: 0;
-  color: var(--text-primary);
-  font-size: 22px;
-  font-weight: 600;
-}
-
-.tasks-page__list-header span {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 32px;
-  padding: 0 var(--space-md);
-  box-sizing: border-box;
-  border-radius: var(--radius-round);
-  background: var(--primary-light);
-  color: var(--primary);
-  font-size: 13px;
-  font-weight: 600;
-  white-space: nowrap;
-}
-
-/* Grilla de tareas */
-
-.tasks-page__cards {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--space-lg);
-  width: 100%;
-  box-sizing: border-box;
-}
-
-/*
-
-* Evita que una TaskCard con contenido largo
-* fuerce el ancho de la grilla.
-  */
-
-.tasks-page__cards > * {
-  min-width: 0;
-  max-width: 100%;
-  box-sizing: border-box;
 }
 
 /* Error de una acción (crear, editar, eliminar) */
@@ -163,11 +92,12 @@
   cursor: pointer;
 }
 
-/* Estado vacío */
+/* Estados: cargando / error al obtener la lista */
 
-.tasks-page__empty {
+.tasks-state {
   width: 100%;
-  margin: 0;
+  max-width: 1100px;
+  margin: 0 auto var(--space-2xl);
   padding: var(--space-2xl) var(--space-lg);
   box-sizing: border-box;
   background: var(--surface);
@@ -179,6 +109,185 @@
   text-align: center;
 }
 
+.tasks-state-error {
+  border-style: solid;
+  border-color: var(--danger);
+  background: var(--primary-soft);
+  color: var(--danger);
+}
+
+.tasks-state-error h2 {
+  margin: 0 0 var(--space-xs);
+  color: var(--danger);
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.tasks-state-error p {
+  margin: 0;
+  font-size: 14px;
+}
+
+/* Lista de tareas */
+
+.tasks-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-lg);
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto var(--space-2xl);
+  box-sizing: border-box;
+}
+
+.tasks-list > * {
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Estado vacío */
+
+.tasks-empty {
+  grid-column: 1 / -1;
+  width: 100%;
+  margin: 0;
+  padding: var(--space-2xl) var(--space-lg);
+  box-sizing: border-box;
+  background: var(--surface);
+  border: 1px dashed var(--border-color);
+  border-radius: var(--radius-lg);
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.tasks-empty h2 {
+  margin: 0 0 var(--space-xs);
+  color: var(--text-primary);
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.tasks-empty p {
+  margin: 0 0 var(--space-lg);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.tasks-empty-button {
+  min-height: 44px;
+  padding: var(--space-sm) var(--space-lg);
+  border: none;
+  border-radius: var(--radius-md);
+  background: var(--primary);
+  color: var(--surface);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.tasks-empty-button:hover {
+  background: var(--primary-hover);
+}
+
+/* Modal del formulario (crear / editar tarea) */
+
+.task-form-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: var(--space-md);
+
+  background: rgba(31, 31, 46, 0.45);
+
+  animation: taskFormOverlayIn var(--transition-fast);
+}
+
+.task-form-modal {
+  width: 100%;
+  max-width: 560px;
+  max-height: calc(100vh - var(--space-2xl));
+  overflow-y: auto;
+
+  padding: var(--space-xl);
+  box-sizing: border-box;
+
+  background: var(--surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+
+  animation: taskFormModalIn var(--transition-normal);
+}
+
+.task-form-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+.task-form-header h2 {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.task-form-close {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: var(--radius-round);
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.task-form-close:hover {
+  background: var(--surface-secondary);
+  color: var(--text-primary);
+}
+
+.task-form-close:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+@keyframes taskFormOverlayIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes taskFormModalIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
 /* =========================================
 TABLET - 768px
 ========================================= */
@@ -188,21 +297,11 @@ TABLET - 768px
     padding: var(--space-xl);
   }
 
-  .tasks-page__header h1 {
+  .tasks-header h1 {
     font-size: 28px;
   }
 
-  .tasks-page__form {
-    padding: var(--space-lg);
-  }
-
-  /*
-
-* En tablet se utiliza una sola columna
-* para evitar tarjetas demasiado estrechas.
-  */
-
-  .tasks-page__cards {
+  .tasks-list {
     grid-template-columns: 1fr;
   }
 }
@@ -217,61 +316,36 @@ TELÉFONO - 375px / hasta 480px
     padding: var(--space-lg) var(--space-md);
   }
 
-  .tasks-page__header {
+  .tasks-header {
+    flex-direction: column;
+    align-items: stretch;
     margin-bottom: var(--space-lg);
   }
 
-  .tasks-page__header h1 {
+  .tasks-header h1 {
     font-size: 25px;
   }
 
-  .tasks-page__header p {
+  .tasks-header p {
     font-size: 14px;
   }
 
-  .tasks-page__form {
+  .tasks-create-button {
     width: 100%;
-    margin-bottom: var(--space-lg);
-    padding: var(--space-md);
-    border-radius: var(--radius-md);
   }
 
-  .tasks-page__form h2 {
-    margin-bottom: var(--space-md);
-    font-size: 18px;
-  }
-
-  /*
-
-* El formulario conserva el ancho de la pantalla
-* sin provocar desplazamiento horizontal.
-  */
-
-  .tasks-page__form .task-form,
-  .tasks-page__form input,
-  .tasks-page__form textarea,
-  .tasks-page__form select {
-    max-width: 100%;
-    box-sizing: border-box;
-  }
-
-  .tasks-page__list-header {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: var(--space-sm);
-  }
-
-  .tasks-page__list-header h2 {
-    font-size: 20px;
-  }
-
-  .tasks-page__cards {
+  .tasks-list {
     grid-template-columns: 1fr;
     gap: var(--space-md);
   }
 
-  .tasks-page__empty {
+  .tasks-empty {
     padding: var(--space-xl) var(--space-md);
+  }
+
+  .task-form-modal {
+    padding: var(--space-lg);
+    border-radius: var(--radius-md);
   }
 }
 
@@ -284,15 +358,11 @@ TELÉFONOS MUY PEQUEÑOS
     padding: var(--space-md) var(--space-sm);
   }
 
-  .tasks-page__form {
-    padding: var(--space-md);
-  }
-
-  .tasks-page__header h1 {
+  .tasks-header h1 {
     font-size: 23px;
   }
 
-  .tasks-page__list-header h2 {
-    font-size: 19px;
+  .task-form-modal {
+    padding: var(--space-md);
   }
 }
