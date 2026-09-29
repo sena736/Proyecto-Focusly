@@ -1,7 +1,7 @@
 import React from "react";
 import UserTable from "../../../components/admin/UserTable/UserTable";
 import RoleSelect from "../../../components/admin/RoleSelect/RoleSelect";
-import { useUsers } from "../../../hooks/useUsers";
+import useUsers from "../../../hooks/useUsers";
 import "./Users.css";
 
 const Users = () => {
