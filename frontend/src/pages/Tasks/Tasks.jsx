@@ -75,8 +75,7 @@ const Tasks = () => {
       await updateTaskAsync({
         id: task.id,
         data: {
-          ...task,
-          status: completed ? "completada" : "pendiente",
+          status: completed ? "COMPLETED" : "PENDING",
         },
       });
     } catch (error) {
@@ -115,12 +114,9 @@ const Tasks = () => {
   // Adaptar prioridad del formulario al TaskCard
   const getTaskPriority = (priority) => {
     const priorities = {
-      baja: "low",
-      media: "normal",
-      alta: "high",
-      low: "low",
-      normal: "normal",
-      high: "high",
+      LOW: "low",
+      MEDIUM: "normal",
+      HIGH: "high",
     };
 
     return priorities[priority] || "normal";
@@ -178,7 +174,7 @@ const Tasks = () => {
             </div>
           ) : (
             tasks.map((task) => {
-              const completed = task.completed ?? task.status === "completada";
+              const completed = task.status === "COMPLETED";
 
               return (
                 <TaskCard

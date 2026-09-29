@@ -23,19 +23,33 @@ const getTaskById = async (taskId, userId) => {
 const createTask = async (userId, data) => {
   return await prisma.task.create({
     data: {
-      ...data,
+      title: data.title,
+      description: data.description,
+      dueDate: data.dueDate ? new Date(data.dueDate) : null,
+      priority: data.priority,
+      status: data.status,
       userId,
     },
   });
 };
 
 const updateTask = async (taskId, userId, data) => {
+  const allowedData = {
+    ...(data.title !== undefined && { title: data.title }),
+    ...(data.description !== undefined && { description: data.description }),
+    ...(data.dueDate !== undefined && {
+      dueDate: data.dueDate ? new Date(data.dueDate) : null,
+    }),
+    ...(data.priority !== undefined && { priority: data.priority }),
+    ...(data.status !== undefined && { status: data.status }),
+  };
+
   return await prisma.task.updateMany({
     where: {
       id: taskId,
       userId,
     },
-    data,
+    data: allowedData,
   });
 };
 

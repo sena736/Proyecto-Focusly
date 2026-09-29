@@ -9,7 +9,7 @@ describe("TaskCard", () => {
     title: "Estudiar matemáticas",
     description: "Repasar funciones y ecuaciones",
     dueDate: "2026-09-25",
-    completed: false,
+    status: "PENDING",
   };
 
   const renderTaskCard = (overrides = {}) => {
@@ -48,7 +48,7 @@ describe("TaskCard", () => {
 
   test("muestra correctamente el estado de tarea completada", () => {
     renderTaskCard({
-      completed: true,
+      status: "COMPLETED",
     });
 
     expect(

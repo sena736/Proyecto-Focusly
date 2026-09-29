@@ -1,5 +1,26 @@
 const taskRepository = require("../repositories/task.repository");
 
+const VALID_PRIORITIES = ["LOW", "MEDIUM", "HIGH"];
+const VALID_STATUSES = ["PENDING", "COMPLETED"];
+
+const validatePriorityAndStatus = (data) => {
+  if (data.priority !== undefined && !VALID_PRIORITIES.includes(data.priority)) {
+    const error = new Error(
+      `La prioridad debe ser una de: ${VALID_PRIORITIES.join(", ")}`
+    );
+    error.status = 400;
+    throw error;
+  }
+
+  if (data.status !== undefined && !VALID_STATUSES.includes(data.status)) {
+    const error = new Error(
+      `El estado debe ser uno de: ${VALID_STATUSES.join(", ")}`
+    );
+    error.status = 400;
+    throw error;
+  }
+};
+
 const getTasks = async (userId) => {
   return taskRepository.getTasksByUserId(userId);
 };
@@ -10,6 +31,8 @@ const createTask = async (userId, data) => {
     error.status = 400;
     throw error;
   }
+
+  validatePriorityAndStatus(data);
 
   return taskRepository.createTask(userId, data);
 };
@@ -22,6 +45,8 @@ const updateTask = async (taskId, userId, data) => {
     error.status = 404;
     throw error;
   }
+
+  validatePriorityAndStatus(data);
 
   await taskRepository.updateTask(taskId, userId, data);
 
