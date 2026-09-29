@@ -6,6 +6,7 @@
   "scripts": {
     "start": "npx prisma migrate deploy && node src/server.js",
     "dev": "nodemon src/server.js",
+    "test": "jest",
     "postinstall": "prisma skills sync || exit 0"
   },
   "keywords": [],
@@ -24,7 +25,9 @@
     "mysql2": "^3.24.3"
   },
   "devDependencies": {
+    "jest": "^30.5.2",
     "nodemon": "^3.1.14",
-    "prisma": "^7.10.0"
+    "prisma": "^7.10.0",
+    "supertest": "^7.3.0"
   }
 }
