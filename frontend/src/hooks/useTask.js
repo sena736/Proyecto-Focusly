@@ -55,6 +55,10 @@ const useTask = (token) => {
     updateTask: updateMutation.mutate,
     deleteTask: deleteMutation.mutate,
 
+    createTaskAsync: createMutation.mutateAsync,
+    updateTaskAsync: updateMutation.mutateAsync,
+    deleteTaskAsync: deleteMutation.mutateAsync,
+
     // Estados de las acciones
     isCreating: createMutation.isPending,
     isUpdating: updateMutation.isPending,

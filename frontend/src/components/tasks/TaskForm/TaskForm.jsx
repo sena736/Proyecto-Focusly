@@ -12,8 +12,8 @@ const TaskForm = ({
     title: "",
     description: "",
     dueDate: "",
-    priority: "media",
-    status: "pendiente",
+    priority: "MEDIUM",
+    status: "PENDING",
   });
 
   const [errors, setErrors] = useState({});
@@ -27,8 +27,8 @@ const TaskForm = ({
       title: initialData.title || "",
       description: initialData.description || "",
       dueDate: initialData.dueDate || "",
-      priority: initialData.priority || "media",
-      status: initialData.status || "pendiente",
+      priority: initialData.priority || "MEDIUM",
+      status: initialData.status || "PENDING",
     });
   }, [initialData]);
 
@@ -94,7 +94,12 @@ const TaskForm = ({
     }
 
     if (onSubmit) {
-      onSubmit(formData);
+      onSubmit({
+        ...formData,
+        dueDate: formData.dueDate
+          ? new Date(formData.dueDate).toISOString()
+          : null,
+      });
     }
   };
 
@@ -204,11 +209,11 @@ const TaskForm = ({
           value={formData.priority}
           onChange={handleChange}
         >
-          <option value="baja">Baja</option>
+          <option value="LOW">Baja</option>
 
-          <option value="media">Media</option>
+          <option value="MEDIUM">Media</option>
 
-          <option value="alta">Alta</option>
+          <option value="HIGH">Alta</option>
         </select>
       </div>
 
@@ -225,9 +230,9 @@ const TaskForm = ({
           value={formData.status}
           onChange={handleChange}
         >
-          <option value="pendiente">Pendiente</option>
+          <option value="PENDING">Pendiente</option>
 
-          <option value="completada">Completada</option>
+          <option value="COMPLETED">Completada</option>
         </select>
       </div>
 
