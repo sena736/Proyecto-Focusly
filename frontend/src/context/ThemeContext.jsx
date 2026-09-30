@@ -3,11 +3,13 @@
 import {
   createContext,
   useEffect,
+  useRef,
   useState,
 } from "react";
 
 import {
   getInitialTheme,
+  getSavedTheme,
   saveTheme,
 } from "../services/storage.service";
 
@@ -33,6 +35,9 @@ export const ThemeContext =
    2. PROVIDER
 ========================================================= */
 
+const DARK_SCHEME_QUERY =
+  "(prefers-color-scheme: dark)";
+
 export const ThemeProvider = ({
   children,
 }) => {
@@ -44,19 +49,102 @@ export const ThemeProvider = ({
     getInitialTheme
   );
 
+  /* -------------------------------------------------------
+     Elección explícita del usuario.
+
+     Mientras no exista (nada guardado), el tema sigue al
+     sistema operativo y NO se persiste.
+  ------------------------------------------------------- */
+
+  const [hasExplicitChoice, setHasExplicitChoice] =
+    useState(() => getSavedTheme() !== null);
+
+  // Siempre refleja el último tema elegido, incluso antes
+  // de que React vuelva a renderizar (evita cierres obsoletos).
+  const themeRef = useRef(theme);
+
 
   /* -------------------------------------------------------
      Aplicar tema al documento
   ------------------------------------------------------- */
 
   useEffect(() => {
+    themeRef.current = theme;
+
     document.documentElement.setAttribute(
       "data-theme",
       theme
     );
-
-    saveTheme(theme);
   }, [theme]);
+
+
+  /* -------------------------------------------------------
+     Seguir al sistema mientras no haya elección explícita
+  ------------------------------------------------------- */
+
+  useEffect(() => {
+    if (
+      hasExplicitChoice ||
+      typeof window === "undefined" ||
+      typeof window.matchMedia !== "function"
+    ) {
+      return undefined;
+    }
+
+    const mediaQuery =
+      window.matchMedia(DARK_SCHEME_QUERY);
+
+    if (!mediaQuery) {
+      return undefined;
+    }
+
+    const handleChange = (event) => {
+      const next = event.matches
+        ? THEMES.DARK
+        : THEMES.LIGHT;
+
+      themeRef.current = next;
+      setTheme(next);
+    };
+
+    if (mediaQuery.addEventListener) {
+      mediaQuery.addEventListener(
+        "change",
+        handleChange
+      );
+
+      return () => {
+        mediaQuery.removeEventListener(
+          "change",
+          handleChange
+        );
+      };
+    }
+
+    // Safari < 14
+    if (mediaQuery.addListener) {
+      mediaQuery.addListener(handleChange);
+
+      return () => {
+        mediaQuery.removeListener(handleChange);
+      };
+    }
+
+    return undefined;
+  }, [hasExplicitChoice]);
+
+
+  /* -------------------------------------------------------
+     Aplicar una elección explícita del usuario
+  ------------------------------------------------------- */
+
+  const applyExplicitTheme = (nextTheme) => {
+    themeRef.current = nextTheme;
+
+    setTheme(nextTheme);
+    setHasExplicitChoice(true);
+    saveTheme(nextTheme);
+  };
 
 
   /* -------------------------------------------------------
@@ -64,8 +152,8 @@ export const ThemeProvider = ({
   ------------------------------------------------------- */
 
   const toggleTheme = () => {
-    setTheme((currentTheme) =>
-      currentTheme === THEMES.LIGHT
+    applyExplicitTheme(
+      themeRef.current === THEMES.LIGHT
         ? THEMES.DARK
         : THEMES.LIGHT
     );
@@ -92,7 +180,7 @@ export const ThemeProvider = ({
       return;
     }
 
-    setTheme(newTheme);
+    applyExplicitTheme(newTheme);
   };
 
 

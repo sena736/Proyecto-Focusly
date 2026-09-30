@@ -3,16 +3,6 @@
    morado, blanco, formas suaves y tipografía limpia.
 */
 
-:root {
-  --footer-purple: #4d378f;
-  --footer-purple-dark: #35236f;
-  --footer-purple-light: #eee9ff;
-  --footer-text: #29263a;
-  --footer-muted: #777187;
-  --footer-border: #e4def0;
-  --footer-white: #ffffff;
-}
-
 .focusly-footer {
   position: relative;
   width: 100%;
@@ -30,7 +20,7 @@
   width: 280px;
   height: 170px;
   border-radius: 0 0 80% 0;
-  background: #f0ebff;
+  background: var(--footer-blob);
   pointer-events: none;
 }
 
@@ -133,9 +123,9 @@
   position: relative;
   min-height: 90px;
   padding: 17px 18px;
-  border: 1px solid #e5def6;
+  border: 1px solid var(--footer-quote-border);
   border-radius: 15px;
-  background: linear-gradient(145deg, #faf9ff, #f2eeff);
+  background: linear-gradient(145deg, var(--footer-quote-from), var(--footer-quote-to));
 }
 
 .focusly-footer__quote-icon {

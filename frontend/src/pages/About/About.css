@@ -25,7 +25,7 @@
 .about__eyebrow {
   display: inline-block;
   margin-bottom: var(--space-sm);
-  color: var(--primary);
+  color: var(--primary-text);
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -40,7 +40,7 @@
 }
 
 .about__title span {
-  color: var(--primary);
+  color: var(--primary-text);
 }
 
 .about__intro {
@@ -108,7 +108,7 @@
 
 .about__feature:hover {
   transform: translateY(-2px);
-  border-color: var(--secondary-light);
+  border-color: var(--public-accent-border);
   box-shadow: var(--shadow-md);
 }
 
@@ -121,7 +121,7 @@
   justify-content: center;
   border-radius: var(--radius-md);
   background: var(--primary-light);
-  color: var(--primary);
+  color: var(--primary-text);
   font-size: 20px;
 }
 
@@ -148,7 +148,7 @@
   margin-bottom: var(--space-lg);
   padding: var(--space-xl);
   background: var(--primary-soft);
-  border: 1px solid var(--secondary-light);
+  border: 1px solid var(--public-accent-border);
   border-radius: var(--radius-lg);
   box-sizing: border-box;
 }
