@@ -1,3 +1,28 @@
+/*
+  Profile page palette (`--profile-*`, unique across the bundle).
+  Light values are the original literals; the dark block maps to global tokens.
+  Colour literals are allowed ONLY here.
+*/
+:root {
+  --profile-accent: #6042a3;
+  --profile-title: #302c3d;
+  --profile-muted: #817b8d;
+  --profile-border: #e9e5ef;
+  --profile-surface: #ffffff;
+  --profile-btn-border: #ded8ea;
+  --profile-hover-bg: #eee9ff;
+}
+
+:root[data-theme="dark"] {
+  --profile-accent: var(--primary-text);
+  --profile-title: var(--text-primary);
+  --profile-muted: var(--text-secondary);
+  --profile-border: var(--border-color);
+  --profile-surface: var(--surface);
+  --profile-btn-border: var(--border-color);
+  --profile-hover-bg: var(--primary-light);
+}
+
 .profile-page {
   width: 100%;
   min-height: 100%;
@@ -19,7 +44,7 @@
 .profile-header__label {
   display: block;
   margin-bottom: 6px;
-  color: #6042a3;
+  color: var(--profile-accent);
   font-size: 0.68rem;
   font-weight: 900;
   letter-spacing: 0.1em;
@@ -27,7 +52,7 @@
 
 .profile-header h1 {
   margin: 0;
-  color: #302c3d;
+  color: var(--profile-title);
   font-size: 1.8rem;
   font-weight: 900;
 }
@@ -35,7 +60,7 @@
 .profile-header p {
   max-width: 600px;
   margin: 7px 0 0;
-  color: #817b8d;
+  color: var(--profile-muted);
   font-size: 0.9rem;
   line-height: 1.5;
   font-weight: 600;
@@ -58,24 +83,24 @@
   gap: 16px;
   margin-top: 18px;
   padding: 16px 20px;
-  border: 1px solid #e9e5ef;
+  border: 1px solid var(--profile-border);
   border-radius: 12px;
-  background: #ffffff;
+  background: var(--profile-surface);
 }
 
 .profile-edit-message p {
   margin: 0;
-  color: #817b8d;
+  color: var(--profile-muted);
   font-size: 0.82rem;
   font-weight: 600;
 }
 
 .profile-edit-message button {
   padding: 8px 14px;
-  border: 1px solid #ded8ea;
+  border: 1px solid var(--profile-btn-border);
   border-radius: 8px;
-  background: #ffffff;
-  color: #6042a3;
+  background: var(--profile-surface);
+  color: var(--profile-accent);
   font-family: inherit;
   font-size: 0.75rem;
   font-weight: 800;
@@ -83,7 +108,7 @@
 }
 
 .profile-edit-message button:hover {
-  background: #eee9ff;
+  background: var(--profile-hover-bg);
 }
 
 /* =========================================
