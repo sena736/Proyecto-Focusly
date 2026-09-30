@@ -7,6 +7,8 @@ import {
   removeToken,
 } from "../services/token.services";
 
+import { API_BASE_URL } from "./config";
+
 
 /* =========================================================
    FOCUSLY - CONFIGURACIÓN DE AXIOS
@@ -14,20 +16,12 @@ import {
 
 
 /* =========================================================
-   1. URL BASE DE LA API
-========================================================= */
-
-const API_URL =
-  import.meta.env.VITE_API_URL ||
-  "http://localhost:3000/api/v1";
-
-
-/* =========================================================
-   2. CREAR INSTANCIA DE AXIOS
+   1. CREAR INSTANCIA DE AXIOS
+   (URL base: ver ./config.js)
 ========================================================= */
 
 const api = axios.create({
-  baseURL: API_URL,
+  baseURL: API_BASE_URL,
 
   headers: {
     "Content-Type": "application/json",
