@@ -42,6 +42,66 @@ describe("Login", () => {
     emailLogin.mockResolvedValue({ token: "jwt" });
   });
 
+  describe("form primitives", () => {
+    it("renders email and password through Input keeping the autofill attributes", () => {
+      setup();
+
+      const email = screen.getByLabelText("Correo electrónico");
+      const password = screen.getByLabelText("Contraseña");
+
+      expect(email).toHaveClass("input-control");
+      expect(email).toHaveAttribute("type", "email");
+      expect(email).toHaveAttribute("autocomplete", "email");
+      expect(email).toHaveAttribute("inputmode", "email");
+      expect(email).toBeRequired();
+      expect(email).toHaveAttribute("placeholder", "Ingresa tu correo");
+
+      expect(password).toHaveClass("input-control");
+      expect(password).toHaveAttribute("type", "password");
+      expect(password).toHaveAttribute("autocomplete", "current-password");
+      expect(password).toBeRequired();
+    });
+
+    it("toggles the password visibility with an accessible icon button", async () => {
+      const user = setup();
+
+      const password = screen.getByLabelText("Contraseña");
+
+      await user.click(
+        screen.getByRole("button", { name: "Mostrar contraseña" }),
+      );
+
+      expect(password).toHaveAttribute("type", "text");
+
+      await user.click(
+        screen.getByRole("button", { name: "Ocultar contraseña" }),
+      );
+
+      expect(password).toHaveAttribute("type", "password");
+    });
+
+    it("keeps the forgot-password link next to the password label", () => {
+      setup();
+
+      expect(
+        screen.getByRole("link", { name: "¿Olvidaste tu contraseña?" }),
+      ).toHaveAttribute("href", "/forgot-password");
+    });
+
+    it("submits with a primary full-width Button", () => {
+      setup();
+
+      const submit = screen.getByRole("button", { name: "Iniciar sesión" });
+
+      expect(submit).toHaveAttribute("type", "submit");
+      expect(submit).toHaveClass(
+        "focusly-button",
+        "focusly-button--primary",
+        "focusly-button--full",
+      );
+    });
+  });
+
   it("blocks the request and shows an error for an invalid email", async () => {
     const user = setup();
 

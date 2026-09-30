@@ -1,5 +1,6 @@
 import React from "react";
 import { FiEdit2, FiTrash2 } from "react-icons/fi";
+import IconButton from "../../ui/IconButton/IconButton";
 import "./TaskCard.css";
 
 const TaskCard = ({
@@ -88,27 +89,25 @@ const TaskCard = ({
       {(onEdit || onDelete) && (
         <div className="task-actions">
           {onEdit && (
-            <button
-              type="button"
-              className="task-action-button"
-              onClick={() => onEdit()}
-              aria-label={`Editar ${title}`}
+            <IconButton
+              variant="ghost"
+              size="small"
+              icon={<FiEdit2 />}
+              label={`Editar ${title}`}
               title="Editar"
-            >
-              <FiEdit2 aria-hidden="true" />
-            </button>
+              onClick={() => onEdit()}
+            />
           )}
 
           {onDelete && (
-            <button
-              type="button"
-              className="task-action-button task-action-delete"
-              onClick={() => onDelete()}
-              aria-label={`Eliminar ${title}`}
+            <IconButton
+              variant="ghost-danger"
+              size="small"
+              icon={<FiTrash2 />}
+              label={`Eliminar ${title}`}
               title="Eliminar"
-            >
-              <FiTrash2 aria-hidden="true" />
-            </button>
+              onClick={() => onDelete()}
+            />
           )}
         </div>
       )}

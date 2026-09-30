@@ -23,6 +23,8 @@
   .user-layout__content {
     margin-left: 0;
     padding-top: 56px;
+    /* Keep the fixed bottom bar from covering the routed content */
+    padding-bottom: calc(var(--mobile-nav-height) + env(safe-area-inset-bottom, 0px));
   }
 
   .user-layout__menu-button {

@@ -15,6 +15,7 @@ import Profile from "../pages/Profile/Profile";
 import Settings from "../pages/Settings/Settings";
 
 // Páginas administrativas
+import AdminDashboard from "../pages/admin/AdminDashboard/AdminDashboard";
 import Users from "../pages/admin/Users/Users";
 
 // Protección de rutas
@@ -65,6 +66,15 @@ const AppRoutes = () => {
 					{/* =========================
               ADMINISTRADOR
           ========================== */}
+
+					<Route
+						path="/admin"
+						element={
+							<AdminRoute>
+								<AdminDashboard />
+							</AdminRoute>
+						}
+					/>
 
 					<Route
 						path="/admin/users"

@@ -1,3 +1,43 @@
+/*
+  Button palette (`--btn-*`, unique across the bundle).
+  Light values are the original literals; the dark block maps to global tokens.
+  Text on the primary fill uses the global --on-primary (white on both themes).
+  Colour literals are allowed ONLY here.
+*/
+:root {
+  --btn-focus: rgba(92, 61, 178, 0.25);
+  --btn-primary-bg: #6546c7;
+  --btn-primary-hover: #5436b1;
+  --btn-primary-active: #462b9a;
+  --btn-secondary-bg: #ffffff;
+  --btn-secondary-text: #26305f;
+  --btn-secondary-border: #6d6d91;
+  --btn-secondary-hover-bg: #f7f5ff;
+  --btn-accent: #6546c7;
+  --btn-accent-hover-bg: #f3efff;
+  --btn-danger-bg: #ffffff;
+  --btn-danger-text: #dc2626;
+  --btn-danger-border: #ef4444;
+  --btn-danger-hover-bg: #fff1f1;
+}
+
+:root[data-theme="dark"] {
+  --btn-focus: rgba(165, 141, 240, 0.45);
+  --btn-primary-bg: var(--primary);
+  --btn-primary-hover: var(--primary-hover);
+  --btn-primary-active: #4a2fa8;
+  --btn-secondary-bg: var(--surface);
+  --btn-secondary-text: var(--text-primary);
+  --btn-secondary-border: var(--text-muted);
+  --btn-secondary-hover-bg: var(--surface-secondary);
+  --btn-accent: var(--primary-text);
+  --btn-accent-hover-bg: var(--primary-light);
+  --btn-danger-bg: var(--surface);
+  --btn-danger-text: var(--danger-text);
+  --btn-danger-border: var(--danger-text);
+  --btn-danger-hover-bg: #3d1f27;
+}
+
 /* =========================================
    BUTTON BASE
    ========================================= */
@@ -31,7 +71,7 @@
    ========================================= */
 
 .focusly-button:focus-visible {
-  outline: 3px solid rgba(92, 61, 178, 0.25);
+  outline: 3px solid var(--btn-focus);
   outline-offset: 2px;
 }
 
@@ -68,18 +108,18 @@
    ========================================= */
 
 .focusly-button--primary {
-  background: #6546c7;
-  color: #ffffff;
-  border: 1px solid #6546c7;
+  background: var(--btn-primary-bg);
+  color: var(--on-primary);
+  border: 1px solid var(--btn-primary-bg);
 }
 
 .focusly-button--primary:not(:disabled):hover {
-  background: #5436b1;
-  border-color: #5436b1;
+  background: var(--btn-primary-hover);
+  border-color: var(--btn-primary-hover);
 }
 
 .focusly-button--primary:not(:disabled):active {
-  background: #462b9a;
+  background: var(--btn-primary-active);
 }
 
 /* =========================================
@@ -88,15 +128,15 @@
    ========================================= */
 
 .focusly-button--secondary {
-  background: #ffffff;
-  color: #26305f;
-  border: 1px solid #6d6d91;
+  background: var(--btn-secondary-bg);
+  color: var(--btn-secondary-text);
+  border: 1px solid var(--btn-secondary-border);
 }
 
 .focusly-button--secondary:not(:disabled):hover {
-  background: #f7f5ff;
-  border-color: #6546c7;
-  color: #6546c7;
+  background: var(--btn-secondary-hover-bg);
+  border-color: var(--btn-accent);
+  color: var(--btn-accent);
 }
 
 /* =========================================
@@ -105,12 +145,12 @@
 
 .focusly-button--outline {
   background: transparent;
-  color: #6546c7;
-  border: 1px solid #6546c7;
+  color: var(--btn-accent);
+  border: 1px solid var(--btn-accent);
 }
 
 .focusly-button--outline:not(:disabled):hover {
-  background: #f3efff;
+  background: var(--btn-accent-hover-bg);
 }
 
 /* =========================================
@@ -120,12 +160,12 @@
 
 .focusly-button--ghost {
   background: transparent;
-  color: #6546c7;
+  color: var(--btn-accent);
   border: 1px solid transparent;
 }
 
 .focusly-button--ghost:not(:disabled):hover {
-  background: #f3efff;
+  background: var(--btn-accent-hover-bg);
 }
 
 /* =========================================
@@ -134,13 +174,13 @@
    ========================================= */
 
 .focusly-button--danger {
-  background: #ffffff;
-  color: #dc2626;
-  border: 1px solid #ef4444;
+  background: var(--btn-danger-bg);
+  color: var(--btn-danger-text);
+  border: 1px solid var(--btn-danger-border);
 }
 
 .focusly-button--danger:not(:disabled):hover {
-  background: #fff1f1;
+  background: var(--btn-danger-hover-bg);
 }
 
 /* =========================================
@@ -222,14 +262,16 @@
 
 /* =========================================
    SPINNER
+   Follows the text colour of the variant, so it is visible on every
+   background (white on primary, dark on secondary, red on danger).
    ========================================= */
 
 .focusly-button__spinner {
   width: 15px;
   height: 15px;
 
-  border: 2px solid rgba(255, 255, 255, 0.4);
-  border-top-color: #ffffff;
+  border: 2px solid color-mix(in srgb, currentColor 35%, transparent);
+  border-top-color: currentColor;
 
   border-radius: 50%;
 

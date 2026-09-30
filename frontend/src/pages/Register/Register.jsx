@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { FiUser, FiMail, FiLock, FiUserPlus } from "react-icons/fi";
 import { registerUser } from "../../api/auth.api";
 import { AuthContext } from "../../context/AuthContext";
+import Button from "../../components/ui/Button/Button";
+import Input from "../../components/ui/Input/Input";
 import { hasMinLength, isValidEmail } from "../../utils/validators";
 import "./Register.css";
 
@@ -106,83 +108,57 @@ const Register = () => {
 
         <form className="register__form" onSubmit={handleSubmit}>
           <div className="register__fields">
-            <div className="register__field">
-              <label htmlFor="name">Nombre</label>
+            <Input
+              label="Nombre"
+              id="name"
+              name="name"
+              type="text"
+              value={formData.name}
+              onChange={handleChange}
+              placeholder="Ingresa tu nombre"
+              autoComplete="name"
+              icon={<FiUser aria-hidden="true" />}
+              required
+            />
 
-              <div className="register__input-wrapper">
-                <FiUser />
+            <Input
+              label="Correo electrónico"
+              id="email"
+              name="email"
+              type="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="Ingresa tu correo"
+              autoComplete="email"
+              icon={<FiMail aria-hidden="true" />}
+              required
+            />
 
-                <input
-                  id="name"
-                  name="name"
-                  type="text"
-                  value={formData.name}
-                  onChange={handleChange}
-                  placeholder="Ingresa tu nombre"
-                  autoComplete="name"
-                  required
-                />
-              </div>
-            </div>
+            <Input
+              label="Contraseña"
+              id="password"
+              name="password"
+              type="password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="Crea una contraseña"
+              autoComplete="new-password"
+              icon={<FiLock aria-hidden="true" />}
+              required
+            />
 
-            <div className="register__field">
-              <label htmlFor="email">Correo electrónico</label>
-
-              <div className="register__input-wrapper">
-                <FiMail />
-
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  placeholder="Ingresa tu correo"
-                  autoComplete="email"
-                  required
-                />
-              </div>
-            </div>
-
-            <div className="register__field">
-              <label htmlFor="password">Contraseña</label>
-
-              <div className="register__input-wrapper">
-                <FiLock />
-
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  placeholder="Crea una contraseña"
-                  autoComplete="new-password"
-                  required
-                />
-              </div>
-            </div>
-
-            <div className="register__field">
-              <label htmlFor="confirmPassword">
-                Confirmar contraseña
-              </label>
-
-              <div className="register__input-wrapper">
-                <FiLock />
-
-                <input
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  type="password"
-                  value={formData.confirmPassword}
-                  onChange={handleChange}
-                  placeholder="Repite tu contraseña"
-                  autoComplete="new-password"
-                  required
-                />
-              </div>
-            </div>
+            <Input
+              label="Confirmar contraseña"
+              id="confirmPassword"
+              name="confirmPassword"
+              type="password"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              placeholder="Repite tu contraseña"
+              autoComplete="new-password"
+              icon={<FiLock aria-hidden="true" />}
+              required
+            />
           </div>
 
           {error && (
@@ -197,14 +173,15 @@ const Register = () => {
             </p>
           )}
 
-          <button
+          <Button
             type="submit"
+            fullWidth
             className="register__button"
+            icon={<FiUserPlus />}
             disabled={isSubmitting}
           >
-            <FiUserPlus />
             {isSubmitting ? "Creando cuenta..." : "Crear cuenta"}
-          </button>
+          </Button>
         </form>
 
         <p className="register__login">

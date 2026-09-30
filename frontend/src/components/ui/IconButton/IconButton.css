@@ -1,3 +1,49 @@
+/*
+  Icon button palette (`--ibtn-*`, unique across the bundle).
+  Light values are the original literals (plus the muted grey TaskCard used for
+  its row actions); the dark block maps to global tokens. Text on the primary
+  fill uses the global --on-primary. Colour literals are allowed ONLY here.
+*/
+:root {
+  --ibtn-text: #25245a;
+  --ibtn-muted: #77778d;
+  --ibtn-hover-bg: #f1edff;
+  --ibtn-accent: #5636d9;
+  --ibtn-primary-bg: #5636d9;
+  --ibtn-primary-hover: #4528b8;
+  --ibtn-primary-shadow: rgba(86, 54, 217, 0.2);
+  --ibtn-secondary-bg: #f1edff;
+  --ibtn-secondary-hover: #e5defc;
+  --ibtn-outline-border: #d8d3ee;
+  --ibtn-outline-bg: #ffffff;
+  --ibtn-outline-hover-bg: #f8f6ff;
+  --ibtn-danger-bg: #fff0f0;
+  --ibtn-danger: #dc3545;
+  --ibtn-danger-hover-bg: #fde0e0;
+  --ibtn-active-bg: #eee9ff;
+  --ibtn-focus: rgba(86, 54, 217, 0.25);
+}
+
+:root[data-theme="dark"] {
+  --ibtn-text: var(--text-primary);
+  --ibtn-muted: var(--text-secondary);
+  --ibtn-hover-bg: var(--primary-light);
+  --ibtn-accent: var(--primary-text);
+  --ibtn-primary-bg: var(--primary);
+  --ibtn-primary-hover: var(--primary-hover);
+  --ibtn-primary-shadow: rgba(0, 0, 0, 0.35);
+  --ibtn-secondary-bg: var(--primary-light);
+  --ibtn-secondary-hover: var(--surface-secondary);
+  --ibtn-outline-border: var(--border-color);
+  --ibtn-outline-bg: var(--surface);
+  --ibtn-outline-hover-bg: var(--surface-secondary);
+  --ibtn-danger-bg: #3d1f27;
+  --ibtn-danger: var(--danger-text);
+  --ibtn-danger-hover-bg: #4d2730;
+  --ibtn-active-bg: var(--primary-light);
+  --ibtn-focus: rgba(165, 141, 240, 0.45);
+}
+
 .icon-button {
   display: inline-flex;
   align-items: center;
@@ -9,7 +55,7 @@
   border-radius: 10px;
 
   background: transparent;
-  color: #25245a;
+  color: var(--ibtn-text);
 
   cursor: pointer;
 
@@ -56,65 +102,87 @@
 /* Variante por defecto */
 
 .icon-button-default:hover {
-  background: #f1edff;
-  color: #5636d9;
+  background: var(--ibtn-hover-bg);
+  color: var(--ibtn-accent);
+}
+
+/* Variante discreta: gris hasta el hover (acciones de fila) */
+
+.icon-button-ghost {
+  color: var(--ibtn-muted);
+}
+
+.icon-button-ghost:hover {
+  background: var(--ibtn-hover-bg);
+  color: var(--ibtn-accent);
+}
+
+/* Variante discreta de peligro: gris hasta el hover, luego rojo */
+
+.icon-button-ghost-danger {
+  color: var(--ibtn-muted);
+}
+
+.icon-button-ghost-danger:hover {
+  background: var(--ibtn-danger-bg);
+  color: var(--ibtn-danger);
 }
 
 /* Variante primaria */
 
 .icon-button-primary {
-  background: #5636d9;
-  color: #ffffff;
+  background: var(--ibtn-primary-bg);
+  color: var(--on-primary);
 }
 
 .icon-button-primary:hover {
-  background: #4528b8;
+  background: var(--ibtn-primary-hover);
 
   transform: translateY(-1px);
 
-  box-shadow: 0 4px 10px rgba(86, 54, 217, 0.2);
+  box-shadow: 0 4px 10px var(--ibtn-primary-shadow);
 }
 
 /* Variante secundaria */
 
 .icon-button-secondary {
-  background: #f1edff;
-  color: #5636d9;
+  background: var(--ibtn-secondary-bg);
+  color: var(--ibtn-accent);
 }
 
 .icon-button-secondary:hover {
-  background: #e5defc;
+  background: var(--ibtn-secondary-hover);
 }
 
 /* Variante outline */
 
 .icon-button-outline {
-  border: 1px solid #d8d3ee;
-  background: #ffffff;
-  color: #5636d9;
+  border: 1px solid var(--ibtn-outline-border);
+  background: var(--ibtn-outline-bg);
+  color: var(--ibtn-accent);
 }
 
 .icon-button-outline:hover {
-  border-color: #5636d9;
-  background: #f8f6ff;
+  border-color: var(--ibtn-accent);
+  background: var(--ibtn-outline-hover-bg);
 }
 
 /* Variante danger */
 
 .icon-button-danger {
-  background: #fff0f0;
-  color: #dc3545;
+  background: var(--ibtn-danger-bg);
+  color: var(--ibtn-danger);
 }
 
 .icon-button-danger:hover {
-  background: #fde0e0;
+  background: var(--ibtn-danger-hover-bg);
 }
 
 /* Estado activo */
 
 .icon-button-active {
-  background: #eee9ff;
-  color: #5636d9;
+  background: var(--ibtn-active-bg);
+  color: var(--ibtn-accent);
 }
 
 /* Estado deshabilitado */
@@ -129,7 +197,7 @@
 /* Accesibilidad */
 
 .icon-button:focus-visible {
-  outline: 3px solid rgba(86, 54, 217, 0.25);
+  outline: 3px solid var(--ibtn-focus);
   outline-offset: 2px;
 }
 

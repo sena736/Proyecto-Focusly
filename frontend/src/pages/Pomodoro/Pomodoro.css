@@ -11,20 +11,9 @@
   margin: 0 auto;
 }
 
-.pomodoro-page__header {
+/* Spacing of the shared <PageHeader className="pomodoro-page__header"> */
+.pomodoro-page .pomodoro-page__header {
   margin-bottom: 32px;
-}
-
-.pomodoro-page__header h1 {
-  margin: 0 0 8px;
-  font-size: 32px;
-  line-height: 1.2;
-}
-
-.pomodoro-page__header p {
-  margin: 0;
-  font-size: 16px;
-  line-height: 1.5;
 }
 
 /*
@@ -99,12 +88,8 @@
     padding: 24px;
   }
 
-  .pomodoro-page__header {
+  .pomodoro-page .pomodoro-page__header {
     margin-bottom: 24px;
-  }
-
-  .pomodoro-page__header h1 {
-    font-size: 28px;
   }
 
   .pomodoro-page__timer-section {
@@ -133,16 +118,8 @@
     padding: 16px;
   }
 
-  .pomodoro-page__header {
+  .pomodoro-page .pomodoro-page__header {
     margin-bottom: 20px;
-  }
-
-  .pomodoro-page__header h1 {
-    font-size: 24px;
-  }
-
-  .pomodoro-page__header p {
-    font-size: 14px;
   }
 
   .pomodoro-page__timer-section {

@@ -14,16 +14,6 @@
   --tform-accent: #6546c7;
   --tform-focus: rgba(101, 70, 199, 0.1);
   --tform-divider: #ebe8f5;
-  --tform-cancel-bg: #ffffff;
-  --tform-cancel-border: #d1cee0;
-  --tform-cancel-text: #5c5b77;
-  --tform-cancel-hover-bg: #f7f5fc;
-  --tform-cancel-hover-border: #aaa6c1;
-  /* Solid fill behind --on-primary text. */
-  --tform-primary: #6546c7;
-  --tform-primary-hover: #5436b1;
-  /* Spinner ring drawn on the brand submit button (constant, see guard). */
-  --tform-spinner-track: rgba(255, 255, 255, 0.4);
 }
 
 :root[data-theme="dark"] {
@@ -37,13 +27,6 @@
   --tform-accent: var(--primary-text);
   --tform-focus: rgba(165, 141, 240, 0.25);
   --tform-divider: var(--border-color);
-  --tform-cancel-bg: var(--surface);
-  --tform-cancel-border: var(--border-color);
-  --tform-cancel-text: var(--text-secondary);
-  --tform-cancel-hover-bg: var(--surface-secondary);
-  --tform-cancel-hover-border: var(--text-muted);
-  --tform-primary: var(--primary);
-  --tform-primary-hover: var(--primary-hover);
 }
 
 /* =========================================
@@ -87,20 +70,9 @@
 }
 
 /* =========================================
-   REQUIRED
+   SELECT / TEXTAREA
    ========================================= */
 
-.task-form__required {
-  margin-left: 3px;
-
-  color: var(--tform-danger);
-}
-
-/* =========================================
-   INPUT / SELECT / TEXTAREA
-   ========================================= */
-
-.task-form__field input,
 .task-form__field textarea,
 .task-form__field select {
   width: 100%;
@@ -133,7 +105,6 @@
    PLACEHOLDER
    ========================================= */
 
-.task-form__field input::placeholder,
 .task-form__field textarea::placeholder {
   color: var(--tform-placeholder);
 }
@@ -164,7 +135,6 @@
    FOCUS
    ========================================= */
 
-.task-form__field input:focus,
 .task-form__field textarea:focus,
 .task-form__field select:focus {
   border-color: var(--tform-accent);
@@ -231,115 +201,12 @@
 }
 
 /* =========================================
-   CANCEL BUTTON
+   BUTTONS
+   (visuals come from the shared <Button>; only the submit width is local)
    ========================================= */
 
-.task-form__cancel,
-.task-form__submit {
-  min-height: 40px;
-
-  padding: 9px 20px;
-
-  border-radius: 8px;
-
-  font-family: "Poppins", "Segoe UI", sans-serif;
-
-  font-size: 13px;
-
-  font-weight: 500;
-
-  cursor: pointer;
-
-  transition:
-    background-color 0.2s ease,
-    border-color 0.2s ease,
-    transform 0.15s ease;
-}
-
-/* =========================================
-   CANCEL
-   ========================================= */
-
-.task-form__cancel {
-  background: var(--tform-cancel-bg);
-
-  border: 1px solid var(--tform-cancel-border);
-
-  color: var(--tform-cancel-text);
-}
-
-.task-form__cancel:hover:not(:disabled) {
-  background: var(--tform-cancel-hover-bg);
-
-  border-color: var(--tform-cancel-hover-border);
-}
-
-/* =========================================
-   SUBMIT
-   ========================================= */
-
-.task-form__submit {
-  display: inline-flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  gap: 8px;
-
+.task-form .task-form__submit {
   min-width: 130px;
-
-  background: var(--tform-primary);
-
-  border: 1px solid var(--tform-primary);
-
-  color: var(--on-primary);
-}
-
-.task-form__submit:hover:not(:disabled) {
-  background: var(--tform-primary-hover);
-
-  border-color: var(--tform-primary-hover);
-
-  transform: translateY(-1px);
-}
-
-.task-form__submit:active:not(:disabled) {
-  transform: translateY(0);
-}
-
-/* =========================================
-   DISABLED
-   ========================================= */
-
-.task-form__cancel:disabled,
-.task-form__submit:disabled {
-  opacity: 0.55;
-
-  cursor: not-allowed;
-}
-
-/* =========================================
-   SPINNER
-   ========================================= */
-
-.task-form__spinner {
-  width: 14px;
-  height: 14px;
-
-  border: 2px solid var(--tform-spinner-track);
-
-  border-top-color: var(--on-primary);
-
-  border-radius: 50%;
-
-  animation: task-form-spin 0.7s linear infinite;
-}
-
-@keyframes task-form-spin {
-  to {
-    transform: rotate(360deg);
-  }
 }
 
 /* =========================================

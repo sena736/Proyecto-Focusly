@@ -67,6 +67,22 @@ describe("TaskCard", () => {
     expect(props.onToggle).toHaveBeenCalledTimes(1);
   });
 
+  test("editar y eliminar son IconButton con nombre accesible y tooltip corto", () => {
+    renderTaskCard();
+
+    const edit = screen.getByRole("button", {
+      name: "Editar Estudiar matemáticas",
+    });
+    const remove = screen.getByRole("button", {
+      name: "Eliminar Estudiar matemáticas",
+    });
+
+    expect(edit).toHaveClass("icon-button");
+    expect(edit).toHaveAttribute("title", "Editar");
+    expect(remove).toHaveClass("icon-button", "icon-button-ghost-danger");
+    expect(remove).toHaveAttribute("title", "Eliminar");
+  });
+
   test("el botón de editar dispara onEdit", async () => {
     const user = userEvent.setup();
     const props = renderTaskCard();

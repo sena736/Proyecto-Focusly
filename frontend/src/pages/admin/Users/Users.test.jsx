@@ -1,6 +1,6 @@
 import React from "react";
 import { describe, it, expect, vi } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 
 import Users from "./Users";
 import useUsers from "../../../hooks/useUsers";
@@ -58,6 +58,32 @@ describe("Users", () => {
 
     expect(screen.getByText("No hay usuarios")).toBeInTheDocument();
     expect(screen.queryByRole("table")).not.toBeInTheDocument();
+  });
+
+  it("renderiza el encabezado con PageHeader y el contador en la zona de acción", () => {
+    useUsers.mockReturnValue({
+      ...baseState,
+      users: [
+        { id: 1, name: "Ana", email: "ana@test.com", role: "USER" },
+        { id: 2, name: "Bea", email: "bea@test.com", role: "ADMIN" },
+      ],
+    });
+
+    const { container } = render(<Users />);
+
+    const header = container.querySelector("header.focusly-page-header");
+
+    expect(header).not.toBeNull();
+    expect(
+      within(header).getByRole("heading", { level: 1, name: "Usuarios" }),
+    ).toBeInTheDocument();
+    expect(
+      within(header).getByText(/administra los usuarios registrados/i),
+    ).toBeInTheDocument();
+    expect(
+      header.querySelector(".focusly-page-header__action"),
+    ).toHaveTextContent("2 usuarios");
+    expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
   });
 
   it("muestra la tabla cuando hay usuarios", () => {

@@ -1,63 +1,91 @@
-import React from "react";
+import React, { useId } from "react";
 import "./Input.css";
 
 const Input = ({
   label,
   type = "text",
   name,
+  id,
   value,
   onChange,
   placeholder = "",
   icon,
+  endAdornment,
+  labelAction,
   error,
   disabled = false,
   required = false,
+  showRequiredMark = false,
+  className = "",
   ...props
 }) => {
-  return (
-    <div className="input-field">
+  // `id` defaults to `name` so the label keeps pointing at the control.
+  const generatedId = useId();
+  // Without id/name a generated one keeps the label and the error message linked.
+  const controlId = id ?? name ?? generatedId;
+  const errorId = error ? `${controlId}-error` : undefined;
 
-      {label && (
-        <label htmlFor={name} className="input-label">
-          {label}
+  const fieldClasses = ["input-field", className].filter(Boolean).join(" ");
 
-          {required && (
-            <span className="input-required">*</span>
-          )}
-        </label>
+  const wrapperClasses = [
+    "input-wrapper",
+    error ? "input-error" : "",
+    disabled ? "input-disabled" : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
+  const labelElement = label && (
+    <label htmlFor={controlId} className="input-label">
+      {label}
+
+      {showRequiredMark && (
+        <span className="input-required" aria-hidden="true">
+          *
+        </span>
       )}
+    </label>
+  );
 
-      <div
-        className={`input-wrapper ${
-          error ? "input-error" : ""
-        } ${disabled ? "input-disabled" : ""}`}
-      >
-        {icon && (
-          <span className="input-icon">
-            {icon}
-          </span>
-        )}
+  return (
+    <div className={fieldClasses}>
+      {labelElement &&
+        (labelAction ? (
+          <div className="input-label-row">
+            {labelElement}
+            {labelAction}
+          </div>
+        ) : (
+          labelElement
+        ))}
+
+      <div className={wrapperClasses}>
+        {icon && <span className="input-icon">{icon}</span>}
 
         <input
-          id={name}
+          id={controlId}
           name={name}
           type={type}
           value={value}
           onChange={onChange}
           placeholder={placeholder}
+          {...props}
           disabled={disabled}
           required={required}
+          aria-required={showRequiredMark && !required ? "true" : undefined}
+          aria-invalid={error ? "true" : undefined}
+          aria-describedby={errorId}
           className="input-control"
-          {...props}
         />
+
+        {endAdornment && <span className="input-end">{endAdornment}</span>}
       </div>
 
       {error && (
-        <span className="input-error-message">
+        <span id={errorId} className="input-error-message">
           {error}
         </span>
       )}
-
     </div>
   );
 };

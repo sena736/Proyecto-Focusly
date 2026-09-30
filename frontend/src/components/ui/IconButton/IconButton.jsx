@@ -11,22 +11,30 @@ const IconButton = ({
   type = "button",
   active = false,
   title,
+  className = "",
+  ...props
 }) => {
+  const classes = [
+    "icon-button",
+    `icon-button-${variant}`,
+    `icon-button-${size}`,
+    active ? "icon-button-active" : "",
+    className,
+  ]
+    .filter(Boolean)
+    .join(" ");
+
   return (
     <button
       type={type}
-      className={`
-        icon-button
-        icon-button-${variant}
-        icon-button-${size}
-        ${active ? "icon-button-active" : ""}
-      `}
+      className={classes}
       onClick={onClick}
       disabled={disabled}
       aria-label={label}
       title={title || label}
+      {...props}
     >
-      <span className="icon-button-icon">
+      <span className="icon-button-icon" aria-hidden="true">
         {icon}
       </span>
     </button>

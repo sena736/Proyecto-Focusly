@@ -1,9 +1,36 @@
+/*
+  Mobile navigation palette (`--mnav-*`, unique across the bundle).
+  Light values are the original literals. Dark maps the surface/border to global
+  tokens and keeps the teal identity with a lighter teal for the active item.
+  Colour literals are allowed ONLY here.
+*/
+:root {
+  --mnav-bg: #ffffff;
+  --mnav-border: #e4eceb;
+  --mnav-shadow: rgba(78, 118, 125, 0.08);
+  --mnav-item: #8a9b9e;
+  --mnav-active: #4e767d;
+}
+
+:root[data-theme="dark"] {
+  --mnav-bg: var(--surface);
+  --mnav-border: var(--border-color);
+  --mnav-shadow: rgba(0, 0, 0, 0.35);
+  --mnav-item: var(--text-muted);
+  --mnav-active: #8cc1c8;
+}
+
 .mobile-navigation {
   display: none;
 }
 
 /* =========================================
    MOBILE NAVIGATION
+
+   Stacking: above the page content, but BELOW the hamburger (998), its
+   backdrop (999), the sidebar (1000) and the modals (9999).
+   The bar height lives in --mobile-nav-height (global.css) so UserLayout can
+   reserve exactly that much room under the routed content.
 ========================================= */
 
 @media (max-width: 768px) {
@@ -13,11 +40,13 @@
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 72px;
-    background-color: #ffffff;
-    border-top: 1px solid #e4eceb;
-    z-index: 1000;
-    box-shadow: 0 -4px 15px rgba(78, 118, 125, 0.08);
+    height: calc(var(--mobile-nav-height) + env(safe-area-inset-bottom, 0px));
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    box-sizing: border-box;
+    background-color: var(--mnav-bg);
+    border-top: 1px solid var(--mnav-border);
+    z-index: 997;
+    box-shadow: 0 -4px 15px var(--mnav-shadow);
   }
 
   .mobile-navigation__container {
@@ -27,6 +56,7 @@
     align-items: center;
     justify-content: space-around;
     padding: 6px 8px;
+    box-sizing: border-box;
   }
 
   .mobile-navigation__item {
@@ -41,7 +71,8 @@
 
     border: none;
     background: transparent;
-    color: #8a9b9e;
+    color: var(--mnav-item);
+    text-decoration: none;
 
     cursor: pointer;
     transition: all 0.2s ease;
@@ -51,11 +82,16 @@
   }
 
   .mobile-navigation__item:hover {
-    color: #4e767d;
+    color: var(--mnav-active);
   }
 
   .mobile-navigation__item--active {
-    color: #4e767d;
+    color: var(--mnav-active);
+  }
+
+  .mobile-navigation__item:focus-visible {
+    outline: 2px solid var(--mnav-active);
+    outline-offset: -2px;
   }
 
   .mobile-navigation__icon {
@@ -82,13 +118,10 @@
 
 /* =========================================
    SMALL PHONES
+   (the bar height itself shrinks through --mobile-nav-height in global.css)
 ========================================= */
 
 @media (max-width: 380px) {
-  .mobile-navigation {
-    height: 68px;
-  }
-
   .mobile-navigation__item {
     height: 56px;
   }

@@ -49,6 +49,54 @@ describe("Register", () => {
     registerUser.mockResolvedValue({ token: "jwt" });
   });
 
+  describe("form primitives", () => {
+    it("renders the four fields through Input keeping type, autofill and required", () => {
+      setup();
+
+      const expectations = [
+        ["Nombre", "text", "name"],
+        ["Correo electrónico", "email", "email"],
+        ["Contraseña", "password", "new-password"],
+        ["Confirmar contraseña", "password", "new-password"],
+      ];
+
+      expectations.forEach(([label, type, autocomplete]) => {
+        const control = screen.getByLabelText(label);
+
+        expect(control).toHaveClass("input-control");
+        expect(control).toHaveAttribute("type", type);
+        expect(control).toHaveAttribute("autocomplete", autocomplete);
+        expect(control).toBeRequired();
+      });
+    });
+
+    it("submits with a primary full-width Button", () => {
+      setup();
+
+      const submit = screen.getByRole("button", { name: "Crear cuenta" });
+
+      expect(submit).toHaveAttribute("type", "submit");
+      expect(submit).toHaveClass(
+        "focusly-button",
+        "focusly-button--primary",
+        "focusly-button--full",
+      );
+    });
+
+    it("disables the button and shows the progress text while creating the account", async () => {
+      registerUser.mockReturnValue(new Promise(() => {}));
+      const user = setup();
+
+      await fill(user, { email: "ana@example.com", password: "secret1" });
+
+      const submit = await screen.findByRole("button", {
+        name: "Creando cuenta...",
+      });
+
+      expect(submit).toBeDisabled();
+    });
+  });
+
   it("blocks the request and shows an error for an invalid email", async () => {
     const user = setup();
 

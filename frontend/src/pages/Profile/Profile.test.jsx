@@ -1,6 +1,6 @@
 import React from "react";
 import { describe, test, expect, vi } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 
 import Profile from "./Profile";
 import useProfile from "../../hooks/useProfile";
@@ -31,6 +31,33 @@ describe("Profile", () => {
     expect(screen.getByText("Usuario de prueba")).toBeInTheDocument();
     expect(screen.getByText("usuario@test.com")).toBeInTheDocument();
     expect(screen.getByText("Administrador")).toBeInTheDocument();
+  });
+
+  test("renderiza el encabezado con PageHeader (un solo h1 y la etiqueta CUENTA como breadcrumb)", () => {
+    useProfile.mockReturnValue({
+      profile: { name: "Usuario de prueba", email: "usuario@test.com", role: "USER" },
+      isLoading: false,
+      isError: false,
+      error: null,
+      updateProfile: vi.fn(),
+      isUpdating: false,
+    });
+
+    const { container } = render(<Profile />);
+
+    const header = container.querySelector("header.focusly-page-header");
+
+    expect(header).not.toBeNull();
+    expect(
+      within(header).getByRole("heading", { level: 1, name: "Mi perfil" })
+    ).toBeInTheDocument();
+    expect(
+      within(header).getByText(/consulta tu información personal/i)
+    ).toBeInTheDocument();
+    expect(
+      header.querySelector(".focusly-page-header__breadcrumb")
+    ).toHaveTextContent("CUENTA");
+    expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
   });
 
   test("muestra el estado de carga mientras isLoading es true", () => {
