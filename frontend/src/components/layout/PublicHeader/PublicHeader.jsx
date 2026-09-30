@@ -1,6 +1,3 @@
-<<<<<<< HEAD
- 
-=======
 import { Link } from "react-router-dom";
 import "./PublicHeader.css";
 
@@ -13,17 +10,19 @@ function PublicHeader() {
           <div className="public-logo-icon">F</div>
 
           <div className="public-logo-text">
-            <h1>FOCUSLY</h1>
-            <span>Organiza tu tiempo, alcanza tus metas</span>
+            <p className="public-logo-name">FOCUSLY</p>
+            <span className="public-logo-tagline">
+              Organiza tu tiempo, alcanza tus metas
+            </span>
           </div>
         </Link>
 
-        {/* Navegación */}
-        <nav className="public-nav">
-          <Link to="/">Inicio</Link>
-          <a href="#caracteristicas">Características</a>
-          <a href="#beneficios">Beneficios</a>
-          <a href="#nosotros">Nosotros</a>
+        {/* Navegación: los enlaces con hash funcionan también desde /about */}
+        <nav className="public-nav" aria-label="Navegación principal">
+          <Link to="/#inicio">Inicio</Link>
+          <Link to="/#caracteristicas">Características</Link>
+          <Link to="/#beneficios">Beneficios</Link>
+          <Link to="/#nosotros">Nosotros</Link>
         </nav>
 
         {/* Botones */}
@@ -42,4 +41,3 @@ function PublicHeader() {
 }
 
 export default PublicHeader;
->>>>>>> 38b08db9645275a147886f0335a30a9d428a8dfc

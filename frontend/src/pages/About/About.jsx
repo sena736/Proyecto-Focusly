@@ -9,7 +9,7 @@ import "./About.css";
 
 const About = () => {
   return (
-    <main className="about">
+    <div className="about">
       <div className="about__container">
         {/* Encabezado */}
         <section className="about__hero">
@@ -125,7 +125,7 @@ const About = () => {
           </div>
         </section>
       </div>
-    </main>
+    </div>
   );
 };
 

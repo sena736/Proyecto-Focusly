@@ -1,0 +1,11 @@
+.public-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: var(--background);
+}
+
+.public-layout__main {
+  flex: 1;
+  width: 100%;
+}

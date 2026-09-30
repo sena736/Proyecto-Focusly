@@ -71,18 +71,19 @@
 
 /* Texto del logo */
 
-.public-logo-text h1 {
+.public-logo-text .public-logo-name {
   margin: 0;
 
   color: #4b36a8;
 
   font-size: 22px;
   font-weight: 800;
+  line-height: 1.2;
 
   letter-spacing: 1px;
 }
 
-.public-logo-text span {
+.public-logo-text .public-logo-tagline {
   display: block;
 
   margin-top: 2px;
@@ -178,6 +179,9 @@
 }
 
 .public-login-button:hover {
+  /* Sin este color, `a:hover` global (0,1,1) le gana a la regla base (0,1,0) */
+  color: #5b3fd1;
+
   background: #f2efff;
 
   transform: translateY(-1px);
@@ -205,6 +209,9 @@
 }
 
 .public-register-button:hover {
+  /* Sin este color, `a:hover` global (0,1,1) pinta el texto igual que el fondo */
+  color: #ffffff;
+
   background: #4931b5;
 
   transform: translateY(-1px);
@@ -231,7 +238,7 @@
     font-size: 13px;
   }
 
-  .public-logo-text span {
+  .public-logo-text .public-logo-tagline {
     display: none;
   }
 }
@@ -289,7 +296,7 @@
     font-size: 22px;
   }
 
-  .public-logo-text h1 {
+  .public-logo-text .public-logo-name {
     font-size: 18px;
   }
 

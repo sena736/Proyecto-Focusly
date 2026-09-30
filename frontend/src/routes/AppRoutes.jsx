@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 // Páginas públicas
 import Home from "../pages/Home/Home";
+import About from "../pages/About/About";
 import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
 
@@ -23,6 +24,9 @@ import AdminRoute from "./AdminRoute";
 // Layout de usuario autenticado
 import UserLayout from "../layouts/UserLayout/UserLayout";
 
+// Layout de páginas públicas (header + footer)
+import PublicLayout from "../layouts/PublicLayout/PublicLayout";
+
 const AppRoutes = () => {
 	return (
 		<BrowserRouter>
@@ -31,7 +35,11 @@ const AppRoutes = () => {
             RUTAS PÚBLICAS
         ========================== */}
 
-				<Route path="/" element={<Home />} />
+				<Route element={<PublicLayout />}>
+					<Route path="/" element={<Home />} />
+					<Route path="/about" element={<About />} />
+				</Route>
+
 				<Route path="/login" element={<Login />} />
 				<Route path="/register" element={<Register />} />
 

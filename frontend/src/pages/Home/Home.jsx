@@ -1,238 +1,166 @@
-import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import {
+  FiArrowRight,
+  FiCheckSquare,
+  FiClock,
+  FiHeart,
+  FiMoon,
+  FiTarget,
+  FiTrendingUp,
+  FiEye,
+} from "react-icons/fi";
 import "./Home.css";
 
-import {
-  FiHome,
-  FiClock,
-  FiCheckSquare,
-  FiStar,
-  FiSettings,
-  FiBell,
-  FiChevronDown,
-  FiPlus,
-  FiMoreVertical,
-  FiPlay,
-  FiRotateCcw,
-  FiTarget,
-} from "react-icons/fi";
-import { Link } from "react-router-dom";
+const FEATURES = [
+  {
+    icon: FiClock,
+    title: "Temporizador Pomodoro",
+    text: "Trabaja en sesiones de 25 minutos de enfoque con descansos de 5 minutos para mantener el ritmo sin agotarte.",
+  },
+  {
+    icon: FiCheckSquare,
+    title: "Gestor de tareas",
+    text: "Crea tus tareas, ponles fecha límite y encuéntralas rápido con los filtros.",
+  },
+  {
+    icon: FiHeart,
+    title: "Frases motivacionales",
+    text: "Encuentra frases que te acompañen y te den un empujón cuando más lo necesites.",
+  },
+  {
+    icon: FiMoon,
+    title: "Modo oscuro",
+    text: "Cambia el tema de la aplicación para estudiar cómodamente a cualquier hora del día.",
+  },
+];
+
+const BENEFITS = [
+  {
+    icon: FiTarget,
+    title: "Mejora tu concentración",
+    text: "Dedicar bloques de tiempo definidos a cada actividad reduce las distracciones.",
+  },
+  {
+    icon: FiTrendingUp,
+    title: "Avanza con constancia",
+    text: "Ver lo pendiente y lo completado te ayuda a construir el hábito de estudiar todos los días.",
+  },
+  {
+    icon: FiEye,
+    title: "Ten todo a la vista",
+    text: "Tus tareas, tus sesiones y tu motivación viven en un solo lugar, sin complicaciones.",
+  },
+];
 
 const Home = () => {
-  const [tareas, setTareas] = useState([
-    {
-      id: 1,
-      titulo: "Tarea 1",
-      descripcion: "Revisar matemáticas",
-      completada: false,
-    },
-    {
-      id: 2,
-      titulo: "Tarea 2",
-      descripcion: "Repasar inglés",
-      completada: false,
-    },
-    {
-      id: 3,
-      titulo: "Tarea 3",
-      descripcion: "Resolver ejercicios de biología",
-      completada: true,
-    },
-  ]);
-
-  const [tiempo, setTiempo] = useState("25:00");
-
-  const cambiarEstadoTarea = (id) => {
-    setTareas(
-      tareas.map((tarea) =>
-        tarea.id === id ? { ...tarea, completada: !tarea.completada } : tarea,
-      ),
-    );
-  };
-
   return (
-    <div className="home">
-      {/* ================= SIDEBAR ================= */}
-      <aside className="sidebar">
-        <div className="logo">
-          <span>FOCUSLY</span>
+    <div className="landing">
+      {/* Inicio */}
+      <section id="inicio" className="landing__section">
+        <div className="landing__container landing__hero-inner">
+          <div className="landing__hero-content">
+            <span className="landing__eyebrow">BIENVENIDO A FOCUSLY</span>
+
+            <h1 className="landing__title">
+              Organiza tu tiempo.
+              <span> Alcanza tus metas.</span>
+            </h1>
+
+            <p className="landing__lead">
+              Focusly combina un temporizador Pomodoro, un gestor de tareas
+              y frases motivacionales para ayudarte a estudiar con más
+              enfoque y menos estrés.
+            </p>
+
+            <div className="landing__actions">
+              <Link to="/register" className="landing__btn landing__btn--primary">
+                Crear cuenta
+                <FiArrowRight aria-hidden="true" />
+              </Link>
+
+              <Link to="/login" className="landing__btn landing__btn--secondary">
+                Iniciar sesión
+              </Link>
+            </div>
+          </div>
+
+          {/* Ilustración decorativa del temporizador */}
+          <div className="landing__timer" aria-hidden="true">
+            <span className="landing__timer-label">Sesión de enfoque</span>
+            <span className="landing__timer-time">25:00</span>
+            <span className="landing__timer-hint">Después, 5 minutos de descanso</span>
+          </div>
         </div>
+      </section>
 
-        <nav className="menu">
-          <button className="menu-item active">
-            <FiHome />
-            <Link to={"/"}>Inicio</Link>
-          </button>
-
-          <button className="menu-item">
-            <FiClock />
-            <Link to={"/pomodoro"}>Pomodoro</Link>
-          </button>
-
-          <button className="menu-item">
-            <FiCheckSquare />
-            <Link to={"/tareas"}>Tareas</Link>
-          </button>
-
-          <button className="menu-item">
-            <FiStar />
-            <Link to={"/motivacion"}>Motivación</Link>
-          </button>
-
-          <button className="menu-item">
-            <FiSettings />
-            <Link to={"/configuracion"}>Configuración</Link>
-          </button>
-        </nav>
-      </aside>
-
-      {/* ================= CONTENIDO ================= */}
-      <main className="main-content">
-        {/* HEADER */}
-        <header className="topbar">
-          <div className="welcome">
-            <h1>¡Hola, Juan! 👋</h1>
-            <p>Es hora de comenzar y dar lo mejor de ti.</p>
+      {/* Características */}
+      <section
+        id="caracteristicas"
+        className="landing__section landing__section--alt"
+      >
+        <div className="landing__container">
+          <div className="landing__header">
+            <span className="landing__eyebrow">CARACTERÍSTICAS</span>
+            <h2>Todo lo que necesitas para estudiar mejor</h2>
+            <p>Herramientas sencillas para organizarte y mantener el enfoque.</p>
           </div>
 
-          <div className="user-area">
-            <button className="notification">
-              <FiBell />
-              <span className="notification-dot"></span>
-            </button>
-
-            <div className="user-profile">
-              <div className="avatar">J</div>
-
-              <div className="user-info">
-                <strong>Juan Pérez</strong>
-                <span>Estudiante</span>
-              </div>
-
-              <FiChevronDown className="arrow-down" />
-            </div>
-          </div>
-        </header>
-
-        {/* CONTENIDO SUPERIOR */}
-        <section className="dashboard-top">
-          {/* POMODORO */}
-          <div className="pomodoro-card">
-            <h3>Pomodoro</h3>
-
-            <div className="timer-circle">
-              <svg className="progress-ring" width="145" height="145">
-                <circle className="circle-background" cx="72" cy="72" r="60" />
-
-                <circle className="circle-progress" cx="72" cy="72" r="60" />
-              </svg>
-
-              <div className="timer-content">
-                <span>{tiempo}</span>
-                <small>Sesión de enfoque</small>
-              </div>
-            </div>
-
-            <div className="pomodoro-buttons">
-              <button className="start-button">
-                <FiPlay />
-                Iniciar
-              </button>
-
-              <button
-                className="reset-button"
-                onClick={() => setTiempo("25:00")}
-              >
-                <FiRotateCcw />
-                Reiniciar
-              </button>
-            </div>
-          </div>
-
-          {/* MOTIVACIÓN */}
-          <div className="motivation-card">
-            <div className="motivation-content">
-              <h3>Motivación</h3>
-
-              <p>
-                “La disciplina de hoy
-                <br />
-                es el éxito de mañana.”
-              </p>
-
-              <button>Nueva frase</button>
-            </div>
-
-            <div className="motivation-image">
-              <div className="moon"></div>
-              <div className="mountain mountain-back"></div>
-              <div className="mountain mountain-front"></div>
-              <div className="flag"></div>
-            </div>
-          </div>
-        </section>
-
-        {/* TAREAS */}
-        <section className="tasks-section">
-          <div className="section-header">
-            <div>
-              <h2>Mis tareas</h2>
-              <p>Organiza tus actividades y mantén el enfoque.</p>
-            </div>
-
-            <button className="new-task-button">
-              <FiPlus />
-              Nueva tarea
-            </button>
-          </div>
-
-          <div className="tasks-card">
-            {tareas.map((tarea) => (
-              <div className="task-item" key={tarea.id}>
-                <button
-                  className={`task-check ${
-                    tarea.completada ? "completed" : ""
-                  }`}
-                  onClick={() => cambiarEstadoTarea(tarea.id)}
-                >
-                  {tarea.completada && "✓"}
-                </button>
-
-                <div className="task-information">
-                  <h4 className={tarea.completada ? "task-completed-text" : ""}>
-                    {tarea.titulo}
-                  </h4>
-
-                  <p>{tarea.descripcion}</p>
+          <div className="landing__grid landing__grid--four">
+            {FEATURES.map(({ icon: Icon, title, text }) => (
+              <article key={title} className="landing__card">
+                <div className="landing__card-icon">
+                  <Icon aria-hidden="true" />
                 </div>
-
-                <span className="task-status">
-                  {tarea.completada ? "Hecha" : "Hoy"}
-                </span>
-
-                <button className="more-button">
-                  <FiMoreVertical />
-                </button>
-              </div>
+                <h3>{title}</h3>
+                <p>{text}</p>
+              </article>
             ))}
-
-            <button className="view-tasks">Ver todas las tareas</button>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* RESUMEN */}
-        <section className="summary-card">
-          <div className="summary-icon">
-            <FiTarget />
-          </div>
-
-          <div className="summary-text">
-            <h3>Resumen de hoy</h3>
-            <p>Cada pequeño esfuerzo te acerca a tus metas. ¡Sigue adelante!</p>
+      {/* Beneficios */}
+      <section id="beneficios" className="landing__section">
+        <div className="landing__container">
+          <div className="landing__header">
+            <span className="landing__eyebrow">BENEFICIOS</span>
+            <h2>Pequeños hábitos, grandes resultados</h2>
+            <p>Lo que puedes lograr al usar Focusly en tu rutina de estudio.</p>
           </div>
 
-          <button className="summary-button">Ver progreso</button>
-        </section>
-      </main>
+          <div className="landing__grid landing__grid--three">
+            {BENEFITS.map(({ icon: Icon, title, text }) => (
+              <article key={title} className="landing__card">
+                <div className="landing__card-icon">
+                  <Icon aria-hidden="true" />
+                </div>
+                <h3>{title}</h3>
+                <p>{text}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Nosotros */}
+      <section
+        id="nosotros"
+        className="landing__section landing__section--alt"
+      >
+        <div className="landing__container landing__about">
+          <span className="landing__eyebrow">NOSOTROS</span>
+          <h2>Una herramienta pensada para estudiantes</h2>
+          <p>
+            Focusly nació para ofrecer un espacio sencillo y agradable donde
+            puedas planificar tus actividades y trabajar por períodos de
+            concentración.
+          </p>
+          <Link to="/about" className="landing__link">
+            Conoce más sobre Focusly
+            <FiArrowRight aria-hidden="true" />
+          </Link>
+        </div>
+      </section>
     </div>
   );
 };
