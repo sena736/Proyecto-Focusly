@@ -1,3 +1,6 @@
+import { Link } from "react-router-dom";
+import "./Footer.css";
+
 export default function Footer({
   showNavigation = true,
   showCopyright = true,
@@ -29,21 +32,21 @@ export default function Footer({
             >
               <div className="focusly-footer__column">
                 <h3>Focusly</h3>
-                <a href="/#inicio">Inicio</a>
-                <a href="/#conoce">Conoce la app</a>
-                <a href="/#motivacion">Motivación</a>
+                <Link to="/#inicio">Inicio</Link>
+                <Link to="/#caracteristicas">Características</Link>
+                <Link to="/#beneficios">Beneficios</Link>
               </div>
 
               <div className="focusly-footer__column">
                 <h3>Acceso</h3>
-                <a href="/login">Iniciar sesión</a>
-                <a href="/registro">Registrarse</a>
+                <Link to="/login">Iniciar sesión</Link>
+                <Link to="/register">Registrarse</Link>
               </div>
 
               <div className="focusly-footer__column">
-                <h3>Ayuda</h3>
-                <a href="/#funcionalidades">Funcionalidades</a>
-                <a href="/#contacto">Contacto</a>
+                <h3>Conócenos</h3>
+                <Link to="/#nosotros">Nosotros</Link>
+                <Link to="/about">Sobre Focusly</Link>
               </div>
             </nav>
           )}
@@ -62,11 +65,6 @@ export default function Footer({
           {showCopyright && (
             <p>© {currentYear} Focusly. Todos los derechos reservados.</p>
           )}
-
-          <div className="focusly-footer__links">
-            <a href="/privacidad">Privacidad</a>
-            <a href="/terminos">Términos y condiciones</a>
-          </div>
         </div>
       </div>
     </footer>

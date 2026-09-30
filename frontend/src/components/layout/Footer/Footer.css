@@ -117,16 +117,14 @@
   font-weight: 900;
 }
 
-.focusly-footer__column a,
-.focusly-footer__links a {
+.focusly-footer__column a {
   color: var(--footer-muted);
   font-size: 0.7rem;
   text-decoration: none;
   transition: color 0.2s ease;
 }
 
-.focusly-footer__column a:hover,
-.focusly-footer__links a:hover {
+.focusly-footer__column a:hover {
   color: var(--footer-purple);
 }
 
@@ -177,12 +175,6 @@
   font-size: 0.66rem;
 }
 
-.focusly-footer__links {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-
 /* Tablet */
 @media (max-width: 850px) {
   .focusly-footer__main {
@@ -219,11 +211,6 @@
   .focusly-footer__bottom {
     flex-direction: column;
     align-items: flex-start;
-  }
-
-  .focusly-footer__links {
-    flex-wrap: wrap;
-    gap: 10px 18px;
   }
 }
 
