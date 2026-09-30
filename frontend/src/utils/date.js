@@ -175,6 +175,49 @@ export const formatDateForInput = (date) => {
 };
 
 /* =========================================================
+   8.1 FECHAS DE VENCIMIENTO (SOLO DÍA, EN UTC)
+========================================================= */
+
+/**
+ * Las fechas de vencimiento se guardan como medianoche UTC
+ * (new Date("2026-09-30").toISOString()), así que se leen en UTC.
+ * Con la hora local, en zonas detrás de UTC se mostraría un día antes.
+ *
+ * Ejemplo: "2026-09-30T00:00:00.000Z" -> 30 sept 2026
+ *
+ * @param {string|Date|number} date
+ * @returns {string}
+ */
+export const formatDueDate = (date) => {
+  const parsedDate = parseDate(date);
+
+  if (!parsedDate) return "";
+
+  return new Intl.DateTimeFormat(DEFAULT_LOCALE, {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(parsedDate);
+};
+
+/**
+ * Ejemplo: "2026-09-30T00:00:00.000Z" -> "2026-09-30"
+ *
+ * Útil para precargar <input type="date" />, que solo acepta ese formato.
+ *
+ * @param {string|Date|number} date
+ * @returns {string}
+ */
+export const formatDueDateForInput = (date) => {
+  const parsedDate = parseDate(date);
+
+  if (!parsedDate) return "";
+
+  return parsedDate.toISOString().slice(0, 10);
+};
+
+/* =========================================================
    9. OBTENER LA FECHA DE HOY
 ========================================================= */
 
