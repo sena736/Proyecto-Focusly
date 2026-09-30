@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Dashboard.css";
 
+import Avatar from "../../components/ui/Avatar/Avatar";
 import useAuth from "../../hooks/useAuth";
 import useTask from "../../hooks/useTask";
 import usePomodoro from "../../hooks/usePomodoro";
@@ -90,26 +91,11 @@ export default function Dashboard() {
             </p>
           </div>
 
-          <button
-            className="focusly-profile"
+          <Avatar
+            name={userName}
+            role={user?.role === "ADMIN" ? "Administrador" : "Estudiante"}
             onClick={() => navigate("/profile")}
-            aria-label="Abrir perfil"
-          >
-            <span className="focusly-avatar">
-              {userName
-                .split(" ")
-                .map((part) => part[0])
-                .slice(0, 2)
-                .join("")}
-            </span>
-
-            <span className="focusly-profile-info">
-              <strong>{userName}</strong>
-              <small>{user?.role === "ADMIN" ? "Administrador" : "Estudiante"}</small>
-            </span>
-
-            <span className="focusly-chevron">⌄</span>
-          </button>
+          />
         </header>
 
         <section className="focusly-hero-grid">

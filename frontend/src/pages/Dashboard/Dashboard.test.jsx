@@ -16,8 +16,10 @@ vi.mock("../../hooks/usePhrase");
 vi.mock("../../services/token.services", () => ({
   getToken: () => "fake-token",
 }));
+const { navigate } = vi.hoisted(() => ({ navigate: vi.fn() }));
+
 vi.mock("react-router-dom", () => ({
-  useNavigate: () => vi.fn(),
+  useNavigate: () => navigate,
 }));
 
 describe("Dashboard", () => {
@@ -40,6 +42,7 @@ describe("Dashboard", () => {
   let updateTask;
 
   beforeEach(() => {
+    navigate.mockClear();
     updateTask = vi.fn();
 
     useTask.mockReturnValue({
@@ -64,6 +67,49 @@ describe("Dashboard", () => {
       isError: false,
       refetch: vi.fn(),
       isRefetching: false,
+    });
+  });
+
+  describe("profile button", () => {
+    it("renders the real user name, initials and role", () => {
+      render(<Dashboard />);
+
+      const profile = screen.getByRole("button", { name: "Perfil de Ana Perez" });
+
+      expect(profile).toHaveTextContent("Ana Perez");
+      expect(profile).toHaveTextContent("AP");
+      expect(profile).toHaveTextContent("Estudiante");
+    });
+
+    it("shows the Administrador role for admins", () => {
+      useAuth.mockReturnValue({ user: { name: "Ana Perez", role: "ADMIN" } });
+      render(<Dashboard />);
+
+      expect(
+        screen.getByRole("button", { name: "Perfil de Ana Perez" }),
+      ).toHaveTextContent("Administrador");
+    });
+
+    it("falls back to Usuario without inventing another name", () => {
+      useAuth.mockReturnValue({ user: null });
+      render(<Dashboard />);
+
+      expect(
+        screen.getByRole("button", { name: "Perfil de Usuario" }),
+      ).toBeInTheDocument();
+      expect(screen.queryByText("Juan Pérez")).not.toBeInTheDocument();
+    });
+
+    it("navigates to /profile when clicked", async () => {
+      const user = userEvent.setup();
+      render(<Dashboard />);
+
+      await user.click(
+        screen.getByRole("button", { name: "Perfil de Ana Perez" }),
+      );
+
+      expect(navigate).toHaveBeenCalledTimes(1);
+      expect(navigate).toHaveBeenCalledWith("/profile");
     });
   });
 
