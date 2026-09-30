@@ -33,7 +33,7 @@ describe("TaskForm", () => {
       id: 1,
       title: "Estudiar React",
       description: "Repasar componentes y hooks",
-      priority: "alta",
+      priority: "HIGH",
     };
 
     render(
@@ -103,7 +103,7 @@ describe("TaskForm", () => {
       expect.objectContaining({
         title: "Completar proyecto",
         description: "Terminar la implementación de Focusly",
-        dueDate: "2026-12-31",
+        dueDate: "2026-12-31T00:00:00.000Z",
       })
     );
   });
