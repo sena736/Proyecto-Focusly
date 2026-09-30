@@ -1,3 +1,31 @@
+/*
+  Task filters palette (`--tfilt-*`, unique across the bundle).
+  Light values are the original literals. Dark maps neutrals to global tokens and
+  lightens the teal accent used as text/outline. The active fills stay teal on
+  purpose (always behind --on-primary text, ~5:1). Literals allowed ONLY here.
+*/
+:root {
+  --tfilt-title: #38565b;
+  --tfilt-border: #dce7e5;
+  --tfilt-border-hover: #b8cecb;
+  --tfilt-surface: #ffffff;
+  --tfilt-text: #718386;
+  --tfilt-hover-text: #4e767d;
+  --tfilt-ring: #4e767d;
+  --tfilt-active-bg: #4e767d;
+  --tfilt-active-hover: #416970;
+}
+
+:root[data-theme="dark"] {
+  --tfilt-title: var(--text-primary);
+  --tfilt-border: var(--border-color);
+  --tfilt-border-hover: #5a8a92;
+  --tfilt-surface: var(--surface);
+  --tfilt-text: var(--text-secondary);
+  --tfilt-hover-text: #8cc1c8;
+  --tfilt-ring: #8cc1c8;
+}
+
 .task-filters {
   width: 100%;
   box-sizing: border-box;
@@ -14,7 +42,7 @@
 .task-filters__title {
   margin: 0;
 
-  color: #38565b;
+  color: var(--tfilt-title);
   font-size: 15px;
   font-weight: 600;
 }
@@ -51,11 +79,11 @@
   min-height: 38px;
   padding: 8px 14px;
 
-  border: 1px solid #dce7e5;
+  border: 1px solid var(--tfilt-border);
   border-radius: 10px;
 
-  background-color: #ffffff;
-  color: #718386;
+  background-color: var(--tfilt-surface);
+  color: var(--tfilt-text);
 
   font-family: inherit;
   font-size: 12px;
@@ -72,8 +100,8 @@
 }
 
 .task-filters__button:hover {
-  border-color: #b8cecb;
-  color: #4e767d;
+  border-color: var(--tfilt-border-hover);
+  color: var(--tfilt-hover-text);
 }
 
 .task-filters__button:active {
@@ -85,15 +113,15 @@
 ========================================= */
 
 .task-filters__button--active {
-  background-color: #4e767d;
-  border-color: #4e767d;
-  color: #ffffff;
+  background-color: var(--tfilt-active-bg);
+  border-color: var(--tfilt-active-bg);
+  color: var(--on-primary);
 }
 
 .task-filters__button--active:hover {
-  background-color: #416970;
-  border-color: #416970;
-  color: #ffffff;
+  background-color: var(--tfilt-active-hover);
+  border-color: var(--tfilt-active-hover);
+  color: var(--on-primary);
 }
 
 .task-filters__icon {
@@ -105,7 +133,7 @@
 ========================================= */
 
 .task-filters__button:focus-visible {
-  outline: 2px solid #4e767d;
+  outline: 2px solid var(--tfilt-ring);
   outline-offset: 2px;
 }
 

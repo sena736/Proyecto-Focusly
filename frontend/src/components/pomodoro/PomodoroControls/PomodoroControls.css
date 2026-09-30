@@ -1,3 +1,37 @@
+/*
+  Pomodoro controls palette (`--pomoc-*`, unique across the bundle).
+  Light values are the original literals; the dark block maps to global tokens.
+  Colour literals are allowed ONLY here.
+*/
+:root {
+  /* Solid fill behind --on-primary text. */
+  --pomoc-primary: #6042a3;
+  --pomoc-primary-hover: #4e328d;
+  --pomoc-primary-shadow: 0 6px 16px rgba(96, 66, 163, 0.2);
+  --pomoc-primary-shadow-hover: 0 8px 20px rgba(96, 66, 163, 0.25);
+  --pomoc-surface: #ffffff;
+  --pomoc-border: #ded8ea;
+  --pomoc-border-hover: #c9bce0;
+  --pomoc-text: #302c3d;
+  --pomoc-hover-bg: #eee9ff;
+  --pomoc-hover-text: #6042a3;
+  --pomoc-glow: rgba(96, 66, 163, 0.15);
+}
+
+:root[data-theme="dark"] {
+  --pomoc-primary: var(--primary);
+  --pomoc-primary-hover: var(--primary-hover);
+  --pomoc-primary-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+  --pomoc-primary-shadow-hover: 0 8px 20px rgba(0, 0, 0, 0.4);
+  --pomoc-surface: var(--surface);
+  --pomoc-border: var(--border-color);
+  --pomoc-border-hover: var(--public-accent-border);
+  --pomoc-text: var(--text-primary);
+  --pomoc-hover-bg: var(--primary-light);
+  --pomoc-hover-text: var(--primary-text);
+  --pomoc-glow: rgba(165, 141, 240, 0.25);
+}
+
 .pomodoro-controls {
   width: 100%;
   display: flex;
@@ -40,40 +74,40 @@
 .pomodoro-controls__button--primary {
   min-width: 120px;
 
-  border: 1px solid #6042a3;
+  border: 1px solid var(--pomoc-primary);
 
-  background: #6042a3;
+  background: var(--pomoc-primary);
 
-  color: #ffffff;
+  color: var(--on-primary);
 
-  box-shadow: 0 6px 16px rgba(96, 66, 163, 0.2);
+  box-shadow: var(--pomoc-primary-shadow);
 }
 
 .pomodoro-controls__button--primary:hover:not(:disabled) {
-  background: #4e328d;
-  border-color: #4e328d;
+  background: var(--pomoc-primary-hover);
+  border-color: var(--pomoc-primary-hover);
 
   transform: translateY(-1px);
 
-  box-shadow: 0 8px 20px rgba(96, 66, 163, 0.25);
+  box-shadow: var(--pomoc-primary-shadow-hover);
 }
 
 /* Botones secundarios */
 
 .pomodoro-controls__button--secondary {
-  border: 1px solid #ded8ea;
+  border: 1px solid var(--pomoc-border);
 
-  background: #ffffff;
+  background: var(--pomoc-surface);
 
-  color: #302c3d;
+  color: var(--pomoc-text);
 }
 
 .pomodoro-controls__button--secondary:hover:not(:disabled) {
-  border-color: #c9bce0;
+  border-color: var(--pomoc-border-hover);
 
-  background: #eee9ff;
+  background: var(--pomoc-hover-bg);
 
-  color: #6042a3;
+  color: var(--pomoc-hover-text);
 
   transform: translateY(-1px);
 }
@@ -100,8 +134,8 @@
   outline: none;
 
   box-shadow:
-    0 0 0 3px rgba(96, 66, 163, 0.15),
-    0 6px 16px rgba(96, 66, 163, 0.15);
+    0 0 0 3px var(--pomoc-glow),
+    0 6px 16px var(--pomoc-glow);
 }
 
 .pomodoro-controls__button:disabled {

@@ -45,10 +45,10 @@
   justify-content: center;
   min-width: 90px;
   padding: var(--space-sm) var(--space-md);
-  border: 1px solid var(--secondary-light);
+  border: 1px solid var(--public-accent-border);
   border-radius: var(--radius-round);
   background: var(--primary-light);
-  color: var(--primary);
+  color: var(--primary-text);
   font-size: 14px;
   font-weight: 600;
   white-space: nowrap;
@@ -83,7 +83,7 @@
 }
 
 .users__table::-webkit-scrollbar-thumb {
-  background: var(--secondary-light);
+  background: var(--public-accent-border);
   border-radius: var(--radius-round);
 }
 

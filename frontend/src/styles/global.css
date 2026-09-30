@@ -8,6 +8,9 @@
 ========================================================= */
 
 :root {
+	/* Native controls (date picker icon, select popups, scrollbars) follow the theme */
+	color-scheme: light;
+
 	/* Colores principales */
 	--primary: #6c4cd3;
 	--primary-hover: #5938c5;
@@ -49,6 +52,13 @@
 	/* Variantes de marca legibles como TEXTO (en oscuro se aclaran) */
 	--primary-text: #6c4cd3;
 	--primary-text-hover: #5938c5;
+
+	/* Error/danger legible as TEXT or border (same value as --danger in light) */
+	--danger-text: #e94d5f;
+
+	/* Scrollbar */
+	--scrollbar-thumb: #c8c1dc;
+	--scrollbar-thumb-hover: #aaa0ca;
 
 	/* Superficies publicas (header, landing, about, footer) */
 	--public-accent: #5b3fd1;
@@ -598,12 +608,12 @@ textarea.form-control {
 }
 
 ::-webkit-scrollbar-thumb {
-	background-color: #c8c1dc;
+	background-color: var(--scrollbar-thumb);
 	border-radius: var(--radius-round);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-	background-color: #aaa0ca;
+	background-color: var(--scrollbar-thumb-hover);
 }
 
 /* =========================================================
@@ -611,6 +621,8 @@ textarea.form-control {
 ========================================================= */
 
 [data-theme="dark"] {
+	color-scheme: dark;
+
 	--background: #15131f;
 	--surface: #211e2d;
 	--surface-secondary: #29253a;
@@ -630,6 +642,10 @@ textarea.form-control {
 
 	--primary-text: #a58df0;
 	--primary-text-hover: #c2b3f7;
+	--danger-text: #ff7a88;
+
+	--scrollbar-thumb: #5a5273;
+	--scrollbar-thumb-hover: #7a7098;
 
 	--public-accent: #a58df0;
 	--public-brand-text: #c2b3f7;

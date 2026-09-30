@@ -1,3 +1,51 @@
+/*
+  Task form palette (`--tform-*`, unique across the bundle).
+  Light values are the original literals; the dark block maps to global tokens.
+  Colour literals are allowed ONLY here.
+*/
+:root {
+  --tform-title: #25245a;
+  --tform-danger: #dc2626;
+  --tform-danger-glow: rgba(220, 38, 38, 0.1);
+  --tform-input-bg: #ffffff;
+  --tform-input-border: #d8d5e7;
+  --tform-placeholder: #aaa8bd;
+  --tform-counter: #9997ad;
+  --tform-accent: #6546c7;
+  --tform-focus: rgba(101, 70, 199, 0.1);
+  --tform-divider: #ebe8f5;
+  --tform-cancel-bg: #ffffff;
+  --tform-cancel-border: #d1cee0;
+  --tform-cancel-text: #5c5b77;
+  --tform-cancel-hover-bg: #f7f5fc;
+  --tform-cancel-hover-border: #aaa6c1;
+  /* Solid fill behind --on-primary text. */
+  --tform-primary: #6546c7;
+  --tform-primary-hover: #5436b1;
+  /* Spinner ring drawn on the brand submit button (constant, see guard). */
+  --tform-spinner-track: rgba(255, 255, 255, 0.4);
+}
+
+:root[data-theme="dark"] {
+  --tform-title: var(--text-primary);
+  --tform-danger: var(--danger-text);
+  --tform-danger-glow: rgba(255, 122, 136, 0.25);
+  --tform-input-bg: var(--surface-secondary);
+  --tform-input-border: var(--border-color);
+  --tform-placeholder: var(--text-muted);
+  --tform-counter: var(--text-muted);
+  --tform-accent: var(--primary-text);
+  --tform-focus: rgba(165, 141, 240, 0.25);
+  --tform-divider: var(--border-color);
+  --tform-cancel-bg: var(--surface);
+  --tform-cancel-border: var(--border-color);
+  --tform-cancel-text: var(--text-secondary);
+  --tform-cancel-hover-bg: var(--surface-secondary);
+  --tform-cancel-hover-border: var(--text-muted);
+  --tform-primary: var(--primary);
+  --tform-primary-hover: var(--primary-hover);
+}
+
 /* =========================================
    TASK FORM
    ========================================= */
@@ -31,7 +79,7 @@
    ========================================= */
 
 .task-form__field label {
-  color: #25245a;
+  color: var(--tform-title);
 
   font-size: 13px;
 
@@ -45,7 +93,7 @@
 .task-form__required {
   margin-left: 3px;
 
-  color: #dc2626;
+  color: var(--tform-danger);
 }
 
 /* =========================================
@@ -61,13 +109,13 @@
 
   padding: 11px 13px;
 
-  background: #ffffff;
+  background: var(--tform-input-bg);
 
-  border: 1px solid #d8d5e7;
+  border: 1px solid var(--tform-input-border);
 
   border-radius: 8px;
 
-  color: #25245a;
+  color: var(--tform-title);
 
   font-family: "Poppins", "Segoe UI", sans-serif;
 
@@ -87,7 +135,7 @@
 
 .task-form__field input::placeholder,
 .task-form__field textarea::placeholder {
-  color: #aaa8bd;
+  color: var(--tform-placeholder);
 }
 
 /* =========================================
@@ -119,9 +167,9 @@
 .task-form__field input:focus,
 .task-form__field textarea:focus,
 .task-form__field select:focus {
-  border-color: #6546c7;
+  border-color: var(--tform-accent);
 
-  box-shadow: 0 0 0 3px rgba(101, 70, 199, 0.1);
+  box-shadow: 0 0 0 3px var(--tform-focus);
 }
 
 /* =========================================
@@ -129,11 +177,11 @@
    ========================================= */
 
 .task-form__input--error {
-  border-color: #dc2626 !important;
+  border-color: var(--tform-danger) !important;
 }
 
 .task-form__input--error:focus {
-  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1) !important;
+  box-shadow: 0 0 0 3px var(--tform-danger-glow) !important;
 }
 
 /* =========================================
@@ -141,7 +189,7 @@
    ========================================= */
 
 .task-form__error {
-  color: #dc2626;
+  color: var(--tform-danger);
 
   font-size: 11px;
 
@@ -157,7 +205,7 @@
 
   margin-top: -3px;
 
-  color: #9997ad;
+  color: var(--tform-counter);
 
   font-size: 10px;
 }
@@ -179,7 +227,7 @@
 
   padding-top: 18px;
 
-  border-top: 1px solid #ebe8f5;
+  border-top: 1px solid var(--tform-divider);
 }
 
 /* =========================================
@@ -213,17 +261,17 @@
    ========================================= */
 
 .task-form__cancel {
-  background: #ffffff;
+  background: var(--tform-cancel-bg);
 
-  border: 1px solid #d1cee0;
+  border: 1px solid var(--tform-cancel-border);
 
-  color: #5c5b77;
+  color: var(--tform-cancel-text);
 }
 
 .task-form__cancel:hover:not(:disabled) {
-  background: #f7f5fc;
+  background: var(--tform-cancel-hover-bg);
 
-  border-color: #aaa6c1;
+  border-color: var(--tform-cancel-hover-border);
 }
 
 /* =========================================
@@ -241,17 +289,17 @@
 
   min-width: 130px;
 
-  background: #6546c7;
+  background: var(--tform-primary);
 
-  border: 1px solid #6546c7;
+  border: 1px solid var(--tform-primary);
 
-  color: #ffffff;
+  color: var(--on-primary);
 }
 
 .task-form__submit:hover:not(:disabled) {
-  background: #5436b1;
+  background: var(--tform-primary-hover);
 
-  border-color: #5436b1;
+  border-color: var(--tform-primary-hover);
 
   transform: translateY(-1px);
 }
@@ -279,9 +327,9 @@
   width: 14px;
   height: 14px;
 
-  border: 2px solid rgba(255, 255, 255, 0.4);
+  border: 2px solid var(--tform-spinner-track);
 
-  border-top-color: #ffffff;
+  border-top-color: var(--on-primary);
 
   border-radius: 50%;
 

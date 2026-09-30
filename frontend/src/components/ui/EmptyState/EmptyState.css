@@ -1,3 +1,39 @@
+/*
+  Empty state palette (`--estate-*`, unique across the bundle).
+  Light values are the original literals; the dark block maps to global tokens
+  (semantic variant tints use dark literals). Literals allowed ONLY here.
+*/
+:root {
+  --estate-surface: #ffffff;
+  --estate-border: #e5e1f7;
+  --estate-icon-bg: #f1edff;
+  --estate-title: #25245a;
+  --estate-message: #77778d;
+  /* Solid fill behind --on-primary text. */
+  --estate-fill: #5636d9;
+  --estate-fill-hover: #4528b8;
+  --estate-shadow: 0 5px 12px rgba(86, 54, 217, 0.2);
+  --estate-success-bg: #eaf8f1;
+  --estate-warning-bg: #fff6e5;
+  --estate-error-bg: #fdeeee;
+  --estate-info-bg: #eeeaff;
+}
+
+:root[data-theme="dark"] {
+  --estate-surface: var(--surface);
+  --estate-border: var(--border-color);
+  --estate-icon-bg: var(--primary-light);
+  --estate-title: var(--text-primary);
+  --estate-message: var(--text-secondary);
+  --estate-fill: var(--primary);
+  --estate-fill-hover: var(--primary-hover);
+  --estate-shadow: 0 5px 12px rgba(0, 0, 0, 0.4);
+  --estate-success-bg: #1c3a2b;
+  --estate-warning-bg: #3d3116;
+  --estate-error-bg: #3d1f27;
+  --estate-info-bg: var(--primary-light);
+}
+
 .empty-state {
   width: 100%;
   min-height: 280px;
@@ -9,8 +45,8 @@
 
   padding: 40px 24px;
 
-  background: #ffffff;
-  border: 1px solid #e5e1f7;
+  background: var(--estate-surface);
+  border: 1px solid var(--estate-border);
   border-radius: 16px;
 
   text-align: center;
@@ -29,7 +65,7 @@
 
   margin-bottom: 18px;
 
-  background: #f1edff;
+  background: var(--estate-icon-bg);
   border-radius: 50%;
 
   font-size: 36px;
@@ -44,7 +80,7 @@
 .empty-state-title {
   margin: 0 0 10px;
 
-  color: #25245a;
+  color: var(--estate-title);
 
   font-size: 20px;
   font-weight: 700;
@@ -53,7 +89,7 @@
 .empty-state-message {
   margin: 0;
 
-  color: #77778d;
+  color: var(--estate-message);
 
   font-size: 14px;
   line-height: 1.6;
@@ -69,8 +105,8 @@
   border: none;
   border-radius: 8px;
 
-  background: #5636d9;
-  color: #ffffff;
+  background: var(--estate-fill);
+  color: var(--on-primary);
 
   font-size: 14px;
   font-weight: 600;
@@ -84,11 +120,11 @@
 }
 
 .empty-state-button:hover {
-  background: #4528b8;
+  background: var(--estate-fill-hover);
 
   transform: translateY(-1px);
 
-  box-shadow: 0 5px 12px rgba(86, 54, 217, 0.2);
+  box-shadow: var(--estate-shadow);
 }
 
 .empty-state-button:active {
@@ -98,19 +134,19 @@
 /* Variantes */
 
 .empty-state-success .empty-state-icon {
-  background: #eaf8f1;
+  background: var(--estate-success-bg);
 }
 
 .empty-state-warning .empty-state-icon {
-  background: #fff6e5;
+  background: var(--estate-warning-bg);
 }
 
 .empty-state-error .empty-state-icon {
-  background: #fdeeee;
+  background: var(--estate-error-bg);
 }
 
 .empty-state-info .empty-state-icon {
-  background: #eeeaff;
+  background: var(--estate-info-bg);
 }
 
 /* Variante compacta */

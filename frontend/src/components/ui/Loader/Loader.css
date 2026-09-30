@@ -1,3 +1,18 @@
+/*
+  Loader palette (`--loader-*`, unique across the bundle).
+  Light values are the original literals; the dark block maps to global tokens.
+  Colour literals are allowed ONLY here.
+*/
+:root {
+  --loader-track: #e8e3f1;
+  --loader-accent: #68519c;
+}
+
+:root[data-theme="dark"] {
+  --loader-track: var(--border-color);
+  --loader-accent: var(--primary-text);
+}
+
 /* ==============================
    LOADER - FOCUSLY
    ============================== */
@@ -29,8 +44,8 @@
   border-radius: 50%;
 
   border-style: solid;
-  border-color: #e8e3f1;
-  border-top-color: #68519c;
+  border-color: var(--loader-track);
+  border-top-color: var(--loader-accent);
 
   animation: loaderSpin 0.8s linear infinite;
 }
@@ -85,7 +100,7 @@
 .loader-text {
   margin: 10px 0 0;
 
-  color: #68519c;
+  color: var(--loader-accent);
 
   font-weight: 700;
 

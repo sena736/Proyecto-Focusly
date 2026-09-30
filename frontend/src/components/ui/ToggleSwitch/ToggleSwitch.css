@@ -1,17 +1,39 @@
-/* ToggleSwitch Focusly
-   Inspirado en los controles de Configuración del mockup.
+/*
+  Toggle palette (`--toggle-*`, unique across the bundle).
+  Light values are the original ones; the dark block maps to global tokens.
+  Colour literals are allowed ONLY here.
 */
-
 :root {
   --toggle-purple: #6042a3;
   --toggle-purple-dark: #4e328d;
   --toggle-purple-light: #eee9ff;
   --toggle-off: #c9c5d1;
+  --toggle-off-border: #bdb8c8;
   --toggle-off-thumb: #ffffff;
   --toggle-text: #29263a;
   --toggle-muted: #777187;
   --toggle-focus: rgba(96, 66, 163, 0.16);
+  --toggle-thumb-shadow: 0 1px 4px rgba(40, 30, 60, 0.2);
+  --toggle-thumb-shadow-hover: 0 2px 6px rgba(40, 30, 60, 0.25);
 }
+
+:root[data-theme="dark"] {
+  --toggle-purple: var(--primary);
+  --toggle-purple-dark: var(--primary-hover);
+  --toggle-purple-light: var(--primary-light);
+  --toggle-off: var(--border-color);
+  --toggle-off-border: var(--text-muted);
+  --toggle-off-thumb: var(--text-primary);
+  --toggle-text: var(--text-primary);
+  --toggle-muted: var(--text-secondary);
+  --toggle-focus: rgba(165, 141, 240, 0.3);
+  --toggle-thumb-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  --toggle-thumb-shadow-hover: 0 2px 6px rgba(0, 0, 0, 0.5);
+}
+
+/* ToggleSwitch Focusly
+   Inspirado en los controles de Configuración del mockup.
+*/
 
 .focusly-toggle {
   --toggle-width: 46px;
@@ -47,7 +69,7 @@
   width: var(--toggle-width);
   height: var(--toggle-height);
   flex: 0 0 var(--toggle-width);
-  border: 1px solid #bdb8c8;
+  border: 1px solid var(--toggle-off-border);
   border-radius: 999px;
   background: var(--toggle-off);
   transition:
@@ -64,7 +86,7 @@
   height: var(--toggle-thumb-size);
   border-radius: 50%;
   background: var(--toggle-off-thumb);
-  box-shadow: 0 1px 4px rgba(40, 30, 60, 0.2);
+  box-shadow: var(--toggle-thumb-shadow);
   transform: translateY(-50%);
   transition:
     left 0.2s ease,
@@ -92,7 +114,7 @@
 }
 
 .focusly-toggle:hover:not(.is-disabled) .focusly-toggle__thumb {
-  box-shadow: 0 2px 6px rgba(40, 30, 60, 0.25);
+  box-shadow: var(--toggle-thumb-shadow-hover);
 }
 
 /* Texto */

@@ -1,3 +1,40 @@
+/*
+  Pomodoro timer palette (`--pomot-*`, unique across the bundle).
+  Light values are the original literals. The dark block maps each entry to a
+  global token (styles/global.css). Colour literals are allowed ONLY here.
+*/
+:root {
+  --pomot-surface: #ffffff;
+  --pomot-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  --pomot-text: #222;
+  --pomot-muted: #777;
+  --pomot-muted-strong: #666;
+  --pomot-faint: #888;
+  --pomot-chip-bg: #f1f3f5;
+  --pomot-chip-text: #555;
+  --pomot-chip-hover: #e5e7eb;
+  --pomot-panel-bg: #f8fafc;
+  /* Fill behind --on-primary text (active mode, main button). */
+  --pomot-accent-fill: #8ecae6;
+  /* Accent used as TEXT (completed counter). */
+  --pomot-accent-text: #8ecae6;
+}
+
+:root[data-theme="dark"] {
+  --pomot-surface: var(--surface);
+  --pomot-shadow: 0 8px 30px rgba(0, 0, 0, 0.32);
+  --pomot-text: var(--text-primary);
+  --pomot-muted: var(--text-secondary);
+  --pomot-muted-strong: var(--text-secondary);
+  --pomot-faint: var(--text-muted);
+  --pomot-chip-bg: var(--surface-secondary);
+  --pomot-chip-text: var(--text-secondary);
+  --pomot-chip-hover: var(--primary-light);
+  --pomot-panel-bg: var(--background);
+  --pomot-accent-fill: var(--primary);
+  --pomot-accent-text: var(--primary-text);
+}
+
 .pomodoro-container {
   width: 100%;
   display: flex;
@@ -10,22 +47,22 @@
 .pomodoro-card {
   width: 100%;
   max-width: 520px;
-  background: #ffffff;
+  background: var(--pomot-surface);
   border-radius: 24px;
   padding: 35px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--pomot-shadow);
   text-align: center;
 }
 
 .pomodoro-header h2 {
   margin: 0;
   font-size: 28px;
-  color: #222;
+  color: var(--pomot-text);
 }
 
 .pomodoro-header p {
   margin-top: 8px;
-  color: #777;
+  color: var(--pomot-muted);
   font-size: 15px;
 }
 
@@ -39,8 +76,8 @@
 
 .pomodoro-modes button {
   border: none;
-  background: #f1f3f5;
-  color: #555;
+  background: var(--pomot-chip-bg);
+  color: var(--pomot-chip-text);
   padding: 10px 16px;
   border-radius: 10px;
   cursor: pointer;
@@ -49,19 +86,19 @@
 }
 
 .pomodoro-modes button:hover {
-  background: #e5e7eb;
+  background: var(--pomot-chip-hover);
 }
 
 .pomodoro-modes button.active {
-  background: #8ecae6;
-  color: white;
+  background: var(--pomot-accent-fill);
+  color: var(--on-primary);
 }
 
 .pomodoro-time {
   font-size: 82px;
   font-weight: 700;
   letter-spacing: 3px;
-  color: #222;
+  color: var(--pomot-text);
   margin: 25px 0;
 }
 
@@ -83,8 +120,8 @@
 }
 
 .pomodoro-main-button {
-  background: #8ecae6;
-  color: white;
+  background: var(--pomot-accent-fill);
+  color: var(--on-primary);
 }
 
 .pomodoro-main-button:hover {
@@ -92,18 +129,18 @@
 }
 
 .pomodoro-reset-button {
-  background: #f1f3f5;
-  color: #555;
+  background: var(--pomot-chip-bg);
+  color: var(--pomot-chip-text);
 }
 
 .pomodoro-reset-button:hover {
-  background: #e5e7eb;
+  background: var(--pomot-chip-hover);
 }
 
 .pomodoro-progress {
   margin-top: 30px;
   padding: 16px;
-  background: #f8fafc;
+  background: var(--pomot-panel-bg);
   border-radius: 14px;
   display: flex;
   justify-content: space-between;
@@ -111,13 +148,13 @@
 }
 
 .pomodoro-progress span {
-  color: #666;
+  color: var(--pomot-muted-strong);
   font-size: 14px;
 }
 
 .pomodoro-progress strong {
   font-size: 20px;
-  color: #8ecae6;
+  color: var(--pomot-accent-text);
 }
 
 .pomodoro-info {
@@ -125,7 +162,7 @@
 }
 
 .pomodoro-info p {
-  color: #888;
+  color: var(--pomot-faint);
   font-size: 13px;
   line-height: 1.6;
   margin: 0;

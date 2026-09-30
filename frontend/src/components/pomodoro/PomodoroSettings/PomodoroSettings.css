@@ -1,3 +1,32 @@
+/*
+  Pomodoro settings palette (`--pomos-*`, unique across the bundle).
+  Light values are the original literals; the dark block maps to global tokens.
+  Colour literals are allowed ONLY here.
+*/
+:root {
+  --pomos-surface: #ffffff;
+  --pomos-border: #e5e1f3;
+  --pomos-title: #25245a;
+  --pomos-muted: #8585a0;
+  --pomos-btn-bg: #f3f0ff;
+  --pomos-btn-border: #ddd5f6;
+  --pomos-btn-hover: #e8e2ff;
+  --pomos-accent: #6546c7;
+  --pomos-focus: rgba(101, 70, 199, 0.2);
+}
+
+:root[data-theme="dark"] {
+  --pomos-surface: var(--surface);
+  --pomos-border: var(--border-color);
+  --pomos-title: var(--text-primary);
+  --pomos-muted: var(--text-muted);
+  --pomos-btn-bg: var(--primary-soft);
+  --pomos-btn-border: var(--public-accent-border);
+  --pomos-btn-hover: var(--primary-light);
+  --pomos-accent: var(--primary-text);
+  --pomos-focus: rgba(165, 141, 240, 0.35);
+}
+
 /* =========================================
    POMODORO SETTINGS
    ========================================= */
@@ -25,9 +54,9 @@
 
   padding: 14px 16px;
 
-  background: #ffffff;
+  background: var(--pomos-surface);
 
-  border: 1px solid #e5e1f3;
+  border: 1px solid var(--pomos-border);
 
   border-radius: 10px;
 
@@ -53,7 +82,7 @@
    ========================================= */
 
 .pomodoro-setting__title {
-  color: #25245a;
+  color: var(--pomos-title);
 
   font-family: "Poppins", "Segoe UI", sans-serif;
 
@@ -67,7 +96,7 @@
    ========================================= */
 
 .pomodoro-setting__description {
-  color: #8585a0;
+  color: var(--pomos-muted);
 
   font-family: "Poppins", "Segoe UI", sans-serif;
 
@@ -105,13 +134,13 @@
 
   padding: 0;
 
-  background: #f3f0ff;
+  background: var(--pomos-btn-bg);
 
-  border: 1px solid #ddd5f6;
+  border: 1px solid var(--pomos-btn-border);
 
   border-radius: 7px;
 
-  color: #6546c7;
+  color: var(--pomos-accent);
 
   font-size: 18px;
 
@@ -132,9 +161,9 @@
    ========================================= */
 
 .pomodoro-setting__button:hover {
-  background: #e8e2ff;
+  background: var(--pomos-btn-hover);
 
-  border-color: #6546c7;
+  border-color: var(--pomos-accent);
 
   transform: translateY(-1px);
 }
@@ -159,7 +188,7 @@
 
   min-width: 32px;
 
-  color: #25245a;
+  color: var(--pomos-title);
 
   font-size: 14px;
 
@@ -173,7 +202,7 @@
    ========================================= */
 
 .pomodoro-setting__button:focus-visible {
-  outline: 3px solid rgba(101, 70, 199, 0.2);
+  outline: 3px solid var(--pomos-focus);
 
   outline-offset: 2px;
 }
