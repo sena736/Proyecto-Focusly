@@ -2,6 +2,32 @@
    AVATAR - FOCUSLY
    ============================== */
 
+/*
+  Palette: light values are the original literals; the dark block maps them to
+  global tokens (styles/global.css). Colour literals live ONLY in these blocks.
+*/
+:root {
+  --avatar-hover-bg: #f4f1fa;
+  --avatar-image-bg: #e7e1f2;
+  --avatar-image-text: #68519c;
+  --avatar-image-border: #ddd6ed;
+  --avatar-name: #302b3d;
+  --avatar-role: #9691a2;
+  --avatar-arrow: #8e889b;
+  --avatar-arrow-hover: #68519c;
+}
+
+:root[data-theme="dark"] {
+  --avatar-hover-bg: var(--surface-secondary);
+  --avatar-image-bg: var(--primary-light);
+  --avatar-image-text: var(--primary-text);
+  --avatar-image-border: var(--border-color);
+  --avatar-name: var(--text-primary);
+  --avatar-role: var(--text-secondary);
+  --avatar-arrow: var(--text-muted);
+  --avatar-arrow-hover: var(--primary-text);
+}
+
 .avatar-container {
   display: flex;
   align-items: center;
@@ -22,7 +48,7 @@
 }
 
 .avatar-container:hover {
-  background: #f4f1fa;
+  background: var(--avatar-hover-bg);
 }
 
 /* ==============================
@@ -37,9 +63,9 @@
 
   border-radius: 50%;
 
-  background: #e7e1f2;
+  background: var(--avatar-image-bg);
 
-  color: #68519c;
+  color: var(--avatar-image-text);
 
   display: flex;
   align-items: center;
@@ -47,7 +73,7 @@
 
   overflow: hidden;
 
-  border: 1px solid #ddd6ed;
+  border: 1px solid var(--avatar-image-border);
 }
 
 .avatar-image span {
@@ -78,7 +104,7 @@
 }
 
 .avatar-info strong {
-  color: #302b3d;
+  color: var(--avatar-name);
 
   font-size: 11px;
   font-weight: 800;
@@ -87,7 +113,7 @@
 }
 
 .avatar-info span {
-  color: #9691a2;
+  color: var(--avatar-role);
 
   font-size: 9px;
 
@@ -99,7 +125,7 @@
    ============================== */
 
 .avatar-arrow {
-  color: #8e889b;
+  color: var(--avatar-arrow);
 
   font-size: 14px;
 
@@ -107,7 +133,7 @@
 }
 
 .avatar-container:hover .avatar-arrow {
-  color: #68519c;
+  color: var(--avatar-arrow-hover);
 }
 
 /* ==============================

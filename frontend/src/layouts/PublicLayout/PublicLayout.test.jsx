@@ -11,6 +11,9 @@ import {
 } from "react-router-dom";
 
 import PublicLayout from "./PublicLayout";
+import useAuth from "../../hooks/useAuth";
+
+vi.mock("../../hooks/useAuth");
 
 const BackButton = () => {
   const navigate = useNavigate();
@@ -63,6 +66,7 @@ describe("PublicLayout", () => {
       scrolledIds.push(this.id);
     });
     window.scrollTo = vi.fn();
+    useAuth.mockReturnValue({ user: null, loading: false, isAuthenticated: false });
   });
 
   it("renders the header, the outlet content inside main, and the footer", () => {
@@ -73,6 +77,49 @@ describe("PublicLayout", () => {
 
     const main = screen.getByRole("main");
     expect(main).toHaveTextContent("Landing content");
+  });
+
+  it("shows guests the login and register links in header and footer", () => {
+    renderLayout("/");
+
+    [screen.getByRole("banner"), screen.getByRole("contentinfo")].forEach(
+      (region) => {
+        expect(
+          within(region).getByRole("link", { name: "Iniciar sesión" }),
+        ).toBeInTheDocument();
+        expect(
+          within(region).queryByRole("link", { name: "Ir al dashboard" }),
+        ).toBeNull();
+      },
+    );
+  });
+
+  it("shows a connected user the way back to the dashboard in header and footer", () => {
+    useAuth.mockReturnValue({
+      user: { name: "Ana Perez", role: "USER" },
+      loading: false,
+      isAuthenticated: true,
+    });
+    renderLayout("/about");
+
+    [screen.getByRole("banner"), screen.getByRole("contentinfo")].forEach(
+      (region) => {
+        expect(
+          within(region).getByRole("link", { name: "Ir al dashboard" }),
+        ).toHaveAttribute("href", "/dashboard");
+        expect(
+          within(region).queryByRole("link", { name: "Iniciar sesión" }),
+        ).toBeNull();
+        expect(
+          within(region).queryByRole("link", { name: "Registrarse" }),
+        ).toBeNull();
+      },
+    );
+    expect(
+      within(screen.getByRole("banner")).getByRole("button", {
+        name: "Perfil de Ana Perez",
+      }),
+    ).toBeInTheDocument();
   });
 
   it("renders a different child route in the same layout", () => {

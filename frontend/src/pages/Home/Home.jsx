@@ -9,6 +9,7 @@ import {
   FiTrendingUp,
   FiEye,
 } from "react-icons/fi";
+import useAuth from "../../hooks/useAuth";
 import "./Home.css";
 
 const FEATURES = [
@@ -53,6 +54,10 @@ const BENEFITS = [
 ];
 
 const Home = () => {
+  const { user, loading, isAuthenticated } = useAuth();
+
+  const hasSession = Boolean(isAuthenticated && user);
+
   return (
     <div className="landing">
       {/* Inicio */}
@@ -72,16 +77,34 @@ const Home = () => {
               enfoque y menos estrés.
             </p>
 
-            <div className="landing__actions">
-              <Link to="/register" className="landing__btn landing__btn--primary">
-                Crear cuenta
-                <FiArrowRight aria-hidden="true" />
-              </Link>
+            {loading ? (
+              // Sesión sin resolver: espacio reservado, sin botones de invitado.
+              <div
+                className="landing__actions landing__actions--pending"
+                aria-hidden="true"
+              />
+            ) : hasSession ? (
+              <div className="landing__actions">
+                <Link
+                  to="/dashboard"
+                  className="landing__btn landing__btn--primary"
+                >
+                  Ir al dashboard
+                  <FiArrowRight aria-hidden="true" />
+                </Link>
+              </div>
+            ) : (
+              <div className="landing__actions">
+                <Link to="/register" className="landing__btn landing__btn--primary">
+                  Crear cuenta
+                  <FiArrowRight aria-hidden="true" />
+                </Link>
 
-              <Link to="/login" className="landing__btn landing__btn--secondary">
-                Iniciar sesión
-              </Link>
-            </div>
+                <Link to="/login" className="landing__btn landing__btn--secondary">
+                  Iniciar sesión
+                </Link>
+              </div>
+            )}
           </div>
 
           {/* Ilustración decorativa del temporizador */}

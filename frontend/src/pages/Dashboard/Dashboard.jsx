@@ -11,6 +11,7 @@ import { usePhrase } from "../../hooks/usePhrase";
 import { getToken } from "../../services/token.services";
 import { TASK_STATUS } from "../../utils/constants";
 import { formatDueDate } from "../../utils/date";
+import { getRoleLabel } from "../../utils/roleLabel";
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -114,7 +115,7 @@ export default function Dashboard() {
 
           <Avatar
             name={userName}
-            role={user?.role === "ADMIN" ? "Administrador" : "Estudiante"}
+            role={getRoleLabel(user?.role)}
             onClick={() => navigate("/profile")}
           />
         </header>

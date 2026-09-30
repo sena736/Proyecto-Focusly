@@ -74,6 +74,15 @@
   gap: var(--space-sm);
 }
 
+/*
+  Sesión sin resolver: reserva la altura de los botones para evitar saltos.
+  Por debajo de 640px los CTA de invitado van apilados (2 botones de ~51px
+  + el gap); desde 640px van en fila (1 botón de ~51px).
+*/
+.landing__actions--pending {
+  min-height: 110px;
+}
+
 .landing__btn {
   display: inline-flex;
   align-items: center;
@@ -279,6 +288,10 @@
   .landing__actions {
     flex-direction: row;
     justify-content: center;
+  }
+
+  .landing__actions--pending {
+    min-height: 51px;
   }
 
   .landing__grid--four {

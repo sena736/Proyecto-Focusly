@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import useAuth from "../../../hooks/useAuth";
 import "./Footer.css";
 
 export default function Footer({
@@ -6,6 +7,9 @@ export default function Footer({
   showCopyright = true,
   className = "",
 }) {
+  const { user, loading, isAuthenticated } = useAuth();
+  const hasSession = Boolean(isAuthenticated && user);
+
   const currentYear = new Date().getFullYear();
 
   const classes = ["focusly-footer", className].filter(Boolean).join(" ");
@@ -39,8 +43,16 @@ export default function Footer({
 
               <div className="focusly-footer__column">
                 <h3>Acceso</h3>
-                <Link to="/login">Iniciar sesión</Link>
-                <Link to="/register">Registrarse</Link>
+                {/* Mientras la sesión se resuelve no se muestra ningún enlace */}
+                {!loading && hasSession && (
+                  <Link to="/dashboard">Ir al dashboard</Link>
+                )}
+                {!loading && !hasSession && (
+                  <>
+                    <Link to="/login">Iniciar sesión</Link>
+                    <Link to="/register">Registrarse</Link>
+                  </>
+                )}
               </div>
 
               <div className="focusly-footer__column">

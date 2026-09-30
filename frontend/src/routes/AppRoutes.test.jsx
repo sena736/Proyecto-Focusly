@@ -1,6 +1,6 @@
 import React from "react";
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 
 const { entry } = vi.hoisted(() => ({ entry: { current: "/" } }));
 
@@ -34,6 +34,10 @@ vi.mock("../pages/Register/Register", () => ({
 }));
 
 import AppRoutes from "./AppRoutes";
+import useAuth from "../hooks/useAuth";
+
+// The public tree reads the session (header/footer/landing CTAs).
+vi.mock("../hooks/useAuth");
 
 const renderAt = (path) => {
   entry.current = path;
@@ -44,6 +48,25 @@ describe("AppRoutes public routes", () => {
   beforeEach(() => {
     Element.prototype.scrollIntoView = vi.fn();
     window.scrollTo = vi.fn();
+    useAuth.mockReturnValue({ user: null, loading: false, isAuthenticated: false });
+  });
+
+  it("renders the landing for a connected user with a dashboard link instead of guest buttons", () => {
+    useAuth.mockReturnValue({
+      user: { name: "Ana Perez", role: "ADMIN" },
+      loading: false,
+      isAuthenticated: true,
+    });
+    renderAt("/");
+
+    const banner = screen.getByRole("banner");
+    expect(
+      within(banner).getByRole("link", { name: "Ir al dashboard" }),
+    ).toHaveAttribute("href", "/dashboard");
+    expect(within(banner).getByText("Administrador")).toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: "Iniciar sesión" })).toBeNull();
+    expect(screen.queryByRole("link", { name: "Registrarse" })).toBeNull();
+    expect(screen.queryByRole("link", { name: /crear cuenta/i })).toBeNull();
   });
 
   it("renders the landing inside the public layout at /", () => {

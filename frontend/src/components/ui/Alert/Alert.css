@@ -2,6 +2,66 @@
    ALERT - FOCUSLY
    ============================== */
 
+/*
+  Palette: light values are the original literals; the dark block re-tints each
+  alert type for dark surfaces. Colour literals live ONLY in these blocks.
+*/
+:root {
+  --alert-close-hover-bg: rgba(0, 0, 0, 0.06);
+
+  --alert-success-bg: #f0f8f3;
+  --alert-success-border: #c9e8d4;
+  --alert-success-text: #27633c;
+  --alert-success-icon-bg: #d9f0e1;
+  --alert-success-icon: #36834f;
+
+  --alert-error-bg: #fff1f1;
+  --alert-error-border: #f0cccc;
+  --alert-error-text: #8a3030;
+  --alert-error-icon-bg: #f9dddd;
+  --alert-error-icon: #c34444;
+
+  --alert-warning-bg: #fff9ed;
+  --alert-warning-border: #f0dfb6;
+  --alert-warning-text: #795c1d;
+  --alert-warning-icon-bg: #f8eac7;
+  --alert-warning-icon: #b28124;
+
+  --alert-info-bg: #f2eff9;
+  --alert-info-border: #dcd3ef;
+  --alert-info-text: #514078;
+  --alert-info-icon-bg: #e4ddf5;
+  --alert-info-icon: #68519c;
+}
+
+:root[data-theme="dark"] {
+  --alert-close-hover-bg: rgba(255, 255, 255, 0.08);
+
+  --alert-success-bg: #16291f;
+  --alert-success-border: #2c5a40;
+  --alert-success-text: #8fd6aa;
+  --alert-success-icon-bg: #1f3d2c;
+  --alert-success-icon: #6fcf97;
+
+  --alert-error-bg: #2e1a1f;
+  --alert-error-border: #6b3038;
+  --alert-error-text: #f2a9b0;
+  --alert-error-icon-bg: #45232a;
+  --alert-error-icon: #f07f8c;
+
+  --alert-warning-bg: #2e2616;
+  --alert-warning-border: #6b5426;
+  --alert-warning-text: #e6c77e;
+  --alert-warning-icon-bg: #463a1c;
+  --alert-warning-icon: #e0aa45;
+
+  --alert-info-bg: #241f38;
+  --alert-info-border: #45396b;
+  --alert-info-text: #c9bdf0;
+  --alert-info-icon-bg: var(--primary-light);
+  --alert-info-icon: var(--primary-text);
+}
+
 .alert {
   width: 100%;
   display: flex;
@@ -88,7 +148,7 @@
 }
 
 .alert-close:hover {
-  background: rgba(0, 0, 0, 0.06);
+  background: var(--alert-close-hover-bg);
 }
 
 /* ==============================
@@ -96,18 +156,18 @@
    ============================== */
 
 .alert-success {
-  background: #f0f8f3;
-  border-color: #c9e8d4;
-  color: #27633c;
+  background: var(--alert-success-bg);
+  border-color: var(--alert-success-border);
+  color: var(--alert-success-text);
 }
 
 .alert-success .alert-icon {
-  background: #d9f0e1;
-  color: #36834f;
+  background: var(--alert-success-icon-bg);
+  color: var(--alert-success-icon);
 }
 
 .alert-success .alert-close {
-  color: #36834f;
+  color: var(--alert-success-icon);
 }
 
 /* ==============================
@@ -115,18 +175,18 @@
    ============================== */
 
 .alert-error {
-  background: #fff1f1;
-  border-color: #f0cccc;
-  color: #8a3030;
+  background: var(--alert-error-bg);
+  border-color: var(--alert-error-border);
+  color: var(--alert-error-text);
 }
 
 .alert-error .alert-icon {
-  background: #f9dddd;
-  color: #c34444;
+  background: var(--alert-error-icon-bg);
+  color: var(--alert-error-icon);
 }
 
 .alert-error .alert-close {
-  color: #c34444;
+  color: var(--alert-error-icon);
 }
 
 /* ==============================
@@ -134,18 +194,18 @@
    ============================== */
 
 .alert-warning {
-  background: #fff9ed;
-  border-color: #f0dfb6;
-  color: #795c1d;
+  background: var(--alert-warning-bg);
+  border-color: var(--alert-warning-border);
+  color: var(--alert-warning-text);
 }
 
 .alert-warning .alert-icon {
-  background: #f8eac7;
-  color: #b28124;
+  background: var(--alert-warning-icon-bg);
+  color: var(--alert-warning-icon);
 }
 
 .alert-warning .alert-close {
-  color: #b28124;
+  color: var(--alert-warning-icon);
 }
 
 /* ==============================
@@ -153,18 +213,18 @@
    ============================== */
 
 .alert-info {
-  background: #f2eff9;
-  border-color: #dcd3ef;
-  color: #514078;
+  background: var(--alert-info-bg);
+  border-color: var(--alert-info-border);
+  color: var(--alert-info-text);
 }
 
 .alert-info .alert-icon {
-  background: #e4ddf5;
-  color: #68519c;
+  background: var(--alert-info-icon-bg);
+  color: var(--alert-info-icon);
 }
 
 .alert-info .alert-close {
-  color: #68519c;
+  color: var(--alert-info-icon);
 }
 
 /* ==============================
