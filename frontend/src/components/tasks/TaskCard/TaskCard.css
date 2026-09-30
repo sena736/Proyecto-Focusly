@@ -1,3 +1,62 @@
+/*
+  Task card palette (`--tcard-*`, unique across the bundle).
+  Light values are the original literals. Dark maps neutrals to global tokens;
+  the semantic priority / danger pairs use dark literals tuned for >= 4.5:1.
+  `--tcard-done-opacity` dims a completed card: .75 in light (unchanged); in dark
+  it is .95 because a dimmed card is blended over the page, and at .75 the tint /
+  high-priority chips fall below 4.5:1 (lowest effective chip contrast at .95: 4.62:1).
+  Colour literals are allowed ONLY here.
+*/
+:root {
+  --tcard-surface: #ffffff;
+  --tcard-border: #e5e1f7;
+  --tcard-border-hover: #cfc7ef;
+  --tcard-hover-bg: #fcfbff;
+  --tcard-shadow: 0 3px 10px rgba(37, 36, 90, 0.06);
+  --tcard-check-border: #8d84bd;
+  /* Solid brand fill (checked box, hover ring) behind --on-primary marks. */
+  --tcard-accent-fill: #5636d9;
+  /* Brand accent used as TEXT. */
+  --tcard-accent: #5636d9;
+  --tcard-tint: #f0edff;
+  --tcard-title: #25245a;
+  --tcard-muted: #77778d;
+  --tcard-date-bg: #f5f3fc;
+  --tcard-date-text: #66627e;
+  --tcard-low-bg: #edf8f3;
+  --tcard-low-text: #27845b;
+  --tcard-high-bg: #fff2e5;
+  --tcard-high-text: #c76a16;
+  --tcard-done-bg: #fafafa;
+  --tcard-danger-bg: #fff0f0;
+  --tcard-danger: #dc3545;
+  --tcard-done-opacity: 0.75;
+}
+
+:root[data-theme="dark"] {
+  --tcard-surface: var(--surface);
+  --tcard-border: var(--border-color);
+  --tcard-border-hover: var(--public-accent-border);
+  --tcard-hover-bg: var(--surface-secondary);
+  --tcard-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+  --tcard-check-border: var(--text-muted);
+  --tcard-accent-fill: var(--primary);
+  --tcard-accent: var(--primary-text);
+  --tcard-tint: var(--primary-light);
+  --tcard-title: var(--text-primary);
+  --tcard-muted: var(--text-secondary);
+  --tcard-date-bg: var(--surface-secondary);
+  --tcard-date-text: var(--text-secondary);
+  --tcard-low-bg: #1c3a2b;
+  --tcard-low-text: #6fd3a0;
+  --tcard-high-bg: #3d2a16;
+  --tcard-high-text: #f0a35e;
+  --tcard-done-bg: var(--background);
+  --tcard-danger-bg: #3d1f27;
+  --tcard-danger: var(--danger-text);
+  --tcard-done-opacity: 0.95;
+}
+
 .task-card {
   width: 100%;
 
@@ -8,9 +67,9 @@
 
   padding: 14px 16px;
 
-  background: #ffffff;
+  background: var(--tcard-surface);
 
-  border: 1px solid #e5e1f7;
+  border: 1px solid var(--tcard-border);
   border-radius: 10px;
 
   box-sizing: border-box;
@@ -22,10 +81,10 @@
 }
 
 .task-card:hover {
-  border-color: #cfc7ef;
-  background: #fcfbff;
+  border-color: var(--tcard-border-hover);
+  background: var(--tcard-hover-bg);
 
-  box-shadow: 0 3px 10px rgba(37, 36, 90, 0.06);
+  box-shadow: var(--tcard-shadow);
 }
 
 /* =========================
@@ -44,11 +103,11 @@
 
   padding: 0;
 
-  border: 1.5px solid #8d84bd;
+  border: 1.5px solid var(--tcard-check-border);
   border-radius: 50%;
 
-  background: #ffffff;
-  color: #ffffff;
+  background: var(--tcard-surface);
+  color: var(--on-primary);
 
   cursor: pointer;
 
@@ -59,13 +118,13 @@
 }
 
 .task-checkbox:hover {
-  border-color: #5636d9;
+  border-color: var(--tcard-accent-fill);
   transform: scale(1.05);
 }
 
 .task-checkbox-checked {
-  border-color: #5636d9;
-  background: #5636d9;
+  border-color: var(--tcard-accent-fill);
+  background: var(--tcard-accent-fill);
 }
 
 .task-checkbox-checked span {
@@ -94,7 +153,7 @@
 .task-title {
   margin: 0;
 
-  color: #25245a;
+  color: var(--tcard-title);
 
   font-size: 14px;
   font-weight: 700;
@@ -109,7 +168,7 @@
 .task-description {
   margin: 3px 0 0;
 
-  color: #77778d;
+  color: var(--tcard-muted);
 
   font-size: 12px;
   line-height: 1.4;
@@ -150,8 +209,8 @@
 .task-date {
   gap: 4px;
 
-  background: #f5f3fc;
-  color: #66627e;
+  background: var(--tcard-date-bg);
+  color: var(--tcard-date-text);
 }
 
 .task-meta-icon {
@@ -159,8 +218,8 @@
 }
 
 .task-category {
-  background: #f0edff;
-  color: #5636d9;
+  background: var(--tcard-tint);
+  color: var(--tcard-accent);
 }
 
 /* =========================
@@ -168,18 +227,18 @@
    ========================= */
 
 .task-priority-low {
-  background: #edf8f3;
-  color: #27845b;
+  background: var(--tcard-low-bg);
+  color: var(--tcard-low-text);
 }
 
 .task-priority-normal {
-  background: #f0edff;
-  color: #5636d9;
+  background: var(--tcard-tint);
+  color: var(--tcard-accent);
 }
 
 .task-priority-high {
-  background: #fff2e5;
-  color: #c76a16;
+  background: var(--tcard-high-bg);
+  color: var(--tcard-high-text);
 }
 
 /* =========================
@@ -187,12 +246,12 @@
    ========================= */
 
 .task-card-completed {
-  background: #fafafa;
-  opacity: 0.75;
+  background: var(--tcard-done-bg);
+  opacity: var(--tcard-done-opacity);
 }
 
 .task-card-completed .task-title {
-  color: #77778d;
+  color: var(--tcard-muted);
 
   text-decoration: line-through;
 }
@@ -228,7 +287,7 @@
   border-radius: 7px;
 
   background: transparent;
-  color: #77778d;
+  color: var(--tcard-muted);
 
   font-size: 18px;
 
@@ -240,13 +299,13 @@
 }
 
 .task-action-button:hover {
-  background: #f0edff;
-  color: #5636d9;
+  background: var(--tcard-tint);
+  color: var(--tcard-accent);
 }
 
 .task-action-delete:hover {
-  background: #fff0f0;
-  color: #dc3545;
+  background: var(--tcard-danger-bg);
+  color: var(--tcard-danger);
 }
 
 /* =========================
