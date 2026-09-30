@@ -1,7 +1,49 @@
+/*
+  Confirm modal palette (`--cmodal-*`, unique across the bundle).
+  Light values are the original literals. Dark maps to global tokens; the
+  danger/warning fills stay constant because they always sit behind
+  --on-primary text. Colour literals are allowed ONLY here.
+*/
+:root {
+  --cmodal-overlay: rgba(48, 43, 61, 0.55);
+  --cmodal-surface: #ffffff;
+  --cmodal-shadow: 0 15px 40px rgba(48, 43, 61, 0.2);
+  --cmodal-muted: #9691a2;
+  --cmodal-hover-bg: #f0f6f5;
+  --cmodal-accent-text: #514078;
+  --cmodal-title: #302b3d;
+  --cmodal-border: #ddd9e5;
+  --cmodal-cancel-hover: #f5f3f8;
+  --cmodal-danger-bg: #fce8e8;
+  --cmodal-danger-text: #d95353;
+  --cmodal-warning-bg: #fff4dc;
+  --cmodal-warning-text: #d99a24;
+  --cmodal-danger-fill: #d95353;
+  --cmodal-danger-fill-hover: #bd4141;
+  --cmodal-warning-fill: #d99a24;
+  --cmodal-warning-fill-hover: #bd841c;
+}
+
+:root[data-theme="dark"] {
+  --cmodal-overlay: rgba(8, 6, 16, 0.7);
+  --cmodal-surface: var(--surface);
+  --cmodal-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+  --cmodal-muted: var(--text-secondary);
+  --cmodal-hover-bg: var(--surface-secondary);
+  --cmodal-accent-text: var(--primary-text);
+  --cmodal-title: var(--text-primary);
+  --cmodal-border: var(--border-color);
+  --cmodal-cancel-hover: var(--surface-secondary);
+  --cmodal-danger-bg: #3d1f27;
+  --cmodal-danger-text: var(--danger-text);
+  --cmodal-warning-bg: #3d3116;
+  --cmodal-warning-text: #f2b84b;
+}
+
 .confirm-modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(48, 43, 61, 0.55);
+  background: var(--cmodal-overlay);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -13,11 +55,11 @@
   position: relative;
   width: 100%;
   max-width: 430px;
-  background: #ffffff;
+  background: var(--cmodal-surface);
   border-radius: 16px;
   padding: 32px;
   text-align: center;
-  box-shadow: 0 15px 40px rgba(48, 43, 61, 0.2);
+  box-shadow: var(--cmodal-shadow);
   animation: confirmModalAppear 0.2s ease;
 }
 
@@ -29,7 +71,7 @@
   height: 34px;
   border: none;
   background: transparent;
-  color: #9691a2;
+  color: var(--cmodal-muted);
   font-size: 21px;
   cursor: pointer;
   border-radius: 8px;
@@ -40,8 +82,8 @@
 }
 
 .confirm-modal-close:hover {
-  background: #f0f6f5;
-  color: #514078;
+  background: var(--cmodal-hover-bg);
+  color: var(--cmodal-accent-text);
 }
 
 .confirm-modal-icon {
@@ -56,18 +98,18 @@
 }
 
 .confirm-modal-icon.danger {
-  background: #fce8e8;
-  color: #d95353;
+  background: var(--cmodal-danger-bg);
+  color: var(--cmodal-danger-text);
 }
 
 .confirm-modal-icon.warning {
-  background: #fff4dc;
-  color: #d99a24;
+  background: var(--cmodal-warning-bg);
+  color: var(--cmodal-warning-text);
 }
 
 .confirm-modal h2 {
   margin: 0 0 10px;
-  color: #302b3d;
+  color: var(--cmodal-title);
   font-family: "Nunito", sans-serif;
   font-size: 23px;
   font-weight: 700;
@@ -76,7 +118,7 @@
 .confirm-modal p {
   margin: 0 auto 28px;
   max-width: 340px;
-  color: #9691a2;
+  color: var(--cmodal-muted);
   font-family: "Nunito", sans-serif;
   font-size: 15px;
   line-height: 1.5;
@@ -106,34 +148,34 @@
 }
 
 .confirm-modal-cancel {
-  border: 1px solid #ddd9e5;
-  background: #ffffff;
-  color: #514078;
+  border: 1px solid var(--cmodal-border);
+  background: var(--cmodal-surface);
+  color: var(--cmodal-accent-text);
 }
 
 .confirm-modal-cancel:hover {
-  background: #f5f3f8;
+  background: var(--cmodal-cancel-hover);
 }
 
 .confirm-modal-confirm {
   border: none;
-  color: #ffffff;
+  color: var(--on-primary);
 }
 
 .confirm-modal-confirm.danger {
-  background: #d95353;
+  background: var(--cmodal-danger-fill);
 }
 
 .confirm-modal-confirm.danger:hover {
-  background: #bd4141;
+  background: var(--cmodal-danger-fill-hover);
 }
 
 .confirm-modal-confirm.warning {
-  background: #d99a24;
+  background: var(--cmodal-warning-fill);
 }
 
 .confirm-modal-confirm.warning:hover {
-  background: #bd841c;
+  background: var(--cmodal-warning-fill-hover);
 }
 
 @keyframes confirmModalAppear {

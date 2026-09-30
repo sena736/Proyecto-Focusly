@@ -1,17 +1,57 @@
-/* Modal Focusly
-   Paleta y formas inspiradas en el mockup de la aplicación.
+/*
+  Modal palette (`--modal-*`, unique across the bundle).
+  Light values are the original ones. The dark block maps to global tokens.
+  `--modal-purple` is used as TEXT/border (lightened in dark); the new
+  `--modal-purple-fill` is the solid fill behind --on-primary text.
+  Colour literals are allowed ONLY here.
 */
-
 :root {
   --modal-purple: #6042a3;
+  --modal-purple-fill: #6042a3;
   --modal-purple-dark: #4e328d;
   --modal-purple-light: #eee9ff;
   --modal-text: #29263a;
   --modal-muted: #777187;
   --modal-border: #e8e2f3;
   --modal-white: #ffffff;
+  /* Danger fill: only ever behind white text (constant, see guard). */
   --modal-danger: #c45c68;
+  --modal-danger-text: #c45c68;
+  --modal-danger-bg: #fae9ec;
+  --modal-overlay: rgba(34, 25, 61, 0.52);
+  --modal-shadow: 0 25px 70px rgba(44, 30, 78, 0.25);
+  --modal-primary-shadow: 0 7px 18px rgba(96, 66, 163, 0.2);
+  --modal-danger-shadow: 0 7px 18px rgba(196, 92, 104, 0.2);
+  --modal-deco-dot: #ded5ff;
+  --modal-deco-from: #f0ebff;
+  --modal-deco-to: #faf9ff;
+  /* White spinner ring drawn on the brand/danger button (constant, see guard). */
+  --modal-spinner-track: rgba(255, 255, 255, 0.45);
 }
+
+:root[data-theme="dark"] {
+  --modal-purple: var(--primary-text);
+  --modal-purple-fill: var(--primary);
+  --modal-purple-dark: var(--primary-hover);
+  --modal-purple-light: var(--primary-light);
+  --modal-text: var(--text-primary);
+  --modal-muted: var(--text-secondary);
+  --modal-border: var(--border-color);
+  --modal-white: var(--surface);
+  --modal-danger-text: var(--danger-text);
+  --modal-danger-bg: #3d1f27;
+  --modal-overlay: rgba(8, 6, 16, 0.7);
+  --modal-shadow: 0 25px 70px rgba(0, 0, 0, 0.5);
+  --modal-primary-shadow: 0 7px 18px rgba(0, 0, 0, 0.4);
+  --modal-danger-shadow: 0 7px 18px rgba(0, 0, 0, 0.4);
+  --modal-deco-dot: var(--primary-light);
+  --modal-deco-from: var(--footer-blob);
+  --modal-deco-to: var(--footer-quote-from);
+}
+
+/* Modal Focusly
+   Paleta y formas inspiradas en el mockup de la aplicación.
+*/
 
 .focusly-modal-overlay {
   position: fixed;
@@ -21,7 +61,7 @@
   align-items: center;
   justify-content: center;
   padding: 20px;
-  background: rgba(34, 25, 61, 0.52);
+  background: var(--modal-overlay);
   backdrop-filter: blur(4px);
   animation: focusly-modal-overlay-in 0.2s ease-out;
 }
@@ -36,7 +76,7 @@
   border-radius: 24px;
   background: var(--modal-white);
   color: var(--modal-text);
-  box-shadow: 0 25px 70px rgba(44, 30, 78, 0.25);
+  box-shadow: var(--modal-shadow);
   font-family: "Nunito", "Segoe UI", sans-serif;
   animation: focusly-modal-in 0.25s ease-out;
 }
@@ -50,8 +90,8 @@
   overflow: hidden;
   border-radius: 24px 0 70px 0;
   background:
-    radial-gradient(circle at 25% 20%, #ded5ff 0 25%, transparent 26%),
-    linear-gradient(135deg, #f0ebff 0%, #faf9ff 68%, transparent 69%);
+    radial-gradient(circle at 25% 20%, var(--modal-deco-dot) 0 25%, transparent 26%),
+    linear-gradient(135deg, var(--modal-deco-from) 0%, var(--modal-deco-to) 68%, transparent 69%);
   opacity: 0.95;
   pointer-events: none;
 }
@@ -180,10 +220,10 @@
 }
 
 .focusly-modal-button--primary {
-  border: 1px solid var(--modal-purple);
-  background: var(--modal-purple);
-  color: white;
-  box-shadow: 0 7px 18px rgba(96, 66, 163, 0.2);
+  border: 1px solid var(--modal-purple-fill);
+  background: var(--modal-purple-fill);
+  color: var(--on-primary);
+  box-shadow: var(--modal-primary-shadow);
 }
 
 .focusly-modal-button--primary:hover:not(:disabled) {
@@ -194,12 +234,12 @@
 .focusly-modal-button--danger {
   border-color: var(--modal-danger);
   background: var(--modal-danger);
-  box-shadow: 0 7px 18px rgba(196, 92, 104, 0.2);
+  box-shadow: var(--modal-danger-shadow);
 }
 
 .focusly-modal--danger .focusly-modal-icon {
-  background: #fae9ec;
-  color: var(--modal-danger);
+  background: var(--modal-danger-bg);
+  color: var(--modal-danger-text);
 }
 
 .focusly-modal-spinner {
@@ -208,8 +248,8 @@
   height: 13px;
   margin-right: 7px;
   vertical-align: -2px;
-  border: 2px solid rgba(255, 255, 255, 0.45);
-  border-top-color: white;
+  border: 2px solid var(--modal-spinner-track);
+  border-top-color: var(--on-primary);
   border-radius: 50%;
   animation: focusly-modal-spin 0.7s linear infinite;
 }
