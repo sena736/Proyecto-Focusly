@@ -1,4 +1,14 @@
 import { NavLink, useNavigate } from "react-router-dom";
+import {
+  FiCheckSquare,
+  FiClock,
+  FiHome,
+  FiLogOut,
+  FiSettings,
+  FiUsers,
+  FiX,
+  FiZap,
+} from "react-icons/fi";
 import useAuth from "../../../hooks/useAuth";
 import "./Sidebar.css";
 
@@ -10,27 +20,27 @@ function Sidebar({ isAdmin = false, isOpen = false, onClose }) {
     {
       name: "Dashboard",
       path: "/dashboard",
-      icon: "⌂",
+      icon: FiHome,
     },
     {
       name: "Tareas",
       path: "/tasks",
-      icon: "✓",
+      icon: FiCheckSquare,
     },
     {
       name: "Pomodoro",
       path: "/pomodoro",
-      icon: "◷",
+      icon: FiClock,
     },
     {
       name: "Motivación",
       path: "/motivation",
-      icon: "✦",
+      icon: FiZap,
     },
     {
       name: "Configuración",
       path: "/settings",
-      icon: "⚙",
+      icon: FiSettings,
     },
   ];
 
@@ -68,7 +78,7 @@ function Sidebar({ isAdmin = false, isOpen = false, onClose }) {
             onClick={onClose}
             aria-label="Cerrar menú"
           >
-            ×
+            <FiX aria-hidden="true" />
           </button>
         )}
       </div>
@@ -77,18 +87,20 @@ function Sidebar({ isAdmin = false, isOpen = false, onClose }) {
       <nav className="sidebar__nav">
         <span className="sidebar__section-title">MENÚ</span>
 
-        {menuItems.map((item) => (
+        {menuItems.map(({ name, path, icon: Icon }) => (
           <NavLink
-            key={item.path}
-            to={item.path}
+            key={path}
+            to={path}
             onClick={handleNavigation}
             className={({ isActive }) =>
               `sidebar__link ${isActive ? "sidebar__link--active" : ""}`
             }
           >
-            <span className="sidebar__link-icon">{item.icon}</span>
+            <span className="sidebar__link-icon">
+              <Icon aria-hidden="true" />
+            </span>
 
-            <span className="sidebar__link-text">{item.name}</span>
+            <span className="sidebar__link-text">{name}</span>
           </NavLink>
         ))}
 
@@ -106,7 +118,9 @@ function Sidebar({ isAdmin = false, isOpen = false, onClose }) {
                 `sidebar__link ${isActive ? "sidebar__link--active" : ""}`
               }
             >
-              <span className="sidebar__link-icon">◈</span>
+              <span className="sidebar__link-icon">
+                <FiUsers aria-hidden="true" />
+              </span>
 
               <span className="sidebar__link-text">Administrar usuarios</span>
             </NavLink>
@@ -121,7 +135,9 @@ function Sidebar({ isAdmin = false, isOpen = false, onClose }) {
           className="sidebar__logout"
           onClick={handleLogout}
         >
-          <span className="sidebar__link-icon">↪</span>
+          <span className="sidebar__link-icon">
+            <FiLogOut aria-hidden="true" />
+          </span>
 
           <span>Cerrar sesión</span>
         </button>

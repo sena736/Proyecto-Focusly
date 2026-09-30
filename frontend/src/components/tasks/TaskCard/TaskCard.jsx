@@ -1,4 +1,5 @@
 import React from "react";
+import { FiEdit2, FiTrash2 } from "react-icons/fi";
 import "./TaskCard.css";
 
 const TaskCard = ({
@@ -94,7 +95,7 @@ const TaskCard = ({
               aria-label={`Editar ${title}`}
               title="Editar"
             >
-              ✎
+              <FiEdit2 aria-hidden="true" />
             </button>
           )}
 
@@ -106,7 +107,7 @@ const TaskCard = ({
               aria-label={`Eliminar ${title}`}
               title="Eliminar"
             >
-              ⋮
+              <FiTrash2 aria-hidden="true" />
             </button>
           )}
         </div>
