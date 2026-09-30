@@ -1,6 +1,8 @@
 import React from "react";
 import useProfile from "../../hooks/useProfile";
 import ProfileCard from "../../components/profile/ProfileCard/ProfileCard";
+import Alert from "../../components/ui/Alert/Alert";
+import Loader from "../../components/ui/Loader/Loader";
 import "./Profile.css";
 
 const Profile = () => {
@@ -12,8 +14,7 @@ const Profile = () => {
       <main className="profile-page">
         <section className="profile-container">
           <div className="profile-state">
-            <div className="profile-loader"></div>
-            <p>Cargando perfil...</p>
+            <Loader text="Cargando perfil..." />
           </div>
         </section>
       </main>
@@ -24,11 +25,14 @@ const Profile = () => {
     return (
       <main className="profile-page">
         <section className="profile-container">
-          <div className="profile-state profile-state-error">
-            <h2>No se pudo cargar el perfil</h2>
-            <p>
-              {error?.message || "Ocurrió un error al obtener tu información."}
-            </p>
+          <div className="profile-state">
+            <Alert
+              type="error"
+              title="No se pudo cargar el perfil"
+              message={
+                error?.message || "Ocurrió un error al obtener tu información."
+              }
+            />
           </div>
         </section>
       </main>

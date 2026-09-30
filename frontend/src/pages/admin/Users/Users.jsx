@@ -1,6 +1,9 @@
 import React from "react";
 import UserTable from "../../../components/admin/UserTable/UserTable";
 import RoleSelect from "../../../components/admin/RoleSelect/RoleSelect";
+import Alert from "../../../components/ui/Alert/Alert";
+import EmptyState from "../../../components/ui/EmptyState/EmptyState";
+import Loader from "../../../components/ui/Loader/Loader";
 import useUsers from "../../../hooks/useUsers";
 import "./Users.css";
 
@@ -26,7 +29,7 @@ const Users = () => {
       <main className="users">
         <div className="users__container">
           <div className="users__state">
-            <p>Cargando usuarios...</p>
+            <Loader text="Cargando usuarios..." />
           </div>
         </div>
       </main>
@@ -37,11 +40,14 @@ const Users = () => {
     return (
       <main className="users">
         <div className="users__container">
-          <div className="users__state users__state--error">
-            <p>
-              {error?.message ||
-                "No fue posible cargar los usuarios."}
-            </p>
+          <div className="users__state">
+            <Alert
+              type="error"
+              message={
+                error?.message ||
+                "No fue posible cargar los usuarios."
+              }
+            />
           </div>
         </div>
       </main>
@@ -67,23 +73,31 @@ const Users = () => {
         </header>
 
         <section className="users__table-container">
-          <UserTable
-            users={users}
-            renderRole={(user) => (
-              <RoleSelect
-                value={user.role}
-                onChange={(event) =>
-                  handleRoleChange(
-                    user.id,
-                    event.target.value
-                  )
-                }
-                disabled={isUpdatingRole}
-                label=""
-                name={`role-${user.id}`}
-              />
-            )}
-          />
+          {users.length === 0 ? (
+            <EmptyState
+              title="No hay usuarios"
+              message="Aún no existen usuarios registrados."
+              icon="👥"
+            />
+          ) : (
+            <UserTable
+              users={users}
+              renderRole={(user) => (
+                <RoleSelect
+                  value={user.role}
+                  onChange={(event) =>
+                    handleRoleChange(
+                      user.id,
+                      event.target.value
+                    )
+                  }
+                  disabled={isUpdatingRole}
+                  label=""
+                  name={`role-${user.id}`}
+                />
+              )}
+            />
+          )}
         </section>
       </div>
     </main>
