@@ -40,11 +40,12 @@ Agrega la siguiente variable:
 
 ```env
 VITE_API_URL=http://localhost:3000/api/v1
+VITE_GOOGLE_CLIENT_ID=...
 ```
 
-Esta variable indica la dirección base de la API del backend.
+`VITE_API_URL` indica la dirección base de la API del backend. Si el backend utiliza otro puerto o dirección, modifica el valor según su configuración.
 
-Si el backend utiliza otro puerto o dirección, modifica el valor según su configuración.
+`VITE_GOOGLE_CLIENT_ID` es el Client ID de Google OAuth y es **opcional**: si no la definís, el botón de inicio de sesión con Google se muestra deshabilitado, pero el login con correo y contraseña funciona igual.
 
 Las variables de entorno utilizadas por Vite deben comenzar con `VITE_` para poder ser accesibles desde el frontend.
 
@@ -86,11 +87,15 @@ Antes de utilizar la aplicación, verifica que:
 
 | Pantalla                    | Ruta           |
 | --------------------------- | -------------- |
-| Panel principal (Dashboard) | `/dashboard`   |
+| Landing pública              | `/`            |
 | Inicio de sesión            | `/login`       |
 | Registro                    | `/register`    |
+| Panel principal (Dashboard) | `/dashboard`   |
 | Mis tareas                  | `/tasks`       |
-| Mi perfil                   | `/perfil`      |
+| Pomodoro                    | `/pomodoro`    |
+| Motivación                  | `/motivation`  |
+| Mi perfil                   | `/profile`     |
+| Configuración                | `/settings`    |
 | Administración de usuarios  | `/admin/users` |
 
 ### Descripción de las pantallas
@@ -101,9 +106,17 @@ Antes de utilizar la aplicación, verifica que:
 
 **Mis tareas:** permite consultar, crear, editar, completar y eliminar tareas académicas.
 
+**Pomodoro:** temporizador de enfoque, independiente de la lista de tareas.
+
+**Motivación:** muestra frases motivacionales.
+
 **Mi perfil:** permite consultar la información personal de la cuenta.
 
-**Administración de usuarios:** permite consultar los usuarios registrados y administrar sus roles, según los permisos de la cuenta.
+**Configuración:** ajustes de la cuenta, como el tema claro/oscuro.
+
+**Administración de usuarios:** permite consultar los usuarios registrados y administrar sus roles. Requiere que la cuenta autenticada tenga rol `ADMIN` — si no lo tiene, redirige a `/dashboard`.
+
+Todas las pantallas excepto la landing, el login y el registro requieren sesión iniciada; sin ella, redirigen a `/login`.
 
 ## 7. Tecnologías utilizadas
 
