@@ -79,6 +79,8 @@ const Users = () => {
                   )
                 }
                 disabled={isUpdatingRole}
+                label=""
+                name={`role-${user.id}`}
               />
             )}
           />
