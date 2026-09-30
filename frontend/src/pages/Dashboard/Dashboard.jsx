@@ -7,6 +7,8 @@ import useTask from "../../hooks/useTask";
 import usePomodoro from "../../hooks/usePomodoro";
 import { usePhrase } from "../../hooks/usePhrase";
 import { getToken } from "../../services/token.services";
+import { TASK_STATUS } from "../../utils/constants";
+import { formatDueDate } from "../../utils/date";
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -23,6 +25,8 @@ export default function Dashboard() {
 
   const {
     formattedTime,
+    remainingSeconds,
+    durationMinutes,
     isRunning,
     start: startPomodoro,
     pause: pausePomodoro,
@@ -37,21 +41,38 @@ export default function Dashboard() {
     isRefetching: isRefetchingPhrase,
   } = usePhrase();
 
+  const isCompleted = (task) => task.status === TASK_STATUS.COMPLETED;
+
   const pendingTasks = useMemo(
-    () => tasks.filter((task) => !task.completed),
+    () => tasks.filter((task) => !isCompleted(task)),
     [tasks],
   );
 
   const previewTasks = useMemo(() => tasks.slice(0, 5), [tasks]);
 
+  const completedCount = tasks.length - pendingTasks.length;
+
   const progressPercent = tasks.length
-    ? Math.round(((tasks.length - pendingTasks.length) / tasks.length) * 100)
+    ? Math.round((completedCount / tasks.length) * 100)
+    : 0;
+
+  // Share of the current cycle already elapsed, clamped to 0-100.
+  const totalSeconds = durationMinutes * 60;
+  const elapsedPercent = Math.round(
+    ((totalSeconds - remainingSeconds) / totalSeconds) * 100,
+  );
+  const timerPercent = Number.isFinite(elapsedPercent)
+    ? Math.min(100, Math.max(0, elapsedPercent))
     : 0;
 
   const toggleTask = (task) => {
     updateTask({
       id: task.id,
-      data: { ...task, completed: !task.completed },
+      data: {
+        status: isCompleted(task)
+          ? TASK_STATUS.PENDING
+          : TASK_STATUS.COMPLETED,
+      },
     });
   };
 
@@ -106,7 +127,10 @@ export default function Dashboard() {
             </div>
 
             <div className="focusly-timer">
-              <div className="focusly-timer-ring">
+              <div
+                className="focusly-timer-ring"
+                style={{ "--timer-progress": `${timerPercent}%` }}
+              >
                 <div className="focusly-timer-content">
                   <strong>{formattedTime}</strong>
 
@@ -188,7 +212,7 @@ export default function Dashboard() {
                   <strong>{pendingTasks.length}</strong> pendientes
                 </span>
 
-                <span>{tasks.length - pendingTasks.length} completadas</span>
+                <span>{completedCount} completadas</span>
               </div>
 
               <div className="focusly-task-list">
@@ -219,13 +243,13 @@ export default function Dashboard() {
                 {previewTasks.map((task) => (
                   <label
                     className={`focusly-task ${
-                      task.completed ? "is-completed" : ""
+                      isCompleted(task) ? "is-completed" : ""
                     }`}
                     key={task.id}
                   >
                     <input
                       type="checkbox"
-                      checked={task.completed}
+                      checked={isCompleted(task)}
                       onChange={() => toggleTask(task)}
                     />
 
@@ -237,7 +261,7 @@ export default function Dashboard() {
                       <small>
                         {task.description || "Sin descripción"}
                         {task.dueDate
-                          ? ` · ${new Date(task.dueDate).toLocaleDateString()}`
+                          ? ` · ${formatDueDate(task.dueDate)}`
                           : ""}
                       </small>
                     </span>
@@ -260,7 +284,10 @@ export default function Dashboard() {
 
               <h3>Tu progreso</h3>
 
-              <div className="focusly-progress-circle">
+              <div
+                className="focusly-progress-circle"
+                style={{ "--progress": `${progressPercent}%` }}
+              >
                 <span>{progressPercent}%</span>
               </div>
 
