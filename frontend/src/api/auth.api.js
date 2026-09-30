@@ -1,4 +1,7 @@
-const API_URL = "http://localhost:3000/api/v1/auth";
+import { API_BASE_URL } from "./config";
+import { readApiBody } from "./http";
+
+const API_URL = `${API_BASE_URL}/auth`;
 
 export const googleLogin = async (idToken) => {
   const response = await fetch(`${API_URL}/google`, {
@@ -11,11 +14,10 @@ export const googleLogin = async (idToken) => {
     }),
   });
 
-  const body = await response.json();
-
-  if (!response.ok) {
-    throw new Error(body.message || "No se pudo iniciar sesión con Google.");
-  }
+  const body = await readApiBody(
+    response,
+    "No se pudo iniciar sesión con Google.",
+  );
 
   return body.data;
 };
@@ -29,11 +31,7 @@ export const registerUser = async ({ name, email, password }) => {
     body: JSON.stringify({ name, email, password }),
   });
 
-  const body = await response.json();
-
-  if (!response.ok) {
-    throw new Error(body.message || "No se pudo crear la cuenta.");
-  }
+  const body = await readApiBody(response, "No se pudo crear la cuenta.");
 
   return body.data;
 };
@@ -47,11 +45,7 @@ export const emailLogin = async ({ email, password }) => {
     body: JSON.stringify({ email, password }),
   });
 
-  const body = await response.json();
-
-  if (!response.ok) {
-    throw new Error(body.message || "No se pudo iniciar sesión.");
-  }
+  const body = await readApiBody(response, "No se pudo iniciar sesión.");
 
   return body.data;
 };
