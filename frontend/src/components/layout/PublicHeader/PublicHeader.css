@@ -5,9 +5,9 @@
 .public-header {
   width: 100%;
 
-  background: #ffffff;
+  background: var(--surface);
 
-  border-bottom: 1px solid #e7e3f5;
+  border-bottom: 1px solid var(--public-border);
 
   position: sticky;
   top: 0;
@@ -59,14 +59,14 @@
 
   border-radius: 50%;
 
-  background: #5b3fd1;
+  background: var(--public-btn-bg);
 
-  color: #ffffff;
+  color: var(--on-primary);
 
   font-size: 27px;
   font-weight: 700;
 
-  box-shadow: 0 4px 10px rgba(91, 63, 209, 0.2);
+  box-shadow: var(--public-btn-shadow);
 }
 
 /* Texto del logo */
@@ -74,7 +74,7 @@
 .public-logo-text .public-logo-name {
   margin: 0;
 
-  color: #4b36a8;
+  color: var(--public-brand-text);
 
   font-size: 22px;
   font-weight: 800;
@@ -88,7 +88,7 @@
 
   margin-top: 2px;
 
-  color: #77748b;
+  color: var(--public-muted);
 
   font-size: 10px;
 }
@@ -110,7 +110,7 @@
 .public-nav a {
   position: relative;
 
-  color: #38355a;
+  color: var(--public-nav-text);
 
   font-size: 14px;
   font-weight: 500;
@@ -121,7 +121,7 @@
 }
 
 .public-nav a:hover {
-  color: #5b3fd1;
+  color: var(--public-accent);
 }
 
 /* Línea debajo del enlace */
@@ -137,7 +137,7 @@
   width: 0;
   height: 2px;
 
-  background: #5b3fd1;
+  background: var(--public-accent);
 
   transition: width 0.2s ease;
 }
@@ -162,13 +162,13 @@
 .public-login-button {
   padding: 10px 18px;
 
-  border: 1.5px solid #5b3fd1;
+  border: 1.5px solid var(--public-accent);
 
   border-radius: 10px;
 
-  background: #ffffff;
+  background: var(--surface);
 
-  color: #5b3fd1;
+  color: var(--public-accent);
 
   font-size: 13px;
   font-weight: 600;
@@ -180,9 +180,9 @@
 
 .public-login-button:hover {
   /* Sin este color, `a:hover` global (0,1,1) le gana a la regla base (0,1,0) */
-  color: #5b3fd1;
+  color: var(--public-accent);
 
-  background: #f2efff;
+  background: var(--public-login-hover-bg);
 
   transform: translateY(-1px);
 }
@@ -194,29 +194,29 @@
 
   border-radius: 10px;
 
-  background: #5b3fd1;
+  background: var(--public-btn-bg);
 
-  color: #ffffff;
+  color: var(--on-primary);
 
   font-size: 13px;
   font-weight: 600;
 
   text-decoration: none;
 
-  box-shadow: 0 4px 10px rgba(91, 63, 209, 0.2);
+  box-shadow: var(--public-btn-shadow);
 
   transition: all 0.2s ease;
 }
 
 .public-register-button:hover {
   /* Sin este color, `a:hover` global (0,1,1) pinta el texto igual que el fondo */
-  color: #ffffff;
+  color: var(--on-primary);
 
-  background: #4931b5;
+  background: var(--public-btn-bg-hover);
 
   transform: translateY(-1px);
 
-  box-shadow: 0 6px 14px rgba(91, 63, 209, 0.25);
+  box-shadow: var(--public-btn-shadow-hover);
 }
 
 /* ================================
@@ -265,7 +265,7 @@
 
     padding-top: 10px;
 
-    border-top: 1px solid #eeeaf8;
+    border-top: 1px solid var(--public-border-soft);
   }
 
   .public-nav a {

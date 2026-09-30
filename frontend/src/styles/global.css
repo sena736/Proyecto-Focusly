@@ -43,6 +43,40 @@
 	--shadow-md: 0 6px 20px rgba(37, 26, 76, 0.1);
 	--shadow-lg: 0 12px 35px rgba(37, 26, 76, 0.14);
 
+	/* Texto sobre fondos de marca (botones primarios): no cambia con el tema */
+	--on-primary: #ffffff;
+
+	/* Variantes de marca legibles como TEXTO (en oscuro se aclaran) */
+	--primary-text: #6c4cd3;
+	--primary-text-hover: #5938c5;
+
+	/* Superficies publicas (header, landing, about, footer) */
+	--public-accent: #5b3fd1;
+	--public-btn-bg: #5b3fd1;
+	--public-btn-bg-hover: #4931b5;
+	--public-brand-text: #4b36a8;
+	--public-nav-text: #38355a;
+	--public-muted: #77748b;
+	--public-border: #e7e3f5;
+	--public-border-soft: #eeeaf8;
+	--public-accent-border: #dcd2ff;
+	--public-login-hover-bg: #f2efff;
+	--public-btn-shadow: 0 4px 10px rgba(91, 63, 209, 0.2);
+	--public-btn-shadow-hover: 0 6px 14px rgba(91, 63, 209, 0.25);
+
+	/* Footer */
+	--footer-purple: #4d378f;
+	--footer-purple-dark: #35236f;
+	--footer-purple-light: #eee9ff;
+	--footer-text: #29263a;
+	--footer-muted: #777187;
+	--footer-border: #e4def0;
+	--footer-white: #ffffff;
+	--footer-blob: #f0ebff;
+	--footer-quote-border: #e5def6;
+	--footer-quote-from: #faf9ff;
+	--footer-quote-to: #f2eeff;
+
 	/* Bordes redondeados */
 	--radius-sm: 6px;
 	--radius-md: 10px;
@@ -593,6 +627,30 @@ textarea.form-control {
 	--shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.18);
 	--shadow-md: 0 6px 20px rgba(0, 0, 0, 0.25);
 	--shadow-lg: 0 12px 35px rgba(0, 0, 0, 0.32);
+
+	--primary-text: #a58df0;
+	--primary-text-hover: #c2b3f7;
+
+	--public-accent: #a58df0;
+	--public-brand-text: #c2b3f7;
+	--public-nav-text: #e4e0f5;
+	--public-muted: #a8a3ba;
+	--public-border: #39334d;
+	--public-border-soft: #2e2941;
+	--public-accent-border: #4a3d75;
+	--public-login-hover-bg: #32284f;
+
+	--footer-purple: #b4a2f0;
+	--footer-purple-dark: #d5cbfa;
+	--footer-purple-light: #32284f;
+	--footer-text: #f0edfa;
+	--footer-muted: #a8a3ba;
+	--footer-border: #39334d;
+	--footer-white: #211e2d;
+	--footer-blob: #2a2340;
+	--footer-quote-border: #3d3558;
+	--footer-quote-from: #27223a;
+	--footer-quote-to: #2e2747;
 }
 
 /* =========================================================

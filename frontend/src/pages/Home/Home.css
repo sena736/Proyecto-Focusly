@@ -27,7 +27,7 @@
 .landing__eyebrow {
   display: inline-block;
   margin-bottom: var(--space-sm);
-  color: var(--primary);
+  color: var(--primary-text);
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -57,7 +57,7 @@
 }
 
 .landing__title span {
-  color: var(--primary);
+  color: var(--primary-text);
 }
 
 .landing__lead {
@@ -97,24 +97,24 @@
 
 .landing__btn--primary {
   background: var(--primary);
-  color: #ffffff;
+  color: var(--on-primary);
   box-shadow: var(--shadow-sm);
 }
 
 .landing__btn--primary:hover {
   /* Sin este color, `a:hover` global (0,1,1) pinta el texto igual que el fondo */
-  color: #ffffff;
+  color: var(--on-primary);
   background: var(--primary-hover);
   box-shadow: var(--shadow-md);
 }
 
 .landing__btn--secondary {
   background: transparent;
-  color: var(--primary);
+  color: var(--primary-text);
 }
 
 .landing__btn--secondary:hover {
-  color: var(--primary);
+  color: var(--primary-text);
   background: var(--primary-light);
 }
 
@@ -135,7 +135,7 @@
 }
 
 .landing__timer-label {
-  color: var(--primary);
+  color: var(--primary-text);
   font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.06em;
@@ -206,7 +206,7 @@
 
 .landing__card:hover {
   transform: translateY(-2px);
-  border-color: var(--secondary-light);
+  border-color: var(--public-accent-border);
   box-shadow: var(--shadow-md);
 }
 
@@ -219,7 +219,7 @@
   margin-bottom: var(--space-md);
   border-radius: var(--radius-md);
   background: var(--primary-light);
-  color: var(--primary);
+  color: var(--primary-text);
   font-size: 22px;
 }
 
@@ -253,14 +253,14 @@
   display: inline-flex;
   align-items: center;
   gap: var(--space-sm);
-  color: var(--primary);
+  color: var(--primary-text);
   font-size: 15px;
   font-weight: 600;
   text-decoration: none;
 }
 
 .landing__link:hover {
-  color: var(--primary-hover);
+  color: var(--primary-text-hover);
   text-decoration: underline;
 }
 
