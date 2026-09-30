@@ -24,13 +24,14 @@ describe("Tasks", () => {
   let createTaskAsync;
   let updateTaskAsync;
   let deleteTaskAsync;
+  let hookState;
 
   beforeEach(() => {
     createTaskAsync = vi.fn().mockResolvedValue({});
     updateTaskAsync = vi.fn().mockResolvedValue({});
     deleteTaskAsync = vi.fn().mockResolvedValue({});
 
-    useTask.mockReturnValue({
+    hookState = {
       tasks: [baseTask],
       isLoading: false,
       isError: false,
@@ -41,7 +42,9 @@ describe("Tasks", () => {
       isCreating: false,
       isUpdating: false,
       isDeleting: false,
-    });
+    };
+
+    useTask.mockReturnValue(hookState);
   });
 
   // Regresión: Tasks.jsx debe llamar a las variantes *Async que expone
@@ -120,6 +123,267 @@ describe("Tasks", () => {
 
     await waitFor(() => {
       expect(deleteTaskAsync).toHaveBeenCalledWith(baseTask.id);
+    });
+  });
+
+  describe("filtros", () => {
+    const pendingHigh = {
+      ...baseTask,
+      id: 10,
+      title: "Pendiente urgente",
+      status: "PENDING",
+      priority: "HIGH",
+    };
+    const pendingLow = {
+      ...baseTask,
+      id: 11,
+      title: "Pendiente tranquila",
+      status: "PENDING",
+      priority: "LOW",
+    };
+    const completedHigh = {
+      ...baseTask,
+      id: 12,
+      title: "Completada urgente",
+      status: "COMPLETED",
+      priority: "HIGH",
+    };
+    const completedMedium = {
+      ...baseTask,
+      id: 13,
+      title: "Completada normal",
+      status: "COMPLETED",
+      priority: "MEDIUM",
+    };
+
+    const mockTasks = (tasks) => {
+      useTask.mockReturnValue({
+        ...hookState,
+        tasks,
+      });
+    };
+
+    beforeEach(() => {
+      mockTasks([pendingHigh, pendingLow, completedHigh, completedMedium]);
+    });
+
+    it("muestra todas las tareas por defecto", () => {
+      render(<Tasks />);
+
+      expect(screen.getByRole("button", { name: "Todas" })).toHaveAttribute(
+        "aria-pressed",
+        "true",
+      );
+      expect(screen.getAllByRole("article")).toHaveLength(4);
+    });
+
+    it("filtra solo las tareas pendientes", async () => {
+      const user = userEvent.setup();
+
+      render(<Tasks />);
+
+      await user.click(screen.getByRole("button", { name: "Pendientes" }));
+
+      expect(screen.getByText("Pendiente urgente")).toBeInTheDocument();
+      expect(screen.getByText("Pendiente tranquila")).toBeInTheDocument();
+      expect(screen.queryByText("Completada urgente")).not.toBeInTheDocument();
+      expect(screen.queryByText("Completada normal")).not.toBeInTheDocument();
+    });
+
+    it("filtra solo las tareas completadas", async () => {
+      const user = userEvent.setup();
+
+      render(<Tasks />);
+
+      await user.click(screen.getByRole("button", { name: "Completadas" }));
+
+      expect(screen.getByText("Completada urgente")).toBeInTheDocument();
+      expect(screen.getByText("Completada normal")).toBeInTheDocument();
+      expect(screen.queryByText("Pendiente urgente")).not.toBeInTheDocument();
+      expect(screen.queryByText("Pendiente tranquila")).not.toBeInTheDocument();
+    });
+
+    it("el filtro de prioridad muestra solo las tareas de prioridad alta", async () => {
+      const user = userEvent.setup();
+
+      render(<Tasks />);
+
+      await user.click(screen.getByRole("button", { name: "Prioridad" }));
+
+      expect(screen.getByText("Pendiente urgente")).toBeInTheDocument();
+      expect(screen.getByText("Completada urgente")).toBeInTheDocument();
+      expect(screen.queryByText("Pendiente tranquila")).not.toBeInTheDocument();
+      expect(screen.queryByText("Completada normal")).not.toBeInTheDocument();
+    });
+
+    it("muestra un estado vacío del filtro y permite volver a ver todas", async () => {
+      const user = userEvent.setup();
+
+      mockTasks([pendingLow]);
+
+      render(<Tasks />);
+
+      await user.click(screen.getByRole("button", { name: "Completadas" }));
+
+      expect(screen.queryByRole("article")).not.toBeInTheDocument();
+      expect(
+        screen.getByText("No hay tareas para este filtro"),
+      ).toBeInTheDocument();
+
+      await user.click(
+        screen.getByRole("button", { name: "Ver todas las tareas" }),
+      );
+
+      expect(screen.getByText("Pendiente tranquila")).toBeInTheDocument();
+    });
+
+    it("vuelve al filtro Todas tras crear una tarea que no coincide con el filtro activo", async () => {
+      const user = userEvent.setup();
+
+      mockTasks([pendingLow]);
+
+      render(<Tasks />);
+
+      await user.click(screen.getByRole("button", { name: "Completadas" }));
+      expect(
+        screen.getByText("No hay tareas para este filtro"),
+      ).toBeInTheDocument();
+
+      await user.click(screen.getByRole("button", { name: "+ Nueva tarea" }));
+      await user.type(
+        screen.getByLabelText(/título de la tarea/i),
+        "Nueva pendiente",
+      );
+      await user.type(
+        screen.getByLabelText(/fecha de entrega/i),
+        "2026-10-15",
+      );
+      await user.click(screen.getByRole("button", { name: "Crear tarea" }));
+
+      await waitFor(() => {
+        expect(createTaskAsync).toHaveBeenCalledTimes(1);
+      });
+
+      await waitFor(() => {
+        expect(screen.getByRole("button", { name: "Todas" })).toHaveAttribute(
+          "aria-pressed",
+          "true",
+        );
+      });
+      expect(screen.getByText("Pendiente tranquila")).toBeInTheDocument();
+    });
+
+    it("no cambia el filtro activo al editar una tarea", async () => {
+      const user = userEvent.setup();
+
+      render(<Tasks />);
+
+      await user.click(screen.getByRole("button", { name: "Completadas" }));
+      await user.click(
+        screen.getByRole("button", { name: "Editar Completada urgente" }),
+      );
+      await user.click(screen.getByRole("button", { name: "Guardar cambios" }));
+
+      await waitFor(() => {
+        expect(updateTaskAsync).toHaveBeenCalledTimes(1);
+      });
+
+      expect(screen.getByRole("button", { name: "Completadas" })).toHaveAttribute(
+        "aria-pressed",
+        "true",
+      );
+    });
+
+    it("restablece el filtro a Todas cuando la lista queda vacía", async () => {
+      const user = userEvent.setup();
+
+      const { rerender } = render(<Tasks />);
+
+      await user.click(screen.getByRole("button", { name: "Completadas" }));
+
+      // Every task is deleted: TaskFilters unmounts with "completed" active
+      mockTasks([]);
+      rerender(<Tasks />);
+      expect(
+        screen.getByText("No tienes tareas todavía"),
+      ).toBeInTheDocument();
+
+      // A new (pending) task arrives: it must not be hidden by the old filter
+      mockTasks([pendingLow]);
+      rerender(<Tasks />);
+
+      expect(screen.getByRole("button", { name: "Todas" })).toHaveAttribute(
+        "aria-pressed",
+        "true",
+      );
+      expect(screen.getByText("Pendiente tranquila")).toBeInTheDocument();
+    });
+  });
+
+  describe("estados de la página", () => {
+    it("muestra el Loader mientras se cargan las tareas", () => {
+      useTask.mockReturnValue({
+        ...hookState,
+        tasks: [],
+        isLoading: true,
+      });
+
+      render(<Tasks />);
+
+      expect(screen.getByText("Cargando tareas...")).toBeInTheDocument();
+      expect(
+        document.querySelector(".loader-container"),
+      ).toBeInTheDocument();
+    });
+
+    it("muestra el EmptyState con la acción de crear cuando no hay tareas", async () => {
+      const user = userEvent.setup();
+
+      useTask.mockReturnValue({
+        ...hookState,
+        tasks: [],
+      });
+
+      render(<Tasks />);
+
+      expect(
+        screen.getByText("No tienes tareas todavía"),
+      ).toBeInTheDocument();
+      // Sin tareas no tiene sentido ofrecer filtros
+      expect(
+        screen.queryByRole("button", { name: "Pendientes" }),
+      ).not.toBeInTheDocument();
+
+      await user.click(
+        screen.getByRole("button", { name: "Crear primera tarea" }),
+      );
+
+      expect(
+        screen.getByRole("button", { name: "Crear tarea" }),
+      ).toBeInTheDocument();
+    });
+
+    it("muestra un Alert de error cuando falla una acción y permite cerrarlo", async () => {
+      const user = userEvent.setup();
+
+      updateTaskAsync.mockRejectedValue(new Error("Fallo del servidor"));
+
+      render(<Tasks />);
+
+      await user.click(
+        screen.getByRole("button", {
+          name: `Marcar ${baseTask.title} como completada`,
+        }),
+      );
+
+      const alert = await screen.findByRole("alert");
+
+      expect(alert).toHaveTextContent("Fallo del servidor");
+      expect(alert).toHaveClass("alert-error");
+
+      await user.click(screen.getByRole("button", { name: "Cerrar alerta" }));
+
+      expect(screen.queryByRole("alert")).not.toBeInTheDocument();
     });
   });
 });
