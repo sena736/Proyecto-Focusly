@@ -116,7 +116,7 @@ describe("AuthContext", () => {
 
     api.get.mockResolvedValueOnce({
       data: {
-        user,
+        data: user,
       },
     });
 
@@ -157,7 +157,7 @@ describe("AuthContext", () => {
 
     api.get.mockResolvedValueOnce({
       data: {
-        user,
+        data: user,
       },
     });
 
@@ -204,7 +204,7 @@ describe("AuthContext", () => {
   it("no utiliza localStorage ni sessionStorage para guardar el token", async () => {
     api.get.mockResolvedValueOnce({
       data: {
-        user: {
+        data: {
           id: 1,
           name: "Usuario de prueba",
           email: "usuario@test.com",
