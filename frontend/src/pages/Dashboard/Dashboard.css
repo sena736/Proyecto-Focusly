@@ -261,7 +261,7 @@
   display: grid;
   place-items: center;
   border-radius: 50%;
-  background: conic-gradient(var(--focusly-purple) 0 72%, var(--focusly-purple-soft) 72% 100%);
+  background: conic-gradient(var(--focusly-purple) 0 var(--timer-progress, 0%), var(--focusly-purple-soft) var(--timer-progress, 0%) 100%);
   position: relative;
 }
 
@@ -551,7 +551,7 @@
   display: grid;
   place-items: center;
   border-radius: 50%;
-  background: conic-gradient(var(--focusly-purple) 0 35%, var(--focusly-purple-soft) 35% 100%);
+  background: conic-gradient(var(--focusly-purple) 0 var(--progress, 0%), var(--focusly-purple-soft) var(--progress, 0%) 100%);
   position: relative;
 }
 

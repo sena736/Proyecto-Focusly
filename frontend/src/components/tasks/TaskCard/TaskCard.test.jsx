@@ -72,7 +72,7 @@ describe("TaskCard", () => {
     const props = renderTaskCard();
 
     const editButton = screen.getByRole("button", {
-      name: /editar/i,
+      name: "Editar Estudiar matemáticas",
     });
 
     await user.click(editButton);
@@ -85,7 +85,7 @@ describe("TaskCard", () => {
     const props = renderTaskCard();
 
     const deleteButton = screen.getByRole("button", {
-      name: /eliminar/i,
+      name: "Eliminar Estudiar matemáticas",
     });
 
     await user.click(deleteButton);

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { formatDueDateForInput } from "../../../utils/date";
 import "./TaskForm.css";
 
 const EMPTY_TASK_DATA = {};
@@ -28,7 +29,7 @@ const TaskForm = ({
     setFormData({
       title: initialData.title || "",
       description: initialData.description || "",
-      dueDate: initialData.dueDate || "",
+      dueDate: formatDueDateForInput(initialData.dueDate),
       priority: initialData.priority || "MEDIUM",
       status: initialData.status || "PENDING",
     });

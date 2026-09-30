@@ -46,6 +46,26 @@ describe("Profile", () => {
     render(<Profile />);
 
     expect(screen.getByText(/cargando perfil/i)).toBeInTheDocument();
+    expect(document.querySelector(".loader-container")).toBeInTheDocument();
+  });
+
+  test("muestra un Alert de error cuando falla la carga del perfil", () => {
+    useProfile.mockReturnValue({
+      profile: undefined,
+      isLoading: false,
+      isError: true,
+      error: new Error("Sin conexión"),
+      updateProfile: vi.fn(),
+      isUpdating: false,
+    });
+
+    render(<Profile />);
+
+    const alert = screen.getByRole("alert");
+
+    expect(alert).toHaveClass("alert-error");
+    expect(alert).toHaveTextContent("No se pudo cargar el perfil");
+    expect(alert).toHaveTextContent("Sin conexión");
   });
 
   test("muestra el estado vacío solo cuando realmente no hay perfil", () => {

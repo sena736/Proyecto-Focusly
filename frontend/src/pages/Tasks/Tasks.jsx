@@ -1,12 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import TaskCard from "../../components/tasks/TaskCard/TaskCard";
+import TaskFilters from "../../components/tasks/TaskFilters/TaskFilters";
 import TaskForm from "../../components/tasks/TaskForm/TaskForm";
 import ConfirmDeleteModal from "../../components/ConfirmDeleteModal";
+import Alert from "../../components/ui/Alert/Alert";
+import EmptyState from "../../components/ui/EmptyState/EmptyState";
+import Loader from "../../components/ui/Loader/Loader";
 import useTask from "../../hooks/useTask";
 import { getToken } from "../../services/token.services";
+import { TASK_STATUS } from "../../utils/constants";
+import { formatDueDate } from "../../utils/date";
 import "./Tasks.css";
 
 const EMPTY_TASK = {};
+
+// Predicados por id de filtro (los ids son los que emite TaskFilters).
+// "priority" muestra únicamente las tareas de prioridad alta.
+const FILTER_PREDICATES = {
+  all: () => true,
+  pending: (task) => task.status === TASK_STATUS.PENDING,
+  completed: (task) => task.status === TASK_STATUS.COMPLETED,
+  priority: (task) => task.priority === "HIGH",
+};
 
 const Tasks = () => {
   const token = getToken();
@@ -25,10 +40,27 @@ const Tasks = () => {
   } = useTask(token);
 
   const [actionError, setActionError] = useState("");
+  const [filter, setFilter] = useState("all");
 
   const [showForm, setShowForm] = useState(false);
   const [editingTask, setEditingTask] = useState(null);
   const [taskToDelete, setTaskToDelete] = useState(null);
+
+  // Sin tareas TaskFilters se desmonta: no dejar un filtro activo "oculto"
+  // que esconda las próximas tareas.
+  const hasTasks = tasks.length > 0;
+
+  useEffect(() => {
+    if (!hasTasks) {
+      setFilter("all");
+    }
+  }, [hasTasks]);
+
+  // Tareas visibles según el filtro activo
+  const filteredTasks = useMemo(
+    () => tasks.filter(FILTER_PREDICATES[filter] ?? FILTER_PREDICATES.all),
+    [tasks, filter]
+  );
 
   // Crear tarea
   const handleCreate = () => {
@@ -64,6 +96,8 @@ const Tasks = () => {
         });
       } else {
         await createTaskAsync(formData);
+        // La tarea nueva no debe quedar oculta por el filtro activo
+        setFilter("all");
       }
 
       setShowForm(false);
@@ -160,25 +194,28 @@ const Tasks = () => {
         </button>
       </div>
 
+      {/* Filtros (solo tiene sentido si hay tareas que filtrar) */}
+      {!isLoading && !isError && tasks.length > 0 && (
+        <div className="tasks-filters">
+          <TaskFilters activeFilter={filter} onFilterChange={setFilter} />
+        </div>
+      )}
+
       {/* Error de una acción (crear, editar, eliminar) */}
       {actionError && (
-        <div className="tasks-action-error" role="alert">
-          <p>{actionError}</p>
-
-          <button
-            type="button"
-            onClick={() => setActionError("")}
-            aria-label="Cerrar mensaje de error"
-          >
-            ×
-          </button>
+        <div className="tasks-action-alert">
+          <Alert
+            type="error"
+            message={actionError}
+            onClose={() => setActionError("")}
+          />
         </div>
       )}
 
       {/* Estado de carga */}
       {isLoading && (
         <div className="tasks-state">
-          <p>Cargando tareas...</p>
+          <Loader text="Cargando tareas..." />
         </div>
       )}
 
@@ -190,43 +227,56 @@ const Tasks = () => {
         </div>
       )}
 
+      {/* Sin tareas creadas */}
+      {!isLoading && !isError && tasks.length === 0 && (
+        <div className="tasks-empty">
+          <EmptyState
+            title="No tienes tareas todavía"
+            message="Crea tu primera tarea para comenzar a organizarte."
+            buttonText="Crear primera tarea"
+            onAction={handleCreate}
+          />
+        </div>
+      )}
+
+      {/* El filtro activo no coincide con ninguna tarea */}
+      {!isLoading &&
+        !isError &&
+        tasks.length > 0 &&
+        filteredTasks.length === 0 && (
+          <div className="tasks-empty">
+            <EmptyState
+              icon="🔍"
+              title="No hay tareas para este filtro"
+              message="Prueba con otro filtro para ver el resto de tus tareas."
+              buttonText="Ver todas las tareas"
+              onAction={() => setFilter("all")}
+              variant="compact"
+            />
+          </div>
+        )}
+
       {/* Lista de tareas */}
-      {!isLoading && !isError && (
+      {!isLoading && !isError && filteredTasks.length > 0 && (
         <div className="tasks-list">
-          {tasks.length === 0 ? (
-            <div className="tasks-empty">
-              <h2>No tienes tareas todavía</h2>
+          {filteredTasks.map((task) => {
+            const completed = task.status === TASK_STATUS.COMPLETED;
 
-              <p>Crea tu primera tarea para comenzar a organizarte.</p>
-
-              <button
-                type="button"
-                className="tasks-empty-button"
-                onClick={handleCreate}
-              >
-                Crear primera tarea
-              </button>
-            </div>
-          ) : (
-            tasks.map((task) => {
-              const completed = task.status === "COMPLETED";
-
-              return (
-                <TaskCard
-                  key={task.id}
-                  title={task.title}
-                  description={task.description}
-                  date={task.dueDate}
-                  completed={completed}
-                  priority={getTaskPriority(task.priority)}
-                  category={task.category}
-                  onToggle={(newCompleted) => handleToggle(task, newCompleted)}
-                  onEdit={() => handleEdit(task)}
-                  onDelete={() => handleDeleteRequest(task)}
-                />
-              );
-            })
-          )}
+            return (
+              <TaskCard
+                key={task.id}
+                title={task.title}
+                description={task.description}
+                date={formatDueDate(task.dueDate)}
+                completed={completed}
+                priority={getTaskPriority(task.priority)}
+                category={task.category}
+                onToggle={(newCompleted) => handleToggle(task, newCompleted)}
+                onEdit={() => handleEdit(task)}
+                onDelete={() => handleDeleteRequest(task)}
+              />
+            );
+          })}
         </div>
       )}
 

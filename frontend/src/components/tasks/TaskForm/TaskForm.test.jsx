@@ -56,6 +56,20 @@ describe("TaskForm", () => {
     ).toBeInTheDocument();
   });
 
+  test("precarga la fecha de entrega ISO como yyyy-mm-dd en el input de fecha", () => {
+    const task = {
+      id: 1,
+      title: "Estudiar React",
+      dueDate: "2026-09-30T00:00:00.000Z",
+    };
+
+    render(<TaskForm initialData={task} onSubmit={vi.fn()} />);
+
+    expect(screen.getByLabelText(/fecha de entrega/i)).toHaveValue(
+      "2026-09-30"
+    );
+  });
+
   test("onSubmit recibe los datos correctos del formulario", () => {
     const onSubmit = vi.fn();
 

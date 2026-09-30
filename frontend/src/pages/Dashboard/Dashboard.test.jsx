@@ -1,0 +1,179 @@
+import React from "react";
+import { describe, it, expect, vi, beforeEach } from "vitest";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+
+import Dashboard from "./Dashboard";
+import useTask from "../../hooks/useTask";
+import useAuth from "../../hooks/useAuth";
+import usePomodoro from "../../hooks/usePomodoro";
+import { usePhrase } from "../../hooks/usePhrase";
+
+vi.mock("../../hooks/useTask");
+vi.mock("../../hooks/useAuth");
+vi.mock("../../hooks/usePomodoro");
+vi.mock("../../hooks/usePhrase");
+vi.mock("../../services/token.services", () => ({
+  getToken: () => "fake-token",
+}));
+vi.mock("react-router-dom", () => ({
+  useNavigate: () => vi.fn(),
+}));
+
+describe("Dashboard", () => {
+  const makeTask = (id, title, status) => ({
+    id,
+    title,
+    description: "desc",
+    dueDate: null,
+    status,
+    priority: "MEDIUM",
+  });
+
+  const tasks = [
+    makeTask(1, "Tarea A", "PENDING"),
+    makeTask(2, "Tarea B", "COMPLETED"),
+    makeTask(3, "Tarea C", "COMPLETED"),
+    makeTask(4, "Tarea D", "PENDING"),
+  ];
+
+  let updateTask;
+
+  beforeEach(() => {
+    updateTask = vi.fn();
+
+    useTask.mockReturnValue({
+      tasks,
+      isLoading: false,
+      isError: false,
+      updateTask,
+    });
+    useAuth.mockReturnValue({ user: { name: "Ana Perez", role: "USER" } });
+    usePomodoro.mockReturnValue({
+      formattedTime: "15:00",
+      remainingSeconds: 900,
+      durationMinutes: 25,
+      isRunning: false,
+      start: vi.fn(),
+      pause: vi.fn(),
+      reset: vi.fn(),
+    });
+    usePhrase.mockReturnValue({
+      data: { text: "Frase" },
+      isLoading: false,
+      isError: false,
+      refetch: vi.fn(),
+      isRefetching: false,
+    });
+  });
+
+  it("derives pending/completed counters and progress from task.status", () => {
+    render(<Dashboard />);
+
+    expect(screen.getByText("pendientes").closest("span")).toHaveTextContent(
+      "2 pendientes",
+    );
+    expect(screen.getByText("2 completadas")).toBeInTheDocument();
+    expect(screen.getByText("50%")).toBeInTheDocument();
+  });
+
+  it("feeds the progress ring with the computed percentage", () => {
+    render(<Dashboard />);
+
+    const ring = screen.getByText("50%").closest(".focusly-progress-circle");
+
+    expect(ring.style.getPropertyValue("--progress")).toBe("50%");
+  });
+
+  it("feeds the timer ring with the elapsed share of the cycle", () => {
+    render(<Dashboard />);
+
+    // 900s left of 25min (1500s) -> 600s elapsed -> 40%
+    const ring = screen.getByText("15:00").closest(".focusly-timer-ring");
+
+    expect(ring.style.getPropertyValue("--timer-progress")).toBe("40%");
+  });
+
+  it("keeps the timer ring empty at the start of a cycle", () => {
+    usePomodoro.mockReturnValue({
+      ...usePomodoro(),
+      formattedTime: "25:00",
+      remainingSeconds: 1500,
+    });
+    render(<Dashboard />);
+
+    const ring = screen.getByText("25:00").closest(".focusly-timer-ring");
+
+    expect(ring.style.getPropertyValue("--timer-progress")).toBe("0%");
+  });
+
+  it("falls back to an empty timer ring when remainingSeconds is missing", () => {
+    usePomodoro.mockReturnValue({
+      ...usePomodoro(),
+      formattedTime: "--:--",
+      remainingSeconds: undefined,
+    });
+    render(<Dashboard />);
+
+    const ring = screen.getByText("--:--").closest(".focusly-timer-ring");
+
+    expect(ring.style.getPropertyValue("--timer-progress")).toBe("0%");
+  });
+
+  it("renders controlled checkboxes reflecting the task status", () => {
+    // Controlled input: React must not receive `checked={undefined}`.
+    // The spy must exist before the (single) render to catch its warnings.
+    const errorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+
+    try {
+      render(<Dashboard />);
+
+      const boxes = screen.getAllByRole("checkbox");
+
+      expect(boxes.map((box) => box.checked)).toEqual([
+        false,
+        true,
+        true,
+        false,
+      ]);
+      expect(errorSpy).not.toHaveBeenCalled();
+    } finally {
+      errorSpy.mockRestore();
+    }
+  });
+
+  it("marks completed tasks with the is-completed class", () => {
+    render(<Dashboard />);
+
+    const boxes = screen.getAllByRole("checkbox");
+
+    expect(boxes[0].closest("label")).not.toHaveClass("is-completed");
+    expect(boxes[1].closest("label")).toHaveClass("is-completed");
+  });
+
+  it("sends only the new status when toggling a pending task", async () => {
+    const user = userEvent.setup();
+    render(<Dashboard />);
+
+    await user.click(screen.getAllByRole("checkbox")[0]);
+
+    expect(updateTask).toHaveBeenCalledTimes(1);
+    expect(updateTask).toHaveBeenCalledWith({
+      id: 1,
+      data: { status: "COMPLETED" },
+    });
+  });
+
+  it("sends PENDING when toggling a completed task", async () => {
+    const user = userEvent.setup();
+    render(<Dashboard />);
+
+    await user.click(screen.getAllByRole("checkbox")[1]);
+
+    expect(updateTask).toHaveBeenCalledTimes(1);
+    expect(updateTask).toHaveBeenCalledWith({
+      id: 2,
+      data: { status: "PENDING" },
+    });
+  });
+});

@@ -95,14 +95,10 @@
    Loading / error
 ================================ */
 
-.users > .users__container > p {
-  padding: var(--space-xl);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-lg);
-  background: var(--surface);
-  color: var(--text-secondary);
-  text-align: center;
-  box-shadow: var(--shadow-sm);
+.users__state {
+  display: flex;
+  justify-content: center;
+  padding: var(--space-2xl) 0;
 }
 
 /* ================================

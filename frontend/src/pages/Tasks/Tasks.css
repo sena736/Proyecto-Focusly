@@ -59,37 +59,22 @@
   box-shadow: var(--shadow-sm);
 }
 
-/* Error de una acción (crear, editar, eliminar) */
+/* Filtros */
 
-.tasks-action-error {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-md);
+.tasks-filters {
+  width: 100%;
   max-width: 1100px;
   margin: 0 auto var(--space-lg);
-  padding: var(--space-md) var(--space-lg);
   box-sizing: border-box;
-  background: var(--danger-light, #fdecea);
-  border: 1px solid var(--danger, #d32f2f);
-  border-radius: var(--radius-md);
-  color: var(--danger, #d32f2f);
 }
 
-.tasks-action-error p {
-  margin: 0;
-  font-size: 14px;
-  line-height: 1.5;
-}
+/* Error de una acción (crear, editar, eliminar) */
 
-.tasks-action-error button {
-  flex-shrink: 0;
-  background: none;
-  border: none;
-  color: inherit;
-  font-size: 18px;
-  line-height: 1;
-  cursor: pointer;
+.tasks-action-alert {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto var(--space-lg);
+  box-sizing: border-box;
 }
 
 /* Estados: cargando / error al obtener la lista */
@@ -149,47 +134,10 @@
 /* Estado vacío */
 
 .tasks-empty {
-  grid-column: 1 / -1;
   width: 100%;
-  margin: 0;
-  padding: var(--space-2xl) var(--space-lg);
+  max-width: 1100px;
+  margin: 0 auto var(--space-2xl);
   box-sizing: border-box;
-  background: var(--surface);
-  border: 1px dashed var(--border-color);
-  border-radius: var(--radius-lg);
-  color: var(--text-muted);
-  text-align: center;
-}
-
-.tasks-empty h2 {
-  margin: 0 0 var(--space-xs);
-  color: var(--text-primary);
-  font-size: 18px;
-  font-weight: 700;
-}
-
-.tasks-empty p {
-  margin: 0 0 var(--space-lg);
-  font-size: 15px;
-  line-height: 1.6;
-}
-
-.tasks-empty-button {
-  min-height: 44px;
-  padding: var(--space-sm) var(--space-lg);
-  border: none;
-  border-radius: var(--radius-md);
-  background: var(--primary);
-  color: var(--surface);
-  font-family: inherit;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background var(--transition-fast);
-}
-
-.tasks-empty-button:hover {
-  background: var(--primary-hover);
 }
 
 /* Modal del formulario (crear / editar tarea) */
@@ -337,10 +285,6 @@ TELÉFONO - 375px / hasta 480px
   .tasks-list {
     grid-template-columns: 1fr;
     gap: var(--space-md);
-  }
-
-  .tasks-empty {
-    padding: var(--space-xl) var(--space-md);
   }
 
   .task-form-modal {
