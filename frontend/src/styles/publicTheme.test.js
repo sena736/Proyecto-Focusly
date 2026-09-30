@@ -681,8 +681,18 @@ const THEMED_APP_STYLESHEETS = [
   // Admin users page (pages/admin/UserTable/UserTable.css is an orphan: no importer)
   "components/admin/UserTable/UserTable.css",
   "components/admin/RoleSelect/RoleSelect.css",
-  // Shared UI that live pages render. Button, Card, Input, Checkbox, IconButton
-  // and Select are NOT listed: no live code imports those components.
+  // Page header shared by Tasks, Pomodoro, Profile, Motivation and admin Users
+  "components/layout/PageHeader/PageHeader.css",
+  // Bottom navigation bar mounted by UserLayout (mobile only)
+  "components/layout/MobileNavigation/MobileNavigation.css",
+  // Admin panel (/admin)
+  "pages/admin/AdminDashboard/AdminDashboard.css",
+  // Form primitives used by Login, Register, TaskForm and TaskCard. Card,
+  // Checkbox and Select are NOT listed: no live code imports those components.
+  "components/ui/Input/Input.css",
+  "components/ui/Button/Button.css",
+  "components/ui/IconButton/IconButton.css",
+  // Shared UI that live pages render.
   "components/ui/Modal/Modal.css",
   "components/ui/ConfirmModal/ConfirmModal.css",
   "components/ui/EmptyState/EmptyState.css",
@@ -702,8 +712,6 @@ const TOKEN_ONLY_STYLESHEETS = ["pages/Tasks/Tasks.css", "pages/admin/Users/User
  * stylesheet. Each entry needs a written reason (same rule as the lists above).
  */
 const EXTRA_CONSTANT_TOKENS = {
-  // White spinner ring drawn ON the brand submit button (next to --on-primary).
-  "components/tasks/TaskForm/TaskForm.css": ["--tform-spinner-track"],
   // Teal fills that always sit behind --on-primary text: #4e767d is ~5:1 against
   // white and ~3.3:1 against the dark surface, so the same fill works on both.
   "components/tasks/TaskFilters/TaskFilters.css": [
@@ -899,6 +907,48 @@ describe("themed app surfaces respect the theme", () => {
   it("dashboard has no dead `.is-dark` rules (the theme lives on <html data-theme>)", () => {
     expect(stripComments(read(THEMED_APP_STYLESHEETS[0]))).not.toMatch(/\.is-dark/);
   });
+});
+
+describe("text contrast of shared form / header tokens", () => {
+  const themed = (relative) => {
+    const own = parseThemes(read(relative));
+    return {
+      light: new Map([...lightTokens, ...own.light]),
+      dark: new Map([...darkTokens, ...own.dark]),
+    };
+  };
+
+  it("dark input placeholder is >= 4.5:1 on the dark input surface", () => {
+    const { light, dark } = themed("components/ui/Input/Input.css");
+    const ratio = contrastRatio(
+      hexToRgb(effectiveValue("--inp-placeholder", dark, light)),
+      hexToRgb(effectiveValue("--inp-surface", dark, light)),
+    );
+    expect(ratio).toBeGreaterThanOrEqual(4.5);
+  });
+
+  it("light input placeholder keeps its original value", () => {
+    expect(themed("components/ui/Input/Input.css").light.get("--inp-placeholder")).toBe("#aaa5b2");
+  });
+
+  it("light page header subtitle is >= 4.5:1 on the page background and differs in dark", () => {
+    const { light, dark } = themed("components/layout/PageHeader/PageHeader.css");
+    const bg = effectiveValue("--background", light, light);
+    const lightColour = effectiveValue("--phdr-subtitle", light, light);
+
+    expect(contrastRatio(hexToRgb(lightColour), hexToRgb(bg))).toBeGreaterThanOrEqual(4.5);
+    expect(normalize(effectiveValue("--phdr-subtitle", dark, light))).not.toBe(
+      normalize(lightColour),
+    );
+  });
+
+  it.each(["pages/Login/Login.css", "pages/Register/Register.css"])(
+    "%s never paints text with the brand fill tokens --primary / --primary-hover",
+    (relative) => {
+      const css = stripComments(read(relative));
+      expect(css).not.toMatch(/(?<![-\w])color:\s*var\(--primary(?:-hover)?\)/);
+    },
+  );
 });
 
 /* ------------------------------------------------------------------ */
