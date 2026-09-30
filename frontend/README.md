@@ -96,6 +96,7 @@ Antes de utilizar la aplicación, verifica que:
 | Motivación                  | `/motivation`  |
 | Mi perfil                   | `/profile`     |
 | Configuración                | `/settings`    |
+| Panel de administración     | `/admin`       |
 | Administración de usuarios  | `/admin/users` |
 
 ### Descripción de las pantallas
@@ -113,6 +114,8 @@ Antes de utilizar la aplicación, verifica que:
 **Mi perfil:** permite consultar la información personal de la cuenta.
 
 **Configuración:** ajustes de la cuenta, como el tema claro/oscuro.
+
+**Panel de administración:** muestra el total de usuarios y de sesiones Pomodoro. Requiere rol `ADMIN` (si no lo tiene, redirige a `/dashboard`).
 
 **Administración de usuarios:** permite consultar los usuarios registrados y administrar sus roles. Requiere que la cuenta autenticada tenga rol `ADMIN` — si no lo tiene, redirige a `/dashboard`.
 

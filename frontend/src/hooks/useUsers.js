@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { getUsers, updateUserRole } from "../api/users.api";
+import { shouldRetryAdminQuery } from "./queryRetry";
 
 const useUsers = () => {
   const queryClient = useQueryClient();
@@ -9,6 +10,7 @@ const useUsers = () => {
   const usersQuery = useQuery({
     queryKey: ["users"],
     queryFn: getUsers,
+    retry: shouldRetryAdminQuery,
   });
 
   // Actualizar el rol de un usuario

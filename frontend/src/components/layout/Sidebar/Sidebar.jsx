@@ -2,6 +2,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import {
   FiCheckSquare,
   FiClock,
+  FiGrid,
   FiHome,
   FiLogOut,
   FiSettings,
@@ -110,6 +111,22 @@ function Sidebar({ isAdmin = false, isOpen = false, onClose }) {
             <span className="sidebar__section-title sidebar__section-title--admin">
               ADMINISTRACIÓN
             </span>
+
+            {/* `end`: /admin/users must not keep the panel link highlighted */}
+            <NavLink
+              to="/admin"
+              end
+              onClick={handleNavigation}
+              className={({ isActive }) =>
+                `sidebar__link ${isActive ? "sidebar__link--active" : ""}`
+              }
+            >
+              <span className="sidebar__link-icon">
+                <FiGrid aria-hidden="true" />
+              </span>
+
+              <span className="sidebar__link-text">Panel de administración</span>
+            </NavLink>
 
             <NavLink
               to="/admin/users"
