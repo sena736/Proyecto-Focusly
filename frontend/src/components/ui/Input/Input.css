@@ -1,12 +1,63 @@
+/*
+  Input palette (`--inp-*`, unique across the bundle).
+  Light values are the original literals; the dark block maps to global tokens
+  (focus/required use the lighter --primary-text, errors use --danger-text and a
+  dark tinted surface). Colour literals are allowed ONLY here.
+*/
+:root {
+  --inp-label: #302b3d;
+  --inp-required: #68519c;
+  --inp-surface: #ffffff;
+  --inp-border: #dcd7e6;
+  --inp-focus: #68519c;
+  --inp-focus-glow: rgba(104, 81, 156, 0.08);
+  --inp-icon: #777181;
+  --inp-text: #302b3d;
+  --inp-placeholder: #aaa5b2;
+  --inp-error: #d45b5b;
+  --inp-error-bg: #fffafa;
+  --inp-error-glow: rgba(212, 91, 91, 0.08);
+  --inp-error-text: #c54b4b;
+  --inp-disabled-bg: #f5f3f7;
+  --inp-disabled-border: #e5e1e9;
+  --inp-disabled-icon: #aaa5b2;
+}
+
+:root[data-theme="dark"] {
+  --inp-label: var(--text-primary);
+  --inp-required: var(--primary-text);
+  --inp-surface: var(--surface-secondary);
+  --inp-border: var(--border-color);
+  --inp-focus: var(--primary-text);
+  --inp-focus-glow: rgba(165, 141, 240, 0.25);
+  --inp-icon: var(--text-muted);
+  --inp-text: var(--text-primary);
+  --inp-placeholder: var(--text-secondary);
+  --inp-error: var(--danger-text);
+  --inp-error-bg: #2f1b22;
+  --inp-error-glow: rgba(255, 122, 136, 0.25);
+  --inp-error-text: var(--danger-text);
+  --inp-disabled-bg: var(--background);
+  --inp-disabled-border: var(--border-color);
+  --inp-disabled-icon: var(--text-muted);
+}
+
 /* ==============================
    INPUT - FOCUSLY
    ============================== */
 
+/*
+  No outer margin on purpose: spacing between fields belongs to the caller
+  (form gap / grid), not to the primitive.
+*/
 .input-field {
   width: 100%;
-  margin-bottom: 16px;
 
-  font-family: "Nunito", sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  min-width: 0;
 }
 
 /* ==============================
@@ -16,18 +67,24 @@
 .input-label {
   display: block;
 
-  margin-bottom: 7px;
+  color: var(--inp-label);
 
-  color: #302b3d;
+  font-size: 14px;
+  font-weight: 600;
+}
 
-  font-size: 12px;
-  font-weight: 700;
+/* Label + secondary action (e.g. "¿Olvidaste tu contraseña?") */
+.input-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
 }
 
 .input-required {
   margin-left: 3px;
 
-  color: #68519c;
+  color: var(--inp-required);
 }
 
 /* ==============================
@@ -36,20 +93,24 @@
 
 .input-wrapper {
   width: 100%;
-  height: 44px;
+  min-height: 46px;
 
   display: flex;
   align-items: center;
 
-  padding: 0 12px;
+  padding: 0 14px;
+  box-sizing: border-box;
 
-  background: #ffffff;
+  background: var(--inp-surface);
 
-  border: 1px solid #dcd7e6;
+  border: 1px solid var(--inp-border);
 
-  border-radius: 7px;
+  border-radius: 10px;
 
-  transition: all 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
 }
 
 /* ==============================
@@ -57,9 +118,9 @@
    ============================== */
 
 .input-wrapper:focus-within {
-  border-color: #68519c;
+  border-color: var(--inp-focus);
 
-  box-shadow: 0 0 0 3px rgba(104, 81, 156, 0.08);
+  box-shadow: 0 0 0 3px var(--inp-focus-glow);
 }
 
 /* ==============================
@@ -73,7 +134,7 @@
 
   margin-right: 9px;
 
-  color: #777181;
+  color: var(--inp-icon);
 
   font-size: 17px;
 
@@ -81,7 +142,17 @@
 }
 
 .input-wrapper:focus-within .input-icon {
-  color: #68519c;
+  color: var(--inp-focus);
+}
+
+/* Trailing slot (e.g. password visibility toggle) */
+.input-end {
+  display: flex;
+  align-items: center;
+
+  margin-left: 8px;
+
+  flex-shrink: 0;
 }
 
 /* ==============================
@@ -90,6 +161,7 @@
 
 .input-control {
   width: 100%;
+  min-width: 0;
   height: 100%;
 
   padding: 0;
@@ -99,15 +171,15 @@
 
   background: transparent;
 
-  color: #302b3d;
+  color: var(--inp-text);
 
-  font-family: "Nunito", sans-serif;
+  font-family: inherit;
 
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .input-control::placeholder {
-  color: #aaa5b2;
+  color: var(--inp-placeholder);
 }
 
 .input-control:disabled {
@@ -119,25 +191,23 @@
    ============================== */
 
 .input-wrapper.input-error {
-  border-color: #d45b5b;
+  border-color: var(--inp-error);
 
-  background: #fffafa;
+  background: var(--inp-error-bg);
 }
 
 .input-wrapper.input-error:focus-within {
-  border-color: #d45b5b;
+  border-color: var(--inp-error);
 
-  box-shadow: 0 0 0 3px rgba(212, 91, 91, 0.08);
+  box-shadow: 0 0 0 3px var(--inp-error-glow);
 }
 
 .input-error-message {
   display: block;
 
-  margin-top: 5px;
+  color: var(--inp-error-text);
 
-  color: #c54b4b;
-
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 600;
 }
 
@@ -146,15 +216,15 @@
    ============================== */
 
 .input-wrapper.input-disabled {
-  background: #f5f3f7;
+  background: var(--inp-disabled-bg);
 
-  border-color: #e5e1e9;
+  border-color: var(--inp-disabled-border);
 
   opacity: 0.7;
 }
 
 .input-disabled .input-icon {
-  color: #aaa5b2;
+  color: var(--inp-disabled-icon);
 }
 
 /* ==============================
@@ -164,7 +234,7 @@
 .input-control:-webkit-autofill,
 .input-control:-webkit-autofill:hover,
 .input-control:-webkit-autofill:focus {
-  -webkit-text-fill-color: #302b3d;
+  -webkit-text-fill-color: var(--inp-text);
 
   transition: background-color 5000s ease-in-out 0s;
 }
@@ -173,18 +243,18 @@
    RESPONSIVE
    ============================== */
 
-@media (max-width: 600px) {
-
+@media (max-width: 480px) {
   .input-label {
-    font-size: 11px;
+    font-size: 13px;
+  }
+
+  .input-label-row {
+    align-items: flex-start;
   }
 
   .input-wrapper {
-    height: 43px;
-  }
+    min-height: 44px;
 
-  .input-control {
-    font-size: 11px;
+    padding: 0 10px;
   }
-
 }
