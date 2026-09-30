@@ -1,6 +1,6 @@
 import React from "react";
-import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import { render, screen, waitFor, act } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import Dashboard from "./Dashboard";
@@ -39,17 +39,17 @@ describe("Dashboard", () => {
     makeTask(4, "Tarea D", "PENDING"),
   ];
 
-  let updateTask;
+  let updateTaskAsync;
 
   beforeEach(() => {
     navigate.mockClear();
-    updateTask = vi.fn();
+    updateTaskAsync = vi.fn().mockResolvedValue({});
 
     useTask.mockReturnValue({
       tasks,
       isLoading: false,
       isError: false,
-      updateTask,
+      updateTaskAsync,
     });
     useAuth.mockReturnValue({ user: { name: "Ana Perez", role: "USER" } });
     usePomodoro.mockReturnValue({
@@ -203,8 +203,8 @@ describe("Dashboard", () => {
 
     await user.click(screen.getAllByRole("checkbox")[0]);
 
-    expect(updateTask).toHaveBeenCalledTimes(1);
-    expect(updateTask).toHaveBeenCalledWith({
+    expect(updateTaskAsync).toHaveBeenCalledTimes(1);
+    expect(updateTaskAsync).toHaveBeenCalledWith({
       id: 1,
       data: { status: "COMPLETED" },
     });
@@ -216,10 +216,150 @@ describe("Dashboard", () => {
 
     await user.click(screen.getAllByRole("checkbox")[1]);
 
-    expect(updateTask).toHaveBeenCalledTimes(1);
-    expect(updateTask).toHaveBeenCalledWith({
+    expect(updateTaskAsync).toHaveBeenCalledTimes(1);
+    expect(updateTaskAsync).toHaveBeenCalledWith({
       id: 2,
       data: { status: "PENDING" },
+    });
+  });
+
+  describe("toggle errors", () => {
+    let errorSpy;
+
+    beforeEach(() => {
+      // The Dashboard logs the failure, like Tasks does.
+      errorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+    });
+
+    afterEach(() => {
+      errorSpy.mockRestore();
+    });
+
+    it("shows no alert while nothing has failed", () => {
+      render(<Dashboard />);
+
+      expect(screen.queryByRole("alert")).not.toBeInTheDocument();
+    });
+
+    it("shows the error message in an alert when the toggle fails", async () => {
+      updateTaskAsync.mockRejectedValue(new Error("Sin conexión con el servidor"));
+      const user = userEvent.setup();
+      render(<Dashboard />);
+
+      await user.click(screen.getAllByRole("checkbox")[0]);
+
+      expect(await screen.findByRole("alert")).toHaveTextContent(
+        "Sin conexión con el servidor",
+      );
+    });
+
+    it("falls back to a generic message when the error has no message", async () => {
+      updateTaskAsync.mockRejectedValue(new Error(""));
+      const user = userEvent.setup();
+      render(<Dashboard />);
+
+      await user.click(screen.getAllByRole("checkbox")[0]);
+
+      expect(await screen.findByRole("alert")).toHaveTextContent(
+        "No se pudo actualizar la tarea. Intentá de nuevo.",
+      );
+    });
+
+    it("lets the user dismiss the alert", async () => {
+      updateTaskAsync.mockRejectedValue(new Error("Falló"));
+      const user = userEvent.setup();
+      render(<Dashboard />);
+
+      await user.click(screen.getAllByRole("checkbox")[0]);
+      await screen.findByRole("alert");
+
+      await user.click(screen.getByRole("button", { name: "Cerrar alerta" }));
+
+      expect(screen.queryByRole("alert")).not.toBeInTheDocument();
+    });
+
+    it("clears the alert when a later toggle succeeds", async () => {
+      updateTaskAsync
+        .mockRejectedValueOnce(new Error("Falló"))
+        .mockResolvedValueOnce({});
+      const user = userEvent.setup();
+      render(<Dashboard />);
+
+      await user.click(screen.getAllByRole("checkbox")[0]);
+      await screen.findByRole("alert");
+
+      await user.click(screen.getAllByRole("checkbox")[1]);
+
+      await waitFor(() =>
+        expect(screen.queryByRole("alert")).not.toBeInTheDocument(),
+      );
+      expect(updateTaskAsync).toHaveBeenCalledTimes(2);
+    });
+
+    describe("overlapping toggles", () => {
+      const deferred = () => {
+        let resolve;
+        let reject;
+        const promise = new Promise((res, rej) => {
+          resolve = res;
+          reject = rej;
+        });
+
+        return { promise, resolve, reject };
+      };
+
+      it("ignores a stale failure that arrives after a newer toggle succeeded", async () => {
+        const first = deferred();
+        const second = deferred();
+        updateTaskAsync
+          .mockReturnValueOnce(first.promise)
+          .mockReturnValueOnce(second.promise);
+        const user = userEvent.setup();
+        render(<Dashboard />);
+
+        await user.click(screen.getAllByRole("checkbox")[0]);
+        await user.click(screen.getAllByRole("checkbox")[1]);
+
+        second.resolve({});
+        await act(async () => {
+          await second.promise;
+        });
+
+        first.reject(new Error("Falló el primero"));
+        await act(async () => {
+          await first.promise.catch(() => {});
+        });
+
+        expect(screen.queryByRole("alert")).not.toBeInTheDocument();
+      });
+
+      it("shows the latest failure even if an older one settles afterwards", async () => {
+        const first = deferred();
+        const second = deferred();
+        updateTaskAsync
+          .mockReturnValueOnce(first.promise)
+          .mockReturnValueOnce(second.promise);
+        const user = userEvent.setup();
+        render(<Dashboard />);
+
+        await user.click(screen.getAllByRole("checkbox")[0]);
+        await user.click(screen.getAllByRole("checkbox")[1]);
+
+        second.reject(new Error("Falló el segundo"));
+        await act(async () => {
+          await second.promise.catch(() => {});
+        });
+
+        first.reject(new Error("Falló el primero"));
+        await act(async () => {
+          await first.promise.catch(() => {});
+        });
+
+        const alert = await screen.findByRole("alert");
+
+        expect(alert).toHaveTextContent("Falló el segundo");
+        expect(alert).not.toHaveTextContent("Falló el primero");
+      });
     });
   });
 });

@@ -1,4 +1,7 @@
-const API_URL = "http://localhost:3000/api/v1/tasks";
+import { API_BASE_URL } from "./config";
+import { readApiBody } from "./http";
+
+const API_URL = `${API_BASE_URL}/tasks`;
 
 const getHeaders = (token) => ({
   Authorization: `Bearer ${token}`,
@@ -14,13 +17,7 @@ export const getTasks = async (token) => {
     headers: getHeaders(token),
   });
 
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data.message || "Error al obtener las tareas");
-  }
-
-  return data;
+  return readApiBody(response, "Error al obtener las tareas");
 };
 
 /**
@@ -33,13 +30,7 @@ export const createTask = async (taskData, token) => {
     body: JSON.stringify(taskData),
   });
 
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data.message || "Error al crear la tarea");
-  }
-
-  return data;
+  return readApiBody(response, "Error al crear la tarea");
 };
 
 /**
@@ -52,17 +43,13 @@ export const updateTask = async (id, taskData, token) => {
     body: JSON.stringify(taskData),
   });
 
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data.message || "Error al actualizar la tarea");
-  }
-
-  return data;
+  return readApiBody(response, "Error al actualizar la tarea");
 };
 
 /**
  * Eliminar una tarea
+ *
+ * El backend responde 204 sin cuerpo: un cuerpo vacío es un éxito.
  */
 export const deleteTask = async (id, token) => {
   const response = await fetch(`${API_URL}/${id}`, {
@@ -70,11 +57,7 @@ export const deleteTask = async (id, token) => {
     headers: getHeaders(token),
   });
 
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(data.message || "Error al eliminar la tarea");
-  }
-
-  return data;
+  return readApiBody(response, "Error al eliminar la tarea", {
+    allowEmpty: true,
+  });
 };

@@ -5,6 +5,7 @@ import userEvent from "@testing-library/user-event";
 
 import { AuthProvider, AuthContext } from "./AuthContext";
 import api from "../api/api";
+import { API_BASE_URL } from "../api/config";
 import * as tokenService from "../services/token.services";
 
 vi.mock("../api/api", () => ({
@@ -15,8 +16,14 @@ vi.mock("../api/api", () => ({
 }));
 
 const TestConsumer = () => {
-  const { user, loading, isAuthenticated, establishSession, logout } =
-    React.useContext(AuthContext);
+  const {
+    user,
+    loading,
+    isAuthenticated,
+    establishSession,
+    logout,
+    loginWithGoogle,
+  } = React.useContext(AuthContext);
 
   return (
     <div>
@@ -31,6 +38,9 @@ const TestConsumer = () => {
       </button>
       <button type="button" onClick={() => logout()}>
         Logout
+      </button>
+      <button type="button" onClick={() => loginWithGoogle()}>
+        Google
       </button>
     </div>
   );
@@ -199,6 +209,33 @@ describe("AuthContext", () => {
 
     expect(tokenService.removeToken).toHaveBeenCalled();
     expect(api.post).toHaveBeenCalled();
+  });
+
+  it("redirige a `${API_BASE_URL}/auth/google` al iniciar con Google", async () => {
+    const originalLocation = window.location;
+    const fakeLocation = { href: "http://localhost/login" };
+
+    Object.defineProperty(window, "location", {
+      configurable: true,
+      value: fakeLocation,
+    });
+
+    try {
+      const userEventInstance = userEvent.setup();
+
+      renderAuthContext();
+
+      await userEventInstance.click(
+        screen.getByRole("button", { name: "Google" }),
+      );
+
+      expect(fakeLocation.href).toBe(`${API_BASE_URL}/auth/google`);
+    } finally {
+      Object.defineProperty(window, "location", {
+        configurable: true,
+        value: originalLocation,
+      });
+    }
   });
 
   it("no utiliza localStorage ni sessionStorage para guardar el token", async () => {

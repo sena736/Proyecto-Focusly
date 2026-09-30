@@ -9,6 +9,7 @@ import {
 } from "react";
 
 import api from "../api/api";
+import { API_BASE_URL } from "../api/config";
 
 import {
   getToken,
@@ -212,12 +213,8 @@ export const AuthProvider = ({
 
   const loginWithGoogle =
     useCallback(() => {
-      const apiUrl =
-        import.meta.env.VITE_API_URL ||
-        "http://localhost:3000/api/v1";
-
       window.location.href =
-        `${apiUrl}${API_ENDPOINTS.AUTH.GOOGLE}`;
+        `${API_BASE_URL}${API_ENDPOINTS.AUTH.GOOGLE}`;
     }, []);
 
 

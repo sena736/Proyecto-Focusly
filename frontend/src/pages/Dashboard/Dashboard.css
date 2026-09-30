@@ -408,6 +408,10 @@
   color: var(--focusly-purple);
 }
 
+.focusly-task-alert {
+  padding: 12px 20px 0;
+}
+
 .focusly-task-list {
   display: grid;
 }
