@@ -16,7 +16,7 @@ const Users = () => {
 
   const handleRoleChange = (userId, role) => {
     updateUserRole({
-      userId,
+      id: userId,
       role,
     });
   };

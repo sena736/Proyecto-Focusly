@@ -4,7 +4,7 @@ import userEvent from "@testing-library/user-event";
 import RoleSelect from "./RoleSelect";
 
 const ControlledRoleSelect = ({ onChange }) => {
-  const [value, setValue] = React.useState("Usuario");
+  const [value, setValue] = React.useState("USER");
 
   const handleChange = (event) => {
     setValue(event.target.value);
@@ -18,14 +18,14 @@ describe("RoleSelect", () => {
   test("muestra el rol actual del usuario correctamente", () => {
     render(
       <RoleSelect
-        value="Usuario"
+        value="USER"
         onChange={vi.fn()}
       />
     );
 
     const select = screen.getByRole("combobox");
 
-    expect(select).toHaveValue("Usuario");
+    expect(select).toHaveValue("USER");
   });
 
   test("dispara el callback de cambio de rol con el valor correcto", async () => {
@@ -46,6 +46,6 @@ describe("RoleSelect", () => {
     await user.selectOptions(select, "Administrador");
 
     expect(handleChange).toHaveBeenCalled();
-    expect(receivedValue).toBe("Administrador");
+    expect(receivedValue).toBe("ADMIN");
   });
 });

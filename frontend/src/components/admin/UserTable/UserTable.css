@@ -145,31 +145,6 @@
 }
 
 /* =========================================
-   STATUS
-========================================= */
-
-.user-table__status {
-  display: inline-flex;
-
-  padding: 5px 10px;
-
-  border-radius: 20px;
-
-  font-size: 9px;
-  font-weight: 600;
-}
-
-.user-table__status--active {
-  background-color: #eaf4ee;
-  color: #56806a;
-}
-
-.user-table__status--inactive {
-  background-color: #f3eeee;
-  color: #9a7373;
-}
-
-/* =========================================
    ACTIONS
 ========================================= */
 
