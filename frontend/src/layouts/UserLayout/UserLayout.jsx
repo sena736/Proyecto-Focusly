@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
+import MobileNavigation from "../../components/layout/MobileNavigation/MobileNavigation";
 import Sidebar from "../../components/layout/Sidebar/Sidebar";
 import useAuth from "../../hooks/useAuth";
 import "./UserLayout.css";
@@ -36,6 +37,8 @@ const UserLayout = () => {
       <div className="user-layout__content">
         <Outlet />
       </div>
+
+      <MobileNavigation />
     </div>
   );
 };
