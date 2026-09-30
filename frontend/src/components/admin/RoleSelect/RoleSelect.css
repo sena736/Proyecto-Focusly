@@ -1,3 +1,29 @@
+/*
+  Role select palette (`--rsel-*`, unique across the bundle).
+  Light values are the original literals; the dark block maps to global tokens.
+  The light-blue focus colours are constants (see the guard allow-list).
+  Colour literals are allowed ONLY here.
+*/
+:root {
+  --rsel-label: #333;
+  --rsel-text: #555;
+  --rsel-placeholder: #999;
+  --rsel-border: #dfe3e6;
+  --rsel-border-hover: #b8ddec;
+  --rsel-surface: #ffffff;
+  --rsel-focus: #8ecae6;
+  --rsel-focus-glow: rgba(142, 202, 230, 0.15);
+}
+
+:root[data-theme="dark"] {
+  --rsel-label: var(--text-primary);
+  --rsel-text: var(--text-primary);
+  --rsel-placeholder: var(--text-muted);
+  --rsel-border: var(--border-color);
+  --rsel-border-hover: #4e7c92;
+  --rsel-surface: var(--surface);
+}
+
 .role-select-container {
   width: 100%;
   display: flex;
@@ -8,16 +34,16 @@
 .role-select-label {
   font-size: 14px;
   font-weight: 600;
-  color: #333;
+  color: var(--rsel-label);
 }
 
 .role-select {
   width: 100%;
   padding: 13px 15px;
-  border: 1px solid #dfe3e6;
+  border: 1px solid var(--rsel-border);
   border-radius: 12px;
-  background-color: #ffffff;
-  color: #555;
+  background-color: var(--rsel-surface);
+  color: var(--rsel-text);
   font-size: 14px;
   outline: none;
   cursor: pointer;
@@ -26,21 +52,21 @@
 }
 
 .role-select:hover {
-  border-color: #b8ddec;
+  border-color: var(--rsel-border-hover);
 }
 
 .role-select:focus {
-  border-color: #8ecae6;
-  box-shadow: 0 0 0 3px rgba(142, 202, 230, 0.15);
+  border-color: var(--rsel-focus);
+  box-shadow: 0 0 0 3px var(--rsel-focus-glow);
 }
 
 .role-select option {
-  color: #333;
-  background-color: #ffffff;
+  color: var(--rsel-label);
+  background-color: var(--rsel-surface);
 }
 
 .role-select option:first-child {
-  color: #999;
+  color: var(--rsel-placeholder);
 }
 
 /* Responsive */

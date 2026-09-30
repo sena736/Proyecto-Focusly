@@ -1,8 +1,56 @@
+/*
+  Admin user table palette (`--utable-*`, unique across the bundle).
+  Light values are the original literals. Dark maps neutrals to global tokens and
+  keeps the teal accent family as lighter dark literals (>= 4.5:1). Literals
+  allowed ONLY here.
+*/
+:root {
+  --utable-surface: #ffffff;
+  --utable-border: #e3ecea;
+  --utable-divider: #edf2f1;
+  --utable-title: #38565b;
+  --utable-muted: #94a2a4;
+  --utable-tint: #f0f6f5;
+  --utable-accent: #4e767d;
+  --utable-head-bg: #fafcfc;
+  --utable-head-text: #98a6a8;
+  --utable-cell: #718386;
+  --utable-row-hover: #fbfdfc;
+  --utable-name: #526b6f;
+  --utable-avatar-bg: #eaf2f1;
+  --utable-edit-hover: #e1edeb;
+  --utable-danger-bg: #faf2f2;
+  --utable-danger-text: #a06f6f;
+  --utable-danger-hover: #f4e5e5;
+  --utable-empty: #9aa8aa;
+}
+
+:root[data-theme="dark"] {
+  --utable-surface: var(--surface);
+  --utable-border: var(--border-color);
+  --utable-divider: var(--border-color);
+  --utable-title: var(--text-primary);
+  --utable-muted: var(--text-muted);
+  --utable-tint: var(--surface-secondary);
+  --utable-accent: #8cc1c8;
+  --utable-head-bg: var(--background);
+  --utable-head-text: var(--text-muted);
+  --utable-cell: var(--text-secondary);
+  --utable-row-hover: var(--surface-secondary);
+  --utable-name: var(--text-primary);
+  --utable-avatar-bg: #22373b;
+  --utable-edit-hover: #2d4a4f;
+  --utable-danger-bg: #3d1f27;
+  --utable-danger-text: #ff9aa5;
+  --utable-danger-hover: #4f2730;
+  --utable-empty: var(--text-muted);
+}
+
 
 .user-table {
   width: 100%;
-  background-color: #ffffff;
-  border: 1px solid #e3ecea;
+  background-color: var(--utable-surface);
+  border: 1px solid var(--utable-border);
   border-radius: 16px;
   overflow: hidden;
   box-sizing: border-box;
@@ -19,13 +67,13 @@
 
   padding: 20px 22px;
 
-  border-bottom: 1px solid #edf2f1;
+  border-bottom: 1px solid var(--utable-divider);
 }
 
 .user-table__header h2 {
   margin: 0;
 
-  color: #38565b;
+  color: var(--utable-title);
   font-size: 17px;
   font-weight: 700;
 }
@@ -33,15 +81,15 @@
 .user-table__header p {
   margin: 4px 0 0;
 
-  color: #94a2a4;
+  color: var(--utable-muted);
   font-size: 11px;
 }
 
 .user-table__count {
   padding: 6px 10px;
 
-  background-color: #f0f6f5;
-  color: #4e767d;
+  background-color: var(--utable-tint);
+  color: var(--utable-accent);
 
   border-radius: 7px;
 
@@ -68,9 +116,9 @@
 .user-table__table th {
   padding: 13px 20px;
 
-  background-color: #fafcfc;
+  background-color: var(--utable-head-bg);
 
-  color: #98a6a8;
+  color: var(--utable-head-text);
 
   font-size: 9px;
   font-weight: 700;
@@ -82,9 +130,9 @@
 .user-table__table td {
   padding: 14px 20px;
 
-  border-top: 1px solid #edf2f1;
+  border-top: 1px solid var(--utable-divider);
 
-  color: #718386;
+  color: var(--utable-cell);
 
   font-size: 11px;
 }
@@ -94,7 +142,7 @@
 }
 
 .user-table__table tbody tr:hover {
-  background-color: #fbfdfc;
+  background-color: var(--utable-row-hover);
 }
 
 /* =========================================
@@ -106,7 +154,7 @@
   align-items: center;
   gap: 10px;
 
-  color: #526b6f;
+  color: var(--utable-name);
   font-weight: 600;
 }
 
@@ -120,8 +168,8 @@
 
   flex-shrink: 0;
 
-  background-color: #eaf2f1;
-  color: #4e767d;
+  background-color: var(--utable-avatar-bg);
+  color: var(--utable-accent);
 
   border-radius: 50%;
 }
@@ -135,8 +183,8 @@
 
   padding: 5px 9px;
 
-  background-color: #f0f6f5;
-  color: #4e767d;
+  background-color: var(--utable-tint);
+  color: var(--utable-accent);
 
   border-radius: 6px;
 
@@ -171,21 +219,21 @@
 }
 
 .user-table__action--edit {
-  background-color: #f0f6f5;
-  color: #4e767d;
+  background-color: var(--utable-tint);
+  color: var(--utable-accent);
 }
 
 .user-table__action--edit:hover {
-  background-color: #e1edeb;
+  background-color: var(--utable-edit-hover);
 }
 
 .user-table__action--delete {
-  background-color: #faf2f2;
-  color: #a06f6f;
+  background-color: var(--utable-danger-bg);
+  color: var(--utable-danger-text);
 }
 
 .user-table__action--delete:hover {
-  background-color: #f4e5e5;
+  background-color: var(--utable-danger-hover);
 }
 
 /* =========================================
@@ -200,18 +248,18 @@
   padding: 45px 20px;
 
   text-align: center;
-  color: #9aa8aa;
+  color: var(--utable-empty);
 }
 
 .user-table__empty svg {
   margin-bottom: 10px;
-  color: #4e767d;
+  color: var(--utable-accent);
 }
 
 .user-table__empty h3 {
   margin: 0 0 5px;
 
-  color: #526b6f;
+  color: var(--utable-name);
   font-size: 14px;
 }
 
