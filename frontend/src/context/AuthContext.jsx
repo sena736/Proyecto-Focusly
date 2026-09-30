@@ -88,10 +88,11 @@ export const AuthProvider = ({
         );
 
         /*
-         * Se asume que el backend responde:
+         * El backend responde:
          *
          * {
-         *   user: {
+         *   success: true,
+         *   data: {
          *     id: 1,
          *     name: "Usuario",
          *     email: "usuario@gmail.com",
@@ -102,7 +103,7 @@ export const AuthProvider = ({
          */
 
         const currentUser =
-          response.data?.user ??
+          response.data?.data ??
           response.data;
 
         setUser(currentUser);
