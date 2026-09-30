@@ -1,7 +1,48 @@
+/*
+  Pomodoro history palette (`--pomoh-*`, unique across the bundle).
+  Light values are the original literals. Dark maps neutrals to global tokens and
+  keeps the teal accent family as lighter dark literals. Literals allowed ONLY here.
+*/
+:root {
+  --pomoh-surface: #ffffff;
+  --pomoh-border: #e4eceb;
+  --pomoh-border-hover: #dce9e7;
+  --pomoh-title: #294b51;
+  --pomoh-task: #38565b;
+  --pomoh-muted: #829396;
+  --pomoh-details: #8a999b;
+  --pomoh-item-bg: #f8fbfa;
+  --pomoh-calendar-bg: #f0f6f5;
+  --pomoh-accent: #4e767d;
+  --pomoh-focus-bg: #e5f0ef;
+  --pomoh-break-bg: #f1f3f3;
+  --pomoh-break-text: #7d8d90;
+  --pomoh-empty-text: #9aa8aa;
+  --pomoh-empty-title: #526b6f;
+}
+
+:root[data-theme="dark"] {
+  --pomoh-surface: var(--surface);
+  --pomoh-border: var(--border-color);
+  --pomoh-border-hover: var(--border-color);
+  --pomoh-title: var(--text-primary);
+  --pomoh-task: var(--text-primary);
+  --pomoh-muted: var(--text-secondary);
+  --pomoh-details: var(--text-muted);
+  --pomoh-item-bg: var(--background);
+  --pomoh-calendar-bg: var(--surface-secondary);
+  --pomoh-accent: #8cc1c8;
+  --pomoh-focus-bg: #22373b;
+  --pomoh-break-bg: var(--surface-secondary);
+  --pomoh-break-text: var(--text-secondary);
+  --pomoh-empty-text: var(--text-muted);
+  --pomoh-empty-title: var(--text-secondary);
+}
+
 .pomodoro-history {
   width: 100%;
-  background-color: #ffffff;
-  border: 1px solid #e4eceb;
+  background-color: var(--pomoh-surface);
+  border: 1px solid var(--pomoh-border);
   border-radius: 18px;
   padding: 24px;
   box-sizing: border-box;
@@ -20,14 +61,14 @@
 
 .pomodoro-history__title {
   margin: 0;
-  color: #294b51;
+  color: var(--pomoh-title);
   font-size: 20px;
   font-weight: 700;
 }
 
 .pomodoro-history__subtitle {
   margin: 5px 0 0;
-  color: #829396;
+  color: var(--pomoh-muted);
   font-size: 13px;
 }
 
@@ -38,8 +79,8 @@
   align-items: center;
   justify-content: center;
 
-  background-color: #f0f6f5;
-  color: #4e767d;
+  background-color: var(--pomoh-calendar-bg);
+  color: var(--pomoh-accent);
   border-radius: 10px;
 }
 
@@ -65,7 +106,7 @@
   min-height: 68px;
   padding: 10px 12px;
 
-  background-color: #f8fbfa;
+  background-color: var(--pomoh-item-bg);
   border: 1px solid transparent;
   border-radius: 13px;
 
@@ -74,7 +115,7 @@
 }
 
 .pomodoro-history__item:hover {
-  border-color: #dce9e7;
+  border-color: var(--pomoh-border-hover);
   transform: translateY(-1px);
 }
 
@@ -95,13 +136,13 @@
 }
 
 .pomodoro-history__icon--focus {
-  background-color: #e5f0ef;
-  color: #4e767d;
+  background-color: var(--pomoh-focus-bg);
+  color: var(--pomoh-accent);
 }
 
 .pomodoro-history__icon--break {
-  background-color: #f1f3f3;
-  color: #7d8d90;
+  background-color: var(--pomoh-break-bg);
+  color: var(--pomoh-break-text);
 }
 
 /* =========================================
@@ -116,7 +157,7 @@
 .pomodoro-history__task {
   margin: 0 0 5px;
 
-  color: #38565b;
+  color: var(--pomoh-task);
   font-size: 14px;
   font-weight: 600;
 
@@ -130,7 +171,7 @@
   align-items: center;
   gap: 6px;
 
-  color: #8a999b;
+  color: var(--pomoh-details);
   font-size: 11px;
 }
 
@@ -143,7 +184,7 @@
   align-items: baseline;
   gap: 3px;
 
-  color: #4e767d;
+  color: var(--pomoh-accent);
 }
 
 .pomodoro-history__duration strong {
@@ -160,7 +201,7 @@
 ========================================= */
 
 .pomodoro-history__completed {
-  color: #4e767d;
+  color: var(--pomoh-accent);
   flex-shrink: 0;
 }
 
@@ -176,19 +217,19 @@
 
   padding: 45px 20px;
 
-  color: #9aa8aa;
+  color: var(--pomoh-empty-text);
   text-align: center;
 }
 
 .pomodoro-history__empty svg {
   margin-bottom: 12px;
-  color: #4e767d;
+  color: var(--pomoh-accent);
 }
 
 .pomodoro-history__empty h3 {
   margin: 0 0 6px;
 
-  color: #526b6f;
+  color: var(--pomoh-empty-title);
   font-size: 15px;
 }
 
