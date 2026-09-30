@@ -52,6 +52,14 @@ const THEME_CONSTANT_TOKENS = [
   "--public-btn-shadow-hover",
 ];
 
+/**
+ * Extra constants allowed ONLY on the app surfaces (dashboard status dot).
+ * `--success` (#35b26f) is ~2.6:1 on white, which is fine for a decorative
+ * status dot but not for public text, so it is NOT allow-listed for the public
+ * guard.
+ */
+const APP_THEME_CONSTANT_TOKENS = [...THEME_CONSTANT_TOKENS, "--success"];
+
 const read = (relative) =>
   fs.readFileSync(path.join(src, relative), "utf8").replace(/\r\n/g, "\n");
 
@@ -463,5 +471,194 @@ describe("public surfaces respect the theme", () => {
 
   it("footer no longer declares its own root tokens (they live in global.css)", () => {
     expect(stripComments(read(PUBLIC_STYLESHEETS[1]))).not.toMatch(/:root\s*{/);
+  });
+});
+
+/* ------------------------------------------------------------------ */
+/* Themed app surfaces (dashboard + the shared widgets it renders)     */
+/* ------------------------------------------------------------------ */
+
+/**
+ * These stylesheets own a small PALETTE: a `:root` block with the light values
+ * (hard-coded colours are allowed ONLY there, exactly like global.css) and a
+ * `:root[data-theme="dark"]` block that maps each entry to a global token or a
+ * dark literal. Every rule outside those two blocks must use `var(--token)`.
+ */
+const THEMED_APP_STYLESHEETS = [
+  "pages/Dashboard/Dashboard.css",
+  "components/ui/Avatar/Avatar.css",
+  "components/ui/Alert/Alert.css",
+];
+
+/** Custom properties that are set at runtime from JSX (`style={{ "--x": ... }}`). */
+const RUNTIME_TOKENS = ["--timer-progress", "--progress"];
+
+/** Removes the body of every block whose selector is exactly `selectorSource`. */
+const removeBlocks = (css, selectorSource) => {
+  const re = new RegExp(`(?:^|[};{\\s,])(?:${selectorSource})\\s*\\{`, "g");
+  let out = "";
+  let cursor = 0;
+  for (const match of css.matchAll(re)) {
+    const open = match.index + match[0].length - 1;
+    if (open < cursor) continue;
+    const close = matchBrace(css, open);
+    if (close === -1) continue;
+    out += css.slice(cursor, open + 1);
+    cursor = close;
+  }
+  return out + css.slice(cursor);
+};
+
+/** CSS with the palette (light + dark theme blocks) removed. */
+const withoutPalette = (css) =>
+  removeBlocks(removeBlocks(stripComments(css), LIGHT_SELECTOR), DARK_SELECTOR);
+
+/** Non-custom-property declarations hiding inside the palette blocks. */
+const paletteIntruders = (css) => {
+  const clean = stripComments(css);
+  return [...findBlocks(clean, LIGHT_SELECTOR), ...findBlocks(clean, DARK_SELECTOR)]
+    .flatMap((body) => walkDeclarations(body))
+    .filter(({ depth, prop }) => depth === 0 && !prop.startsWith("--"))
+    .map(({ prop }) => prop);
+};
+
+describe("palette scanner (mutation checks)", () => {
+  it("allows colour literals inside the palette blocks only", () => {
+    const css =
+      ':root { --a: #fff; }\n:root[data-theme="dark"] { --a: rgba(0,0,0,.5); }\na { color: #abc; }';
+    expect(findLiterals(withoutPalette(css))).toEqual(["#abc"]);
+  });
+
+  it("does not let a rule hide after a palette block", () => {
+    const css = ":root { --a: #fff; }\n.x { color: red; }\n.y { background: #000; }";
+    expect(findLiterals(withoutPalette(css))).toEqual(["red", "#000"]);
+  });
+
+  it("flags real declarations placed inside a palette block", () => {
+    expect(paletteIntruders(":root { --a: #fff; color: red; }")).toEqual(["color"]);
+    expect(paletteIntruders(':root[data-theme="dark"] { background: #000; }')).toEqual([
+      "background",
+    ]);
+    expect(paletteIntruders(":root { --a: #fff; }")).toEqual([]);
+  });
+});
+
+describe("themed app surfaces respect the theme", () => {
+  it.each(THEMED_APP_STYLESHEETS)(
+    "%s has no hard-coded colour literals outside its palette",
+    (relative) => {
+      expect(findLiterals(withoutPalette(read(relative)))).toEqual([]);
+    },
+  );
+
+  it.each(THEMED_APP_STYLESHEETS)(
+    "%s keeps only custom properties inside its palette blocks",
+    (relative) => {
+      expect(paletteIntruders(read(relative))).toEqual([]);
+    },
+  );
+
+  it.each(THEMED_APP_STYLESHEETS)(
+    "%s only uses tokens defined in global.css or in its own palette",
+    (relative) => {
+      const css = read(relative);
+      const own = parseThemes(css).light;
+      const undefinedTokens = [...usedTokens(css)].filter(
+        (token) =>
+          !lightTokens.has(token) &&
+          !own.has(token) &&
+          !RUNTIME_TOKENS.includes(token),
+      );
+      expect(undefinedTokens).toEqual([]);
+    },
+  );
+
+  it.each(THEMED_APP_STYLESHEETS)(
+    "%s only uses colour tokens whose dark value differs from light",
+    (relative) => {
+      const css = read(relative);
+      const own = parseThemes(css);
+      const light = new Map([...lightTokens, ...own.light]);
+      const dark = new Map([...darkTokens, ...own.dark]);
+      expect(
+        themeIssues(usedTokens(css), light, dark, APP_THEME_CONSTANT_TOKENS),
+      ).toEqual([]);
+    },
+  );
+
+  it("dashboard has no dead `.is-dark` rules (the theme lives on <html data-theme>)", () => {
+    expect(stripComments(read(THEMED_APP_STYLESHEETS[0]))).not.toMatch(/\.is-dark/);
+  });
+});
+
+/* ------------------------------------------------------------------ */
+/* Cross-file custom-property collisions                               */
+/* ------------------------------------------------------------------ */
+
+/** Names of custom properties defined in any `:root`-level block (light or dark). */
+const rootTokenNames = (css) => {
+  const { light, dark } = parseThemes(css);
+  return new Set([...light.keys(), ...dark.keys()]);
+};
+
+/**
+ * `:root` tokens are global: when two stylesheets define the same name, the one
+ * bundled LAST silently wins for the whole app. Returns, for a guarded file,
+ * every palette name that another stylesheet (global.css excluded, it is the
+ * source of truth and is referenced, not redefined) also defines.
+ */
+const findCollisions = (guardedPath, sheets) => {
+  const own = rootTokenNames(sheets.get(guardedPath));
+  const hits = [];
+  for (const [otherPath, css] of sheets) {
+    if (otherPath === guardedPath || otherPath === "styles/global.css") continue;
+    for (const name of rootTokenNames(css)) {
+      if (own.has(name)) hits.push(`${name} (also defined in ${otherPath})`);
+    }
+  }
+  return hits;
+};
+
+const listStylesheets = (dir = src) =>
+  fs.readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
+    const full = path.join(dir, entry.name);
+    if (entry.isDirectory()) return listStylesheets(full);
+    return entry.name.endsWith(".css")
+      ? [path.relative(src, full).split(path.sep).join("/")]
+      : [];
+  });
+
+describe("palette collision scanner (mutation checks)", () => {
+  const sheets = (extra) =>
+    new Map([
+      ["a.css", ":root { --x: #fff; }"],
+      ["styles/global.css", ":root { --x: #000; --y: #000; }"],
+      ...extra,
+    ]);
+
+  it("flags a name redefined in another :root block", () => {
+    expect(findCollisions("a.css", sheets([["b.css", ":root { --x: #111; }"]]))).toHaveLength(1);
+  });
+
+  it("flags a name redefined in another dark block", () => {
+    const b = ':root[data-theme="dark"] { --x: #111; }';
+    expect(findCollisions("a.css", sheets([["b.css", b]]))).toHaveLength(1);
+  });
+
+  it("ignores global.css and unrelated names", () => {
+    expect(findCollisions("a.css", sheets([["b.css", ":root { --z: #111; }"]]))).toEqual([]);
+  });
+
+  it("ignores the same name when it is not declared at :root level", () => {
+    expect(findCollisions("a.css", sheets([["b.css", ".card { --x: #111; }"]]))).toEqual([]);
+  });
+});
+
+describe("app-surface palettes do not collide with other stylesheets", () => {
+  const sheets = new Map(listStylesheets().map((file) => [file, read(file)]));
+
+  it.each(THEMED_APP_STYLESHEETS)("%s palette names are unique across src", (relative) => {
+    expect(sheets.has(relative)).toBe(true);
+    expect(findCollisions(relative, sheets)).toEqual([]);
   });
 });
