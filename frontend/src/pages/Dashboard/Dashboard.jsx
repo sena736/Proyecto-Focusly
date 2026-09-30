@@ -1,7 +1,8 @@
-import { useMemo } from "react";
+import { useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Dashboard.css";
 
+import Alert from "../../components/ui/Alert/Alert";
 import Avatar from "../../components/ui/Avatar/Avatar";
 import useAuth from "../../hooks/useAuth";
 import useTask from "../../hooks/useTask";
@@ -21,8 +22,11 @@ export default function Dashboard() {
     tasks = [],
     isLoading: isLoadingTasks,
     isError: isTasksError,
-    updateTask,
+    updateTaskAsync,
   } = useTask(getToken());
+
+  const [toggleError, setToggleError] = useState("");
+  const latestToggleRef = useRef(0);
 
   const {
     formattedTime,
@@ -66,15 +70,32 @@ export default function Dashboard() {
     ? Math.min(100, Math.max(0, elapsedPercent))
     : 0;
 
-  const toggleTask = (task) => {
-    updateTask({
-      id: task.id,
-      data: {
-        status: isCompleted(task)
-          ? TASK_STATUS.PENDING
-          : TASK_STATUS.COMPLETED,
-      },
-    });
+  const toggleTask = async (task) => {
+    // Toggles can overlap: only the latest request may touch the shared alert.
+    latestToggleRef.current += 1;
+    const requestId = latestToggleRef.current;
+    const isLatest = () => requestId === latestToggleRef.current;
+
+    setToggleError("");
+
+    try {
+      await updateTaskAsync({
+        id: task.id,
+        data: {
+          status: isCompleted(task)
+            ? TASK_STATUS.PENDING
+            : TASK_STATUS.COMPLETED,
+        },
+      });
+    } catch (error) {
+      console.error("Error al actualizar la tarea:", error);
+
+      if (!isLatest()) return;
+
+      setToggleError(
+        error?.message || "No se pudo actualizar la tarea. Intentá de nuevo.",
+      );
+    }
   };
 
   return (
@@ -200,6 +221,16 @@ export default function Dashboard() {
 
                 <span>{completedCount} completadas</span>
               </div>
+
+              {toggleError && (
+                <div className="focusly-task-alert">
+                  <Alert
+                    type="error"
+                    message={toggleError}
+                    onClose={() => setToggleError("")}
+                  />
+                </div>
+              )}
 
               <div className="focusly-task-list">
                 {isLoadingTasks && (
