@@ -1,14 +1,45 @@
+/*
+  Motivation card palette (`--motiv-*`, unique across the bundle).
+  Light values are the original literals; the dark block maps to global tokens.
+  Colour literals are allowed ONLY here.
+*/
+:root {
+  --motiv-surface: #ffffff;
+  --motiv-border: #e5e7eb;
+  --motiv-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  --motiv-icon-bg: #f3f4f6;
+  --motiv-muted: #6b7280;
+  --motiv-text: #1f2937;
+  /* Solid fill behind --on-primary text. */
+  --motiv-btn-bg: #111827;
+  --motiv-btn-hover: #374151;
+  --motiv-ring: #111827;
+}
+
+:root[data-theme="dark"] {
+  --motiv-surface: var(--surface);
+  --motiv-border: var(--border-color);
+  --motiv-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  --motiv-icon-bg: var(--surface-secondary);
+  --motiv-muted: var(--text-secondary);
+  --motiv-text: var(--text-primary);
+  /* A near-black button would vanish on the dark surface: use the brand fill. */
+  --motiv-btn-bg: var(--primary);
+  --motiv-btn-hover: var(--primary-hover);
+  --motiv-ring: var(--primary-text);
+}
+
 .motivation-card {
   width: 100%;
   display: flex;
   align-items: center;
   gap: 20px;
   padding: 24px;
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
+  background: var(--motiv-surface);
+  border: 1px solid var(--motiv-border);
   border-radius: 16px;
   box-sizing: border-box;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--motiv-shadow);
 }
 
 .motivation-card__icon {
@@ -20,7 +51,7 @@
   align-items: center;
   justify-content: center;
 
-  background: #f3f4f6;
+  background: var(--motiv-icon-bg);
   border-radius: 50%;
 
   font-size: 24px;
@@ -38,7 +69,7 @@
   font-weight: 700;
   letter-spacing: 1px;
 
-  color: #6b7280;
+  color: var(--motiv-muted);
 }
 
 .motivation-card__quote {
@@ -48,14 +79,14 @@
   line-height: 1.5;
   font-weight: 600;
 
-  color: #1f2937;
+  color: var(--motiv-text);
 }
 
 .motivation-card__author {
   margin: 8px 0 16px;
 
   font-size: 14px;
-  color: #6b7280;
+  color: var(--motiv-muted);
 }
 
 .motivation-card__button {
@@ -64,8 +95,8 @@
   border: none;
   border-radius: 8px;
 
-  background: #111827;
-  color: #ffffff;
+  background: var(--motiv-btn-bg);
+  color: var(--on-primary);
 
   font-size: 14px;
   font-weight: 600;
@@ -78,7 +109,7 @@
 }
 
 .motivation-card__button:hover {
-  background: #374151;
+  background: var(--motiv-btn-hover);
   transform: translateY(-1px);
 }
 
@@ -87,7 +118,7 @@
 }
 
 .motivation-card__button:focus-visible {
-  outline: 2px solid #111827;
+  outline: 2px solid var(--motiv-ring);
   outline-offset: 2px;
 }
 
