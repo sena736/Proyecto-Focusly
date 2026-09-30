@@ -99,6 +99,12 @@
   transition: 0.2s ease;
 }
 
+.confirm-modal-actions button:disabled,
+.confirm-modal-close:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 .confirm-modal-cancel {
   border: 1px solid #ddd9e5;
   background: #ffffff;

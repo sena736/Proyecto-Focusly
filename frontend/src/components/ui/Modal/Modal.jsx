@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import "./Modal.css";
 
@@ -34,12 +34,22 @@ export default function Modal({
   loading = false,
   icon,
 }) {
+  // Latest props live in refs so callers can pass unmemoized handlers
+  // without tearing down and re-creating the listener on every render.
+  const onCloseRef = useRef(onClose);
+  const loadingRef = useRef(loading);
+
+  useEffect(() => {
+    onCloseRef.current = onClose;
+    loadingRef.current = loading;
+  });
+
   useEffect(() => {
     if (!isOpen || !closeOnEscape) return;
 
     const handleKeyDown = (event) => {
-      if (event.key === "Escape" && !loading) {
-        onClose?.();
+      if (event.key === "Escape" && !loadingRef.current) {
+        onCloseRef.current?.();
       }
     };
 
@@ -52,9 +62,11 @@ export default function Modal({
       document.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = originalOverflow;
     };
-  }, [isOpen, closeOnEscape, onClose, loading]);
+  }, [isOpen, closeOnEscape]);
 
   if (!isOpen) return null;
+
+  const hasFooter = showCancel || showConfirm;
 
   const handleOverlayClick = (event) => {
     if (closeOnOverlay && event.target === event.currentTarget && !loading) {
@@ -106,9 +118,17 @@ export default function Modal({
           </div>
         </div>
 
-        {children && <div className="focusly-modal-body">{children}</div>}
+        {children && (
+          <div
+            className={`focusly-modal-body ${
+              hasFooter ? "focusly-modal-body--with-footer" : ""
+            }`}
+          >
+            {children}
+          </div>
+        )}
 
-        {(showCancel || showConfirm) && (
+        {hasFooter && (
           <footer className="focusly-modal-footer">
             {showCancel && (
               <button
