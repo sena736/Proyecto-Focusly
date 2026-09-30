@@ -678,7 +678,7 @@ const THEMED_APP_STYLESHEETS = [
   "components/tasks/TaskCard/TaskCard.css",
   "components/tasks/TaskForm/TaskForm.css",
   "components/tasks/TaskFilters/TaskFilters.css",
-  // Admin users page (pages/admin/UserTable/UserTable.css is an orphan: no importer)
+  // Admin users page
   "components/admin/UserTable/UserTable.css",
   "components/admin/RoleSelect/RoleSelect.css",
   // Page header shared by Tasks, Pomodoro, Profile, Motivation and admin Users
