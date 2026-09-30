@@ -1,7 +1,7 @@
 /*
   Task card palette (`--tcard-*`, unique across the bundle).
   Light values are the original literals. Dark maps neutrals to global tokens;
-  the semantic priority / danger pairs use dark literals tuned for >= 4.5:1.
+  the semantic priority pairs use dark literals tuned for >= 4.5:1.
   `--tcard-done-opacity` dims a completed card: .75 in light (unchanged); in dark
   it is .95 because a dimmed card is blended over the page, and at .75 the tint /
   high-priority chips fall below 4.5:1 (lowest effective chip contrast at .95: 4.62:1).
@@ -28,8 +28,6 @@
   --tcard-high-bg: #fff2e5;
   --tcard-high-text: #c76a16;
   --tcard-done-bg: #fafafa;
-  --tcard-danger-bg: #fff0f0;
-  --tcard-danger: #dc3545;
   --tcard-done-opacity: 0.75;
 }
 
@@ -52,8 +50,6 @@
   --tcard-high-bg: #3d2a16;
   --tcard-high-text: #f0a35e;
   --tcard-done-bg: var(--background);
-  --tcard-danger-bg: #3d1f27;
-  --tcard-danger: var(--danger-text);
   --tcard-done-opacity: 0.95;
 }
 
@@ -271,41 +267,6 @@
   gap: 4px;
 
   flex-shrink: 0;
-}
-
-.task-action-button {
-  width: 32px;
-  height: 32px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  padding: 0;
-
-  border: none;
-  border-radius: 7px;
-
-  background: transparent;
-  color: var(--tcard-muted);
-
-  font-size: 18px;
-
-  cursor: pointer;
-
-  transition:
-    background 0.2s ease,
-    color 0.2s ease;
-}
-
-.task-action-button:hover {
-  background: var(--tcard-tint);
-  color: var(--tcard-accent);
-}
-
-.task-action-delete:hover {
-  background: var(--tcard-danger-bg);
-  color: var(--tcard-danger);
 }
 
 /* =========================

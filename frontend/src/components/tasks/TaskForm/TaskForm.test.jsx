@@ -26,6 +26,70 @@ describe("TaskForm", () => {
     ).toBeInTheDocument();
   });
 
+  test("renderiza título y fecha con Input: marca visual de obligatorio sin required nativo", () => {
+    const { container } = render(<TaskForm onSubmit={vi.fn()} />);
+
+    const title = screen.getByLabelText(/título de la tarea/i);
+    const dueDate = screen.getByLabelText(/fecha de entrega/i);
+
+    expect(title).toHaveClass("input-control");
+    expect(title).toHaveAttribute("id", "task-title");
+    expect(title).toHaveAttribute("maxlength", "100");
+    expect(dueDate).toHaveClass("input-control");
+    expect(dueDate).toHaveAttribute("type", "date");
+    expect(dueDate).toHaveAttribute("id", "task-due-date");
+
+    // La validación es propia del formulario: no debe aparecer la de la plataforma.
+    // (toBeRequired() also honours aria-required, so assert on the DOM attributes.)
+    expect(title).not.toHaveAttribute("required");
+    expect(dueDate).not.toHaveAttribute("required");
+    // ...but assistive tech still hears that the fields are required.
+    expect(title).toHaveAttribute("aria-required", "true");
+    expect(dueDate).toHaveAttribute("aria-required", "true");
+    expect(container.querySelectorAll(".input-required")).toHaveLength(2);
+  });
+
+  test("enlaza el mensaje de error con el campo y lo limpia al corregir", () => {
+    render(<TaskForm onSubmit={vi.fn()} />);
+
+    fireEvent.click(screen.getByRole("button", { name: /crear/i }));
+
+    const title = screen.getByLabelText(/título de la tarea/i);
+    const message = screen.getByText(/el título de la tarea es obligatorio/i);
+
+    expect(title).toHaveAttribute("aria-invalid", "true");
+    expect(title).toHaveAttribute("aria-describedby", message.id);
+    expect(screen.getByText("Selecciona una fecha.")).toBeInTheDocument();
+
+    fireEvent.change(title, { target: { value: "Algo" } });
+
+    expect(title).not.toHaveAttribute("aria-invalid");
+    expect(
+      screen.queryByText(/el título de la tarea es obligatorio/i)
+    ).not.toBeInTheDocument();
+  });
+
+  test("mientras guarda, el botón principal muestra Guardando... y ambos botones se bloquean", () => {
+    render(<TaskForm onSubmit={vi.fn()} loading />);
+
+    const submit = screen.getByRole("button", { name: "Guardando..." });
+
+    expect(submit).toBeDisabled();
+    expect(submit).toHaveAttribute("type", "submit");
+    expect(submit).toHaveClass("focusly-button--primary");
+    expect(screen.getByRole("button", { name: "Cancelar" })).toBeDisabled();
+  });
+
+  test("Cancelar llama a onCancel", () => {
+    const onCancel = vi.fn();
+
+    render(<TaskForm onSubmit={vi.fn()} onCancel={onCancel} />);
+
+    fireEvent.click(screen.getByRole("button", { name: "Cancelar" }));
+
+    expect(onCancel).toHaveBeenCalledTimes(1);
+  });
+
   test("precarga los campos cuando recibe una tarea por prop", () => {
     const onSubmit = vi.fn();
 

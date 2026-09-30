@@ -9,6 +9,9 @@ import {
 } from "react-icons/fi";
 import { googleLogin, emailLogin } from "../../api/auth.api";
 import { AuthContext } from "../../context/AuthContext";
+import Button from "../../components/ui/Button/Button";
+import IconButton from "../../components/ui/IconButton/IconButton";
+import Input from "../../components/ui/Input/Input";
 import { isValidEmail } from "../../utils/validators";
 import "./Login.css";
 
@@ -203,63 +206,48 @@ const Login = () => {
         </div>
 
         <form className="login__form" onSubmit={handleSubmit}>
-          <div className="login__field">
-            <label htmlFor="email">Correo electrónico</label>
+          <Input
+            label="Correo electrónico"
+            id="email"
+            name="email"
+            type="email"
+            value={formData.email}
+            onChange={handleChange}
+            placeholder="Ingresa tu correo"
+            autoComplete="email"
+            inputMode="email"
+            icon={<FiMail aria-hidden="true" />}
+            required
+          />
 
-            <div className="login__input-wrapper">
-              <FiMail aria-hidden="true" />
-
-              <input
-                id="email"
-                name="email"
-                type="email"
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="Ingresa tu correo"
-                autoComplete="email"
-                inputMode="email"
-                required
-              />
-            </div>
-          </div>
-
-          <div className="login__field">
-            <div className="login__label-row">
-              <label htmlFor="password">Contraseña</label>
-
-              <Link to="/forgot-password">
+          <Input
+            label="Contraseña"
+            id="password"
+            name="password"
+            type={showPassword ? "text" : "password"}
+            value={formData.password}
+            onChange={handleChange}
+            placeholder="Ingresa tu contraseña"
+            autoComplete="current-password"
+            icon={<FiLock aria-hidden="true" />}
+            labelAction={
+              <Link className="login__forgot" to="/forgot-password">
                 ¿Olvidaste tu contraseña?
               </Link>
-            </div>
-
-            <div className="login__input-wrapper">
-              <FiLock aria-hidden="true" />
-
-              <input
-                id="password"
-                name="password"
-                type={showPassword ? "text" : "password"}
-                value={formData.password}
-                onChange={handleChange}
-                placeholder="Ingresa tu contraseña"
-                autoComplete="current-password"
-                required
-              />
-
-              <button
-                type="button"
-                className="login__password-toggle"
-                onClick={() => setShowPassword((prev) => !prev)}
-                aria-label={
-                  showPassword
-                    ? "Ocultar contraseña"
-                    : "Mostrar contraseña"
+            }
+            endAdornment={
+              <IconButton
+                size="small"
+                variant="ghost"
+                icon={showPassword ? <FiEyeOff /> : <FiEye />}
+                label={
+                  showPassword ? "Ocultar contraseña" : "Mostrar contraseña"
                 }
-              >
-                {showPassword ? <FiEyeOff /> : <FiEye />}
-              </button>
-            </div>
-          </div>
+                onClick={() => setShowPassword((prev) => !prev)}
+              />
+            }
+            required
+          />
 
           {error && (
             <p className="login__error" role="alert">
@@ -267,9 +255,9 @@ const Login = () => {
             </p>
           )}
 
-          <button type="submit" className="login__submit">
+          <Button type="submit" fullWidth className="login__submit">
             Iniciar sesión
-          </button>
+          </Button>
         </form>
 
         <p className="login__register">

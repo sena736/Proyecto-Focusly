@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import Button from "../../ui/Button/Button";
+import Input from "../../ui/Input/Input";
 import { formatDueDateForInput } from "../../../utils/date";
 import "./TaskForm.css";
 
@@ -132,27 +134,18 @@ const TaskForm = ({
           TÍTULO
           ===================================== */}
 
-      <div className="task-form__field">
-        <label htmlFor="task-title">
-          Título de la tarea
-          <span className="task-form__required">*</span>
-        </label>
-
-        <input
-          id="task-title"
-          name="title"
-          type="text"
-          value={formData.title}
-          onChange={handleChange}
-          placeholder="Ej: Estudiar Matemáticas"
-          maxLength={100}
-          className={errors.title ? "task-form__input--error" : ""}
-        />
-
-        {errors.title && (
-          <span className="task-form__error">{errors.title}</span>
-        )}
-      </div>
+      <Input
+        label="Título de la tarea"
+        id="task-title"
+        name="title"
+        type="text"
+        value={formData.title}
+        onChange={handleChange}
+        placeholder="Ej: Estudiar Matemáticas"
+        maxLength={100}
+        error={errors.title}
+        showRequiredMark
+      />
 
       {/* =====================================
           DESCRIPCIÓN
@@ -185,25 +178,16 @@ const TaskForm = ({
           FECHA
           ===================================== */}
 
-      <div className="task-form__field">
-        <label htmlFor="task-due-date">
-          Fecha de entrega
-          <span className="task-form__required">*</span>
-        </label>
-
-        <input
-          id="task-due-date"
-          name="dueDate"
-          type="date"
-          value={formData.dueDate}
-          onChange={handleChange}
-          className={errors.dueDate ? "task-form__input--error" : ""}
-        />
-
-        {errors.dueDate && (
-          <span className="task-form__error">{errors.dueDate}</span>
-        )}
-      </div>
+      <Input
+        label="Fecha de entrega"
+        id="task-due-date"
+        name="dueDate"
+        type="date"
+        value={formData.dueDate}
+        onChange={handleChange}
+        error={errors.dueDate}
+        showRequiredMark
+      />
 
       {/* =====================================
           PRIORIDAD
@@ -250,25 +234,23 @@ const TaskForm = ({
           ===================================== */}
 
       <div className="task-form__actions">
-        <button
-          type="button"
+        <Button
+          variant="secondary"
           className="task-form__cancel"
           onClick={handleCancel}
           disabled={loading}
         >
           Cancelar
-        </button>
+        </Button>
 
-        <button type="submit" className="task-form__submit" disabled={loading}>
-          {loading ? (
-            <>
-              <span className="task-form__spinner"></span>
-              Guardando...
-            </>
-          ) : (
-            submitText
-          )}
-        </button>
+        <Button
+          type="submit"
+          className="task-form__submit"
+          loading={loading}
+          loadingText="Guardando..."
+        >
+          {submitText}
+        </Button>
       </div>
     </form>
   );
