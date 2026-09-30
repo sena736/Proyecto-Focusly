@@ -3,7 +3,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { FiUser, FiMail, FiLock, FiUserPlus } from "react-icons/fi";
 import { registerUser } from "../../api/auth.api";
 import { AuthContext } from "../../context/AuthContext";
+import { hasMinLength, isValidEmail } from "../../utils/validators";
 import "./Register.css";
+
+const MIN_PASSWORD_LENGTH = 6;
 
 const Register = () => {
   const { establishSession } = useContext(AuthContext);
@@ -35,6 +38,20 @@ const Register = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    if (!isValidEmail(formData.email)) {
+      setSuccess("");
+      setError("Ingresa un correo electrónico válido.");
+      return;
+    }
+
+    if (!hasMinLength(formData.password, MIN_PASSWORD_LENGTH)) {
+      setSuccess("");
+      setError(
+        `La contraseña debe tener al menos ${MIN_PASSWORD_LENGTH} caracteres.`,
+      );
+      return;
+    }
+
     if (formData.password !== formData.confirmPassword) {
       setError("Las contraseñas no coinciden.");
       return;
@@ -47,7 +64,7 @@ const Register = () => {
     try {
       const data = await registerUser({
         name: formData.name,
-        email: formData.email,
+        email: formData.email.trim(),
         password: formData.password,
       });
 
