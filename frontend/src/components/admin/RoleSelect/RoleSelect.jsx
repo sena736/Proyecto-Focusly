@@ -3,7 +3,7 @@ import { FiShield, FiChevronDown } from "react-icons/fi";
 import "./RoleSelect.css";
 
 const RoleSelect = ({
-  value = "Usuario",
+  value = "USER",
   onChange,
   label = "Rol",
   name = "role",
@@ -13,15 +13,11 @@ const RoleSelect = ({
 }) => {
   const roles = [
     {
-      value: "Invitado",
-      label: "Invitado",
-    },
-    {
-      value: "Usuario",
+      value: "USER",
       label: "Usuario",
     },
     {
-      value: "Administrador",
+      value: "ADMIN",
       label: "Administrador",
     },
   ];

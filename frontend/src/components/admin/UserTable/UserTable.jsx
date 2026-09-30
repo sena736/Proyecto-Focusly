@@ -7,32 +7,9 @@ const UserTable = ({
   users = [],
   onEdit,
   onDelete,
+  renderRole,
 }) => {
-  const defaultUsers = [
-    {
-      id: 1,
-      name: "María López",
-      email: "maria@email.com",
-      role: "Usuario",
-      status: "Activo",
-    },
-    {
-      id: 2,
-      name: "Juan Pérez",
-      email: "juan@email.com",
-      role: "Usuario",
-      status: "Activo",
-    },
-    {
-      id: 3,
-      name: "Laura Gómez",
-      email: "laura@email.com",
-      role: "Usuario",
-      status: "Inactivo",
-    },
-  ];
-
-  const userList = users.length > 0 ? users : defaultUsers;
+  const userList = users;
 
   return (
     <section className="user-table">
@@ -54,7 +31,6 @@ const UserTable = ({
               <th>Usuario</th>
               <th>Correo electrónico</th>
               <th>Rol</th>
-              <th>Estado</th>
               <th>Acciones</th>
             </tr>
           </thead>
@@ -75,21 +51,13 @@ const UserTable = ({
                 <td>{user.email}</td>
 
                 <td>
-                  <span className="user-table__role">
-                    {user.role}
-                  </span>
-                </td>
-
-                <td>
-                  <span
-                    className={`user-table__status ${
-                      user.status === "Activo"
-                        ? "user-table__status--active"
-                        : "user-table__status--inactive"
-                    }`}
-                  >
-                    {user.status}
-                  </span>
+                  {renderRole ? (
+                    renderRole(user)
+                  ) : (
+                    <span className="user-table__role">
+                      {user.role}
+                    </span>
+                  )}
                 </td>
 
                 <td>

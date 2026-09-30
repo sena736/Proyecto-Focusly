@@ -16,7 +16,7 @@ const Users = () => {
 
   const handleRoleChange = (userId, role) => {
     updateUserRole({
-      userId,
+      id: userId,
       role,
     });
   };
@@ -79,6 +79,8 @@ const Users = () => {
                   )
                 }
                 disabled={isUpdatingRole}
+                label=""
+                name={`role-${user.id}`}
               />
             )}
           />
