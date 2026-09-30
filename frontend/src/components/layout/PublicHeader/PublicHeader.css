@@ -157,6 +157,18 @@
   gap: 10px;
 }
 
+/*
+  Sesion sin resolver: reserva el espacio de los botones de invitado para
+  evitar saltos. El ancho sigue el layout real por breakpoint:
+  - > 700px: "Iniciar sesion" + "Registrarse" (~240px)
+  - <= 700px: mismos botones, mas compactos (~200px)
+  - <= 450px: solo "Registrarse" (~90px)
+*/
+.public-header-actions--pending {
+  min-width: 240px;
+  min-height: 42px;
+}
+
 /* Botón iniciar sesión */
 
 .public-login-button {
@@ -189,7 +201,8 @@
 
 /* Botón registrarse */
 
-.public-register-button {
+.public-register-button,
+.public-dashboard-button {
   padding: 11px 20px;
 
   border-radius: 10px;
@@ -208,7 +221,8 @@
   transition: all 0.2s ease;
 }
 
-.public-register-button:hover {
+.public-register-button:hover,
+.public-dashboard-button:hover {
   /* Sin este color, `a:hover` global (0,1,1) pinta el texto igual que el fondo */
   color: var(--on-primary);
 
@@ -277,10 +291,16 @@
   }
 
   .public-login-button,
-  .public-register-button {
+  .public-register-button,
+  .public-dashboard-button {
     padding: 9px 12px;
 
     font-size: 12px;
+  }
+
+  .public-header-actions--pending {
+    min-width: 200px;
+    min-height: 34px;
   }
 }
 
@@ -310,5 +330,10 @@
 
   .public-login-button {
     display: none;
+  }
+
+  /* Solo queda "Registrarse": no reserves mas ancho del que ocupa */
+  .public-header-actions--pending {
+    min-width: 90px;
   }
 }

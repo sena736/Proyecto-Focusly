@@ -1,7 +1,16 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
+import Avatar from "../../ui/Avatar/Avatar";
+import useAuth from "../../../hooks/useAuth";
+import { getRoleLabel } from "../../../utils/roleLabel";
 import "./PublicHeader.css";
 
 function PublicHeader() {
+  const navigate = useNavigate();
+  const { user, loading, isAuthenticated } = useAuth();
+
+  const hasSession = Boolean(isAuthenticated && user);
+
   return (
     <header className="public-header">
       <div className="public-header-container">
@@ -25,16 +34,37 @@ function PublicHeader() {
           <Link to="/#nosotros">Nosotros</Link>
         </nav>
 
-        {/* Botones */}
-        <div className="public-header-actions">
-          <Link to="/login" className="public-login-button">
-            Iniciar sesión
-          </Link>
+        {/* Acciones según la sesión */}
+        {loading ? (
+          // Sesión sin resolver: espacio reservado, sin botones de invitado.
+          <div
+            className="public-header-actions public-header-actions--pending"
+            aria-hidden="true"
+          />
+        ) : hasSession ? (
+          <div className="public-header-actions">
+            <Avatar
+              name={user.name || ""}
+              role={getRoleLabel(user.role)}
+              showArrow={false}
+              onClick={() => navigate("/profile")}
+            />
 
-          <Link to="/register" className="public-register-button">
-            Registrarse
-          </Link>
-        </div>
+            <Link to="/dashboard" className="public-dashboard-button">
+              Ir al dashboard
+            </Link>
+          </div>
+        ) : (
+          <div className="public-header-actions">
+            <Link to="/login" className="public-login-button">
+              Iniciar sesión
+            </Link>
+
+            <Link to="/register" className="public-register-button">
+              Registrarse
+            </Link>
+          </div>
+        )}
       </div>
     </header>
   );

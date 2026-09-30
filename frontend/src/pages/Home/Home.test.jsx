@@ -1,10 +1,13 @@
 import React from "react";
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, within } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 
 import Home from "./Home";
 import PublicHeader from "../../components/layout/PublicHeader/PublicHeader";
+import useAuth from "../../hooks/useAuth";
+
+vi.mock("../../hooks/useAuth");
 
 const renderHome = () =>
   render(
@@ -14,6 +17,10 @@ const renderHome = () =>
   );
 
 describe("Home (landing)", () => {
+  beforeEach(() => {
+    useAuth.mockReturnValue({ user: null, loading: false, isAuthenticated: false });
+  });
+
   it("renders every section used by the header anchors", () => {
     const { container } = render(
       <MemoryRouter>
@@ -100,5 +107,77 @@ describe("Home (landing)", () => {
     renderHome();
 
     expect(screen.queryByText(/Juan Pérez|Tarea 1/)).toBeNull();
+  });
+
+  describe("hero CTAs by session", () => {
+    const hero = () => document.getElementById("inicio");
+
+    it("guests never see a link to the dashboard", () => {
+      renderHome();
+
+      expect(
+        within(hero()).queryByRole("link", { name: /ir al dashboard/i }),
+      ).toBeNull();
+    });
+
+    it("a connected user gets a single primary CTA to the dashboard", () => {
+      useAuth.mockReturnValue({
+        user: { name: "Ana Perez", role: "USER" },
+        loading: false,
+        isAuthenticated: true,
+      });
+      renderHome();
+
+      const links = within(hero()).getAllByRole("link");
+      expect(links).toHaveLength(1);
+      expect(links[0]).toHaveAccessibleName(/ir al dashboard/i);
+      expect(links[0]).toHaveAttribute("href", "/dashboard");
+      expect(links[0]).toHaveClass("landing__btn--primary");
+    });
+
+    it("a connected user no longer sees register or login CTAs", () => {
+      useAuth.mockReturnValue({
+        user: { name: "Ana Perez", role: "USER" },
+        loading: false,
+        isAuthenticated: true,
+      });
+      renderHome();
+
+      expect(
+        within(hero()).queryByRole("link", { name: /crear cuenta/i }),
+      ).toBeNull();
+      expect(
+        within(hero()).queryByRole("link", { name: /iniciar sesión/i }),
+      ).toBeNull();
+    });
+
+    it("renders no CTA at all while the session is unresolved (no guest flash)", () => {
+      useAuth.mockReturnValue({ user: null, loading: true, isAuthenticated: false });
+      renderHome();
+
+      expect(within(hero()).queryAllByRole("link")).toHaveLength(0);
+      expect(hero().querySelector(".landing__actions--pending")).not.toBeNull();
+    });
+
+    it("keeps a stale user's CTA hidden while loading (no dashboard or guest links)", () => {
+      useAuth.mockReturnValue({
+        user: { name: "Ana Perez", role: "USER" },
+        loading: true,
+        isAuthenticated: true,
+      });
+      renderHome();
+
+      expect(within(hero()).queryAllByRole("link")).toHaveLength(0);
+      expect(hero().querySelector(".landing__actions--pending")).not.toBeNull();
+    });
+
+    it("still renders the heading and lead while loading", () => {
+      useAuth.mockReturnValue({ user: null, loading: true, isAuthenticated: false });
+      renderHome();
+
+      expect(
+        within(hero()).getByRole("heading", { level: 1 }),
+      ).toBeInTheDocument();
+    });
   });
 });
