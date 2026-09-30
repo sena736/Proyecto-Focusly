@@ -19,7 +19,7 @@ describe("TaskCard", () => {
       title: task.title,
       description: task.description,
       date: task.dueDate,
-      completed: task.completed,
+      completed: task.status === "COMPLETED",
       priority: task.priority,
       onToggle: vi.fn(),
       onEdit: vi.fn(),
