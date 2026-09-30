@@ -134,44 +134,13 @@
 .focusly-modal-body {
   position: relative;
   z-index: 1;
+}
+
+/* Only reserve space for the footer when there is one. Consumers that style
+   their own fields (e.g. TaskForm) are not overridden: no global element
+   selectors here. */
+.focusly-modal-body--with-footer {
   margin-bottom: 24px;
-}
-
-.focusly-modal-body label {
-  display: block;
-  margin-bottom: 7px;
-  color: var(--modal-text);
-  font-size: 0.75rem;
-  font-weight: 800;
-}
-
-.focusly-modal-body input,
-.focusly-modal-body textarea,
-.focusly-modal-body select {
-  width: 100%;
-  padding: 11px 13px;
-  border: 1px solid var(--modal-border);
-  border-radius: 10px;
-  outline: none;
-  background: #fbfaff;
-  color: var(--modal-text);
-  font: inherit;
-  font-size: 0.78rem;
-  transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease;
-}
-
-.focusly-modal-body input:focus,
-.focusly-modal-body textarea:focus,
-.focusly-modal-body select:focus {
-  border-color: var(--modal-purple);
-  box-shadow: 0 0 0 3px rgba(96, 66, 163, 0.1);
-}
-
-.focusly-modal-body textarea {
-  min-height: 100px;
-  resize: vertical;
 }
 
 .focusly-modal-footer {

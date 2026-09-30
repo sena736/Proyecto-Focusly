@@ -156,51 +156,6 @@
   font-size: 0.92rem;
 }
 
-.focusly-profile {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 7px 10px 7px 7px;
-  border: 1px solid var(--focusly-border);
-  border-radius: 15px;
-  background: var(--focusly-white);
-  color: var(--focusly-text);
-  cursor: pointer;
-  box-shadow: 0 4px 16px rgba(68, 46, 107, 0.04);
-}
-
-.focusly-avatar {
-  width: 39px;
-  height: 39px;
-  display: grid;
-  place-items: center;
-  border-radius: 12px;
-  background: var(--focusly-purple-soft);
-  color: var(--focusly-purple);
-  font-size: 0.8rem;
-  font-weight: 800;
-}
-
-.focusly-profile-info {
-  display: grid;
-  text-align: left;
-  gap: 1px;
-}
-
-.focusly-profile-info strong {
-  font-size: 0.82rem;
-}
-
-.focusly-profile-info small {
-  color: var(--focusly-muted);
-  font-size: 0.7rem;
-}
-
-.focusly-chevron {
-  color: var(--focusly-muted);
-  margin-left: 4px;
-}
-
 .focusly-hero-grid,
 .focusly-task-layout {
   max-width: 1240px;
@@ -596,7 +551,6 @@
   background: var(--focusly-white);
 }
 
-.focusly-dashboard.is-dark .focusly-profile,
 .focusly-dashboard.is-dark .focusly-secondary-button,
 .focusly-dashboard.is-dark .focusly-new-task {
   background: var(--focusly-white);
@@ -667,14 +621,6 @@
 
   .focusly-header {
     align-items: flex-start;
-  }
-
-  .focusly-profile-info {
-    display: none;
-  }
-
-  .focusly-profile {
-    flex: 0 0 auto;
   }
 
   .focusly-subtitle {

@@ -140,102 +140,6 @@
   box-sizing: border-box;
 }
 
-/* Modal del formulario (crear / editar tarea) */
-
-.task-form-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 1000;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  padding: var(--space-md);
-
-  background: rgba(31, 31, 46, 0.45);
-
-  animation: taskFormOverlayIn var(--transition-fast);
-}
-
-.task-form-modal {
-  width: 100%;
-  max-width: 560px;
-  max-height: calc(100vh - var(--space-2xl));
-  overflow-y: auto;
-
-  padding: var(--space-xl);
-  box-sizing: border-box;
-
-  background: var(--surface);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-lg);
-
-  animation: taskFormModalIn var(--transition-normal);
-}
-
-.task-form-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-md);
-  margin-bottom: var(--space-lg);
-}
-
-.task-form-header h2 {
-  margin: 0;
-  color: var(--text-primary);
-  font-size: 20px;
-  font-weight: 600;
-}
-
-.task-form-close {
-  flex-shrink: 0;
-  width: 32px;
-  height: 32px;
-  border: none;
-  border-radius: var(--radius-round);
-  background: transparent;
-  color: var(--text-muted);
-  font-size: 20px;
-  line-height: 1;
-  cursor: pointer;
-  transition: background var(--transition-fast), color var(--transition-fast);
-}
-
-.task-form-close:hover {
-  background: var(--surface-secondary);
-  color: var(--text-primary);
-}
-
-.task-form-close:disabled {
-  opacity: 0.55;
-  cursor: not-allowed;
-}
-
-@keyframes taskFormOverlayIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes taskFormModalIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px) scale(0.98);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
 /* =========================================
 TABLET - 768px
 ========================================= */
@@ -286,11 +190,6 @@ TELÉFONO - 375px / hasta 480px
     grid-template-columns: 1fr;
     gap: var(--space-md);
   }
-
-  .task-form-modal {
-    padding: var(--space-lg);
-    border-radius: var(--radius-md);
-  }
 }
 
 /* =========================================
@@ -304,9 +203,5 @@ TELÉFONOS MUY PEQUEÑOS
 
   .tasks-header h1 {
     font-size: 23px;
-  }
-
-  .task-form-modal {
-    padding: var(--space-md);
   }
 }

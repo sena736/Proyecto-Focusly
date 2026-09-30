@@ -2,10 +2,11 @@ import React, { useEffect, useMemo, useState } from "react";
 import TaskCard from "../../components/tasks/TaskCard/TaskCard";
 import TaskFilters from "../../components/tasks/TaskFilters/TaskFilters";
 import TaskForm from "../../components/tasks/TaskForm/TaskForm";
-import ConfirmDeleteModal from "../../components/ConfirmDeleteModal";
 import Alert from "../../components/ui/Alert/Alert";
+import ConfirmModal from "../../components/ui/ConfirmModal/ConfirmModal";
 import EmptyState from "../../components/ui/EmptyState/EmptyState";
 import Loader from "../../components/ui/Loader/Loader";
+import Modal from "../../components/ui/Modal/Modal";
 import useTask from "../../hooks/useTask";
 import { getToken } from "../../services/token.services";
 import { TASK_STATUS } from "../../utils/constants";
@@ -281,46 +282,41 @@ const Tasks = () => {
       )}
 
       {/* Formulario para crear o editar */}
-      {showForm && (
-        <div className="task-form-overlay" onClick={handleCloseForm}>
-          <div
-            className="task-form-modal"
-            onClick={(event) => event.stopPropagation()}
-            role="dialog"
-            aria-modal="true"
-          >
-            <div className="task-form-header">
-              <h2>{editingTask ? "Editar tarea" : "Nueva tarea"}</h2>
-
-              <button
-                type="button"
-                className="task-form-close"
-                onClick={handleCloseForm}
-                disabled={isCreating || isUpdating}
-                aria-label="Cerrar"
-              >
-                ×
-              </button>
-            </div>
-
-            <TaskForm
-              initialData={editingTask || EMPTY_TASK}
-              onSubmit={handleSubmit}
-              onCancel={handleCloseForm}
-              loading={isCreating || isUpdating}
-              submitText={editingTask ? "Guardar cambios" : "Crear tarea"}
-            />
-          </div>
-        </div>
-      )}
+      {/* TaskForm ya trae sus propios botones: el Modal no muestra footer */}
+      <Modal
+        isOpen={showForm}
+        onClose={handleCloseForm}
+        title={editingTask ? "Editar tarea" : "Nueva tarea"}
+        showConfirm={false}
+        showCancel={false}
+        loading={isCreating || isUpdating}
+      >
+        <TaskForm
+          initialData={editingTask || EMPTY_TASK}
+          onSubmit={handleSubmit}
+          onCancel={handleCloseForm}
+          loading={isCreating || isUpdating}
+          submitText={editingTask ? "Guardar cambios" : "Crear tarea"}
+        />
+      </Modal>
 
       {/* Modal de confirmación de eliminación */}
-      <ConfirmDeleteModal
+      <ConfirmModal
         isOpen={Boolean(taskToDelete)}
-        taskName={taskToDelete?.title}
+        title="¿Eliminar tarea?"
+        message={
+          <>
+            ¿Estás segura de que deseas eliminar{" "}
+            <strong>"{taskToDelete?.title}"</strong>?
+            <br />
+            Esta acción no se puede deshacer.
+          </>
+        }
+        confirmText="Eliminar"
+        loadingText="Eliminando..."
         onConfirm={handleConfirmDelete}
         onCancel={handleCancelDelete}
-        isDeleting={isDeleting}
+        isLoading={isDeleting}
       />
     </div>
   );

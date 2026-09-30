@@ -9,6 +9,7 @@ import {
 } from "react-icons/fi";
 import { googleLogin, emailLogin } from "../../api/auth.api";
 import { AuthContext } from "../../context/AuthContext";
+import { isValidEmail } from "../../utils/validators";
 import "./Login.css";
 
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
@@ -41,11 +42,18 @@ const Login = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    // Email format only: no minimum password length on login, so accounts
+    // created with older/shorter passwords can still sign in.
+    if (!isValidEmail(formData.email)) {
+      setError("Ingresa un correo electrónico válido.");
+      return;
+    }
+
     setError("");
 
     try {
       const data = await emailLogin({
-        email: formData.email,
+        email: formData.email.trim(),
         password: formData.password,
       });
 
