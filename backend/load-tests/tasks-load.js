@@ -55,7 +55,10 @@ const runTest = (name, options) => {
           durationSeconds: DURATION,
 
           averageResponseTimeMs: result.latency.average,
-          p95ResponseTimeMs: result.latency.p95,
+          // autocannon no calcula un percentil 95 exacto; p97_5 es el
+          // bucket más cercano que expone (result.latency.p95 no existe
+          // y siempre daba `undefined`).
+          p97_5ResponseTimeMs: result.latency.p97_5,
 
           requests: {
             total: result.requests.total,
@@ -70,7 +73,7 @@ const runTest = (name, options) => {
         results.push(testResult);
 
         console.log(`Promedio: ${testResult.averageResponseTimeMs} ms`);
-        console.log(`P95: ${testResult.p95ResponseTimeMs} ms`);
+        console.log(`P97.5: ${testResult.p97_5ResponseTimeMs} ms`);
         console.log(`Errores: ${testResult.errors}`);
         console.log(`Timeouts: ${testResult.timeouts}`);
         console.log(`Respuestas no 2xx: ${testResult.non2xx}`);
@@ -92,6 +95,9 @@ const runLoadTests = async () => {
       method: "GET",
     });
 
+    const sessionStart = new Date();
+    const sessionEnd = new Date(sessionStart.getTime() + 25 * 60 * 1000);
+
     await runTest("POST /pomodoro-sessions", {
       url: `${BASE_URL}/pomodoro-sessions`,
       method: "POST",
@@ -99,7 +105,10 @@ const runLoadTests = async () => {
         "content-type": "application/json",
       },
       body: JSON.stringify({
-        duration: 25,
+        type: "WORK",
+        startedAt: sessionStart.toISOString(),
+        endedAt: sessionEnd.toISOString(),
+        durationMinutes: 25,
       }),
     });
 

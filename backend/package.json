@@ -25,6 +25,7 @@
     "mysql2": "^3.24.3"
   },
   "devDependencies": {
+    "autocannon": "^8.0.0",
     "jest": "^30.5.2",
     "nodemon": "^3.1.14",
     "prisma": "^7.10.0",
