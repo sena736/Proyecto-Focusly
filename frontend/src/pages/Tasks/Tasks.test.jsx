@@ -126,6 +126,127 @@ describe("Tasks", () => {
     });
   });
 
+  describe("formulario en Modal", () => {
+    it("muestra el formulario de creación dentro de un diálogo titulado", async () => {
+      const user = userEvent.setup();
+
+      render(<Tasks />);
+
+      await user.click(screen.getByRole("button", { name: "+ Nueva tarea" }));
+
+      expect(
+        screen.getByRole("dialog", { name: "Nueva tarea" }),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole("button", { name: "Crear tarea" }),
+      ).toBeInTheDocument();
+    });
+
+    it("muestra el formulario de edición precargado", async () => {
+      const user = userEvent.setup();
+
+      render(<Tasks />);
+
+      await user.click(
+        screen.getByRole("button", { name: `Editar ${baseTask.title}` }),
+      );
+
+      expect(
+        screen.getByRole("dialog", { name: "Editar tarea" }),
+      ).toBeInTheDocument();
+      expect(screen.getByLabelText(/título de la tarea/i)).toHaveValue(
+        baseTask.title,
+      );
+      expect(
+        screen.getByRole("button", { name: "Guardar cambios" }),
+      ).toBeInTheDocument();
+    });
+
+    it("se cierra con Escape", async () => {
+      const user = userEvent.setup();
+
+      render(<Tasks />);
+
+      await user.click(screen.getByRole("button", { name: "+ Nueva tarea" }));
+      await user.keyboard("{Escape}");
+
+      expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+    });
+
+    it("se cierra al hacer click en el overlay pero no dentro del diálogo", async () => {
+      const user = userEvent.setup();
+
+      render(<Tasks />);
+
+      await user.click(screen.getByRole("button", { name: "+ Nueva tarea" }));
+
+      const dialog = screen.getByRole("dialog");
+
+      await user.click(dialog);
+      expect(screen.getByRole("dialog")).toBeInTheDocument();
+
+      await user.click(dialog.parentElement);
+      expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+    });
+
+    it("se cierra con el botón Cancelar del formulario", async () => {
+      const user = userEvent.setup();
+
+      render(<Tasks />);
+
+      await user.click(screen.getByRole("button", { name: "+ Nueva tarea" }));
+      await user.click(screen.getByRole("button", { name: "Cancelar" }));
+
+      expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+    });
+  });
+
+  describe("confirmación de eliminación", () => {
+    const openDeleteDialog = async (user) => {
+      await user.click(
+        screen.getByRole("button", { name: `Eliminar ${baseTask.title}` }),
+      );
+    };
+
+    it("muestra el nombre de la tarea entre comillas y la advertencia", async () => {
+      const user = userEvent.setup();
+
+      render(<Tasks />);
+      await openDeleteDialog(user);
+
+      const dialog = screen.getByRole("dialog", { name: "¿Eliminar tarea?" });
+
+      expect(dialog).toHaveTextContent(`"${baseTask.title}"`);
+      expect(dialog).toHaveTextContent("Esta acción no se puede deshacer.");
+    });
+
+    it("cancelar cierra el diálogo sin eliminar", async () => {
+      const user = userEvent.setup();
+
+      render(<Tasks />);
+      await openDeleteDialog(user);
+      await user.click(screen.getByRole("button", { name: "Cancelar" }));
+
+      expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+      expect(deleteTaskAsync).not.toHaveBeenCalled();
+    });
+
+    it("muestra Eliminando... y bloquea los botones mientras elimina", async () => {
+      const user = userEvent.setup();
+
+      const { rerender } = render(<Tasks />);
+      await openDeleteDialog(user);
+
+      useTask.mockReturnValue({ ...hookState, isDeleting: true });
+      rerender(<Tasks />);
+
+      expect(
+        screen.getByRole("button", { name: "Eliminando..." }),
+      ).toBeDisabled();
+      expect(screen.getByRole("button", { name: "Cancelar" })).toBeDisabled();
+    });
+  });
+
   describe("filtros", () => {
     const pendingHigh = {
       ...baseTask,
