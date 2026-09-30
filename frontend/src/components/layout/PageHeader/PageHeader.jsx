@@ -10,14 +10,16 @@ const PageHeader = ({
   align = "left",
   className = "",
 }) => {
+  const classes = [
+    "focusly-page-header",
+    `focusly-page-header--${align}`,
+    className,
+  ]
+    .filter(Boolean)
+    .join(" ");
+
   return (
-    <header
-      className={`
-        focusly-page-header
-        focusly-page-header--${align}
-        ${className}
-      `}
-    >
+    <header className={classes}>
       {/* =====================================
           BREADCRUMB
           ===================================== */}

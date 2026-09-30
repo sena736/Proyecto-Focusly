@@ -3,6 +3,7 @@ import "./Pomodoro.css";
 
 import usePomodoro from "../../hooks/usePomodoro";
 
+import PageHeader from "../../components/layout/PageHeader/PageHeader";
 import PomodoroTimer from "../../components/pomodoro/PomodoroTimer/PomodoroTimer";
 import PomodoroControls from "../../components/pomodoro/PomodoroControls/PomodoroControls";
 import PomodoroHistory from "../../components/pomodoro/PomodoroHistory/PomodoroHistory";
@@ -26,13 +27,11 @@ const Pomodoro = () => {
 
   return (
     <main className="pomodoro-page">
-      <header className="pomodoro-page__header">
-        <h1>Pomodoro</h1>
-        <p>
-          Concéntrate, trabaja con propósito y aprovecha mejor tu
-          tiempo.
-        </p>
-      </header>
+      <PageHeader
+        className="pomodoro-page__header"
+        title="Pomodoro"
+        subtitle="Concéntrate, trabaja con propósito y aprovecha mejor tu tiempo."
+      />
 
       {isFinished && (
         <div

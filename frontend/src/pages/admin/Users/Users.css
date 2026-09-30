@@ -16,27 +16,9 @@
    Header
 ================================ */
 
-.users__header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: var(--space-lg);
+/* Spacing of the shared <PageHeader className="users__header"> */
+.users .users__header {
   margin-bottom: var(--space-xl);
-}
-
-.users__header h1 {
-  margin: 0 0 var(--space-xs);
-  color: var(--text-primary);
-  font-size: 28px;
-  font-weight: 700;
-  line-height: 1.2;
-}
-
-.users__header p {
-  margin: 0;
-  color: var(--text-secondary);
-  font-size: 15px;
-  line-height: 1.5;
 }
 
 .users__count {
@@ -110,19 +92,6 @@
     padding: var(--space-lg);
   }
 
-  .users__header {
-    align-items: flex-start;
-    gap: var(--space-md);
-  }
-
-  .users__header h1 {
-    font-size: 24px;
-  }
-
-  .users__header p {
-    font-size: 14px;
-  }
-
   .users__count {
     min-width: auto;
   }
@@ -137,18 +106,8 @@
     padding: var(--space-md);
   }
 
-  .users__header {
-    flex-direction: column;
-    gap: var(--space-md);
+  .users .users__header {
     margin-bottom: var(--space-lg);
-  }
-
-  .users__header h1 {
-    font-size: 22px;
-  }
-
-  .users__header p {
-    font-size: 14px;
   }
 
   .users__count {

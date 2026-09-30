@@ -1,5 +1,6 @@
 import React from "react";
 import { usePhrase } from "../../hooks/usePhrase";
+import PageHeader from "../../components/layout/PageHeader/PageHeader";
 import MotivationCard from "../../components/motivation/MotivationCard/MotivationCard";
 
 const Motivation = () => {
@@ -27,10 +28,10 @@ const Motivation = () => {
 
 	return (
 		<main className="motivation-page">
-			<header className="motivation-page__header">
-				<h1>Motivación</h1>
-				<p>Encuentra inspiración para continuar con tus objetivos.</p>
-			</header>
+				<PageHeader
+					title="Motivación"
+					subtitle="Encuentra inspiración para continuar con tus objetivos."
+				/>
 
 			{phrase ? (
 				<MotivationCard

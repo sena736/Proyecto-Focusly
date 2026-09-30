@@ -1,5 +1,6 @@
 import React from "react";
 import useProfile from "../../hooks/useProfile";
+import PageHeader from "../../components/layout/PageHeader/PageHeader";
 import ProfileCard from "../../components/profile/ProfileCard/ProfileCard";
 import Alert from "../../components/ui/Alert/Alert";
 import Loader from "../../components/ui/Loader/Loader";
@@ -63,16 +64,11 @@ const Profile = () => {
   return (
     <main className="profile-page">
       <section className="profile-container">
-        <header className="profile-header">
-          <span className="profile-header__label">CUENTA</span>
-
-          <h1>Mi perfil</h1>
-
-          <p>
-            Consulta tu información personal y administra los datos de tu
-            cuenta.
-          </p>
-        </header>
+        <PageHeader
+          title="Mi perfil"
+          subtitle="Consulta tu información personal y administra los datos de tu cuenta."
+          breadcrumb={<span className="profile-header__label">CUENTA</span>}
+        />
 
         <section className="profile-content">
           <ProfileCard

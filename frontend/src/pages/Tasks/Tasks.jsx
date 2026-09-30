@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
+import PageHeader from "../../components/layout/PageHeader/PageHeader";
 import TaskCard from "../../components/tasks/TaskCard/TaskCard";
 import TaskFilters from "../../components/tasks/TaskFilters/TaskFilters";
 import TaskForm from "../../components/tasks/TaskForm/TaskForm";
@@ -180,20 +181,20 @@ const Tasks = () => {
   return (
     <div className="tasks-page">
       {/* Encabezado */}
-      <div className="tasks-header">
-        <div>
-          <h1>Mis tareas</h1>
-          <p>Organiza tus tareas y mantén al día tus actividades.</p>
-        </div>
-
-        <button
-          type="button"
-          className="tasks-create-button"
-          onClick={handleCreate}
-        >
-          + Nueva tarea
-        </button>
-      </div>
+      <PageHeader
+        className="tasks-header"
+        title="Mis tareas"
+        subtitle="Organiza tus tareas y mantén al día tus actividades."
+        action={
+          <button
+            type="button"
+            className="tasks-create-button"
+            onClick={handleCreate}
+          >
+            + Nueva tarea
+          </button>
+        }
+      />
 
       {/* Filtros (solo tiene sentido si hay tareas que filtrar) */}
       {!isLoading && !isError && tasks.length > 0 && (

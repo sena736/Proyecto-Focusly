@@ -10,31 +10,13 @@
 
 /* Encabezado */
 
-.tasks-header {
+/* Layout of the shared <PageHeader className="tasks-header"> */
+
+.tasks-page .tasks-header {
   width: 100%;
   max-width: 1100px;
   margin: 0 auto var(--space-xl);
   box-sizing: border-box;
-
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: var(--space-md);
-}
-
-.tasks-header h1 {
-  margin: 0 0 var(--space-xs);
-  color: var(--text-primary);
-  font-size: 32px;
-  font-weight: 700;
-  line-height: 1.2;
-}
-
-.tasks-header p {
-  margin: 0;
-  color: var(--text-secondary);
-  font-size: 15px;
-  line-height: 1.6;
 }
 
 .tasks-create-button {
@@ -149,10 +131,6 @@ TABLET - 768px
     padding: var(--space-xl);
   }
 
-  .tasks-header h1 {
-    font-size: 28px;
-  }
-
   .tasks-list {
     grid-template-columns: 1fr;
   }
@@ -168,18 +146,8 @@ TELÉFONO - 375px / hasta 480px
     padding: var(--space-lg) var(--space-md);
   }
 
-  .tasks-header {
-    flex-direction: column;
-    align-items: stretch;
+  .tasks-page .tasks-header {
     margin-bottom: var(--space-lg);
-  }
-
-  .tasks-header h1 {
-    font-size: 25px;
-  }
-
-  .tasks-header p {
-    font-size: 14px;
   }
 
   .tasks-create-button {
@@ -199,9 +167,5 @@ TELÉFONOS MUY PEQUEÑOS
 @media (max-width: 375px) {
   .tasks-page {
     padding: var(--space-md) var(--space-sm);
-  }
-
-  .tasks-header h1 {
-    font-size: 23px;
   }
 }

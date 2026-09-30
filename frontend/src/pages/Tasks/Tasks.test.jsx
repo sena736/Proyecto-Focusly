@@ -1,6 +1,6 @@
 import React from "react";
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import Tasks from "./Tasks";
@@ -438,6 +438,36 @@ describe("Tasks", () => {
         "true",
       );
       expect(screen.getByText("Pendiente tranquila")).toBeInTheDocument();
+    });
+  });
+
+  describe("encabezado", () => {
+    it("renders title, subtitle and the create action through PageHeader", () => {
+      const { container } = render(<Tasks />);
+
+      const header = container.querySelector("header.focusly-page-header");
+
+      expect(header).not.toBeNull();
+      expect(
+        within(header).getByRole("heading", { level: 1, name: "Mis tareas" }),
+      ).toBeInTheDocument();
+      expect(
+        within(header).getByText(
+          "Organiza tus tareas y mantén al día tus actividades.",
+        ),
+      ).toBeInTheDocument();
+
+      const action = header.querySelector(".focusly-page-header__action");
+
+      expect(
+        within(action).getByRole("button", { name: "+ Nueva tarea" }),
+      ).toBeInTheDocument();
+    });
+
+    it("renders exactly one h1", () => {
+      render(<Tasks />);
+
+      expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
     });
   });
 

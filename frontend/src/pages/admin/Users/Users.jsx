@@ -1,4 +1,5 @@
 import React from "react";
+import PageHeader from "../../../components/layout/PageHeader/PageHeader";
 import UserTable from "../../../components/admin/UserTable/UserTable";
 import RoleSelect from "../../../components/admin/RoleSelect/RoleSelect";
 import Alert from "../../../components/ui/Alert/Alert";
@@ -57,20 +58,17 @@ const Users = () => {
   return (
     <main className="users">
       <div className="users__container">
-        <header className="users__header">
-          <div>
-            <h1>Usuarios</h1>
-            <p>
-              Administra los usuarios registrados y sus roles en
-              Focusly.
-            </p>
-          </div>
-
-          <span className="users__count">
-            {users.length}{" "}
-            {users.length === 1 ? "usuario" : "usuarios"}
-          </span>
-        </header>
+        <PageHeader
+          className="users__header"
+          title="Usuarios"
+          subtitle="Administra los usuarios registrados y sus roles en Focusly."
+          action={
+            <span className="users__count">
+              {users.length}{" "}
+              {users.length === 1 ? "usuario" : "usuarios"}
+            </span>
+          }
+        />
 
         <section className="users__table-container">
           {users.length === 0 ? (

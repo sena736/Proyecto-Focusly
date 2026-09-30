@@ -5,7 +5,6 @@
 */
 :root {
   --profile-accent: #6042a3;
-  --profile-title: #302c3d;
   --profile-muted: #817b8d;
   --profile-border: #e9e5ef;
   --profile-surface: #ffffff;
@@ -15,7 +14,6 @@
 
 :root[data-theme="dark"] {
   --profile-accent: var(--primary-text);
-  --profile-title: var(--text-primary);
   --profile-muted: var(--text-secondary);
   --profile-border: var(--border-color);
   --profile-surface: var(--surface);
@@ -37,33 +35,13 @@
   margin: 0 auto;
 }
 
-.profile-header {
-  margin-bottom: 24px;
-}
-
+/* "CUENTA" eyebrow rendered in the <PageHeader> breadcrumb slot */
 .profile-header__label {
   display: block;
-  margin-bottom: 6px;
   color: var(--profile-accent);
   font-size: 0.68rem;
   font-weight: 900;
   letter-spacing: 0.1em;
-}
-
-.profile-header h1 {
-  margin: 0;
-  color: var(--profile-title);
-  font-size: 1.8rem;
-  font-weight: 900;
-}
-
-.profile-header p {
-  max-width: 600px;
-  margin: 7px 0 0;
-  color: var(--profile-muted);
-  font-size: 0.9rem;
-  line-height: 1.5;
-  font-weight: 600;
 }
 
 .profile-content {
@@ -120,14 +98,6 @@
     padding: 24px;
   }
 
-  .profile-header h1 {
-    font-size: 1.6rem;
-  }
-
-  .profile-header p {
-    font-size: 0.85rem;
-  }
-
   .profile-edit-message {
     align-items: flex-start;
     flex-direction: column;
@@ -143,22 +113,8 @@
     padding: 18px 14px;
   }
 
-  .profile-header {
-    margin-bottom: 18px;
-  }
-
   .profile-header__label {
     font-size: 0.62rem;
-  }
-
-  .profile-header h1 {
-    font-size: 1.45rem;
-  }
-
-  .profile-header p {
-    margin-top: 5px;
-    font-size: 0.8rem;
-    line-height: 1.45;
   }
 
   .profile-edit-message {
@@ -175,13 +131,5 @@
 @media (max-width: 400px) {
   .profile-page {
     padding: 16px 12px;
-  }
-
-  .profile-header h1 {
-    font-size: 1.35rem;
-  }
-
-  .profile-header p {
-    font-size: 0.76rem;
   }
 }
