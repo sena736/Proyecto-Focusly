@@ -1,4 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import ToggleSwitch from "../../components/ui/ToggleSwitch/ToggleSwitch";
+import useTheme from "../../hooks/useTheme";
+import { THEMES } from "../../utils/constants";
 import "./Settings.css";
 
 /**
@@ -7,29 +10,22 @@ import "./Settings.css";
  * Basado en el ERS/SDD:
  * - Permite cambiar entre modo claro y modo oscuro.
  * - Actualiza inmediatamente la interfaz.
- * - Expone onThemeChange para que la aplicación persista la preferencia
- *   mediante su capa de datos/API.
+ *
+ * El tema vive en ThemeProvider (único responsable de aplicar `data-theme`
+ * al documento y de persistirlo); esta página solo lo consume con useTheme.
  *
  * Props:
- *   isDarkMode      boolean   Estado actual del tema.
- *   onThemeChange   function  Callback ejecutado al cambiar el tema.
- *   onSavePreference function Opcional: callback para persistir la preferencia.
+ *   onSavePreference function Opcional: callback para persistir la preferencia
+ *                             en la capa de datos/API.
  */
-export default function Configuracion({
-  isDarkMode = false,
-  onThemeChange,
-  onSavePreference,
-}) {
+export default function Configuracion({ onSavePreference }) {
+  const { isDarkMode, changeTheme } = useTheme();
   const [saved, setSaved] = useState(false);
-
-  useEffect(() => {
-    document.documentElement.dataset.theme = isDarkMode ? "dark" : "light";
-  }, [isDarkMode]);
 
   const handleThemeChange = (dark) => {
     if (dark === isDarkMode) return;
 
-    onThemeChange?.(dark);
+    changeTheme(dark ? THEMES.DARK : THEMES.LIGHT);
     onSavePreference?.({
       modo_oscuro: dark,
     });
@@ -67,53 +63,12 @@ export default function Configuracion({
             </div>
           </div>
 
-          <div className="theme-options" role="radiogroup" aria-label="Tema de la aplicación">
-            <button
-              type="button"
-              className={`theme-option ${!isDarkMode ? "theme-option--active" : ""}`}
-              role="radio"
-              aria-checked={!isDarkMode}
-              onClick={() => handleThemeChange(false)}
-            >
-              <span className="theme-preview theme-preview--light" aria-hidden="true">
-                <span className="theme-preview__bar" />
-                <span className="theme-preview__line" />
-                <span className="theme-preview__line theme-preview__line--short" />
-              </span>
-
-              <span className="theme-option__content">
-                <strong>Modo claro</strong>
-                <small>Interfaz clara y luminosa</small>
-              </span>
-
-              <span className="theme-option__check" aria-hidden="true">
-                {!isDarkMode ? "✓" : ""}
-              </span>
-            </button>
-
-            <button
-              type="button"
-              className={`theme-option ${isDarkMode ? "theme-option--active" : ""}`}
-              role="radio"
-              aria-checked={isDarkMode}
-              onClick={() => handleThemeChange(true)}
-            >
-              <span className="theme-preview theme-preview--dark" aria-hidden="true">
-                <span className="theme-preview__bar" />
-                <span className="theme-preview__line" />
-                <span className="theme-preview__line theme-preview__line--short" />
-              </span>
-
-              <span className="theme-option__content">
-                <strong>Modo oscuro</strong>
-                <small>Reduce el brillo de la interfaz</small>
-              </span>
-
-              <span className="theme-option__check" aria-hidden="true">
-                {isDarkMode ? "✓" : ""}
-              </span>
-            </button>
-          </div>
+          <ToggleSwitch
+            label="Modo oscuro"
+            description="Reduce el brillo de la interfaz"
+            checked={isDarkMode}
+            onChange={handleThemeChange}
+          />
         </section>
 
         <section className="config-card config-status" aria-live="polite">
@@ -136,8 +91,8 @@ export default function Configuracion({
         </section>
 
         <p className="config-note">
-          Los cambios se aplican inmediatamente y la preferencia puede ser
-          persistida por la aplicación.
+          Los cambios se aplican inmediatamente y tu preferencia se guarda en
+          este dispositivo.
         </p>
       </section>
     </main>
