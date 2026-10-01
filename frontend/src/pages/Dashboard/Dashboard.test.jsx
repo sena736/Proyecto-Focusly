@@ -8,6 +8,7 @@ import useTask from "../../hooks/useTask";
 import useAuth from "../../hooks/useAuth";
 import usePomodoro from "../../hooks/usePomodoro";
 import { usePhrase } from "../../hooks/usePhrase";
+import { STORAGE_KEYS } from "../../utils/constants";
 
 vi.mock("../../hooks/useTask");
 vi.mock("../../hooks/useAuth");
@@ -56,6 +57,7 @@ describe("Dashboard", () => {
       formattedTime: "15:00",
       remainingSeconds: 900,
       durationMinutes: 25,
+      mode: "focus",
       isRunning: false,
       start: vi.fn(),
       pause: vi.fn(),
@@ -164,6 +166,66 @@ describe("Dashboard", () => {
     const ring = screen.getByText("--:--").closest(".focusly-timer-ring");
 
     expect(ring.style.getPropertyValue("--timer-progress")).toBe("0%");
+  });
+
+  describe("pomodoro card", () => {
+    beforeEach(() => {
+      localStorage.clear();
+    });
+
+    it("runs the timer with the durations persisted by the Pomodoro page", () => {
+      localStorage.setItem(
+        STORAGE_KEYS.POMODORO_DURATIONS,
+        JSON.stringify({ focusMinutes: 50, shortBreakMinutes: 10, longBreakMinutes: 30 }),
+      );
+
+      render(<Dashboard />);
+
+      expect(usePomodoro).toHaveBeenLastCalledWith({
+        focusMinutes: 50,
+        shortBreakMinutes: 10,
+        longBreakMinutes: 30,
+      });
+    });
+
+    it("falls back to 25 / 5 / 15 when nothing is persisted", () => {
+      render(<Dashboard />);
+
+      expect(usePomodoro).toHaveBeenLastCalledWith({
+        focusMinutes: 25,
+        shortBreakMinutes: 5,
+        longBreakMinutes: 15,
+      });
+    });
+
+    it.each([
+      ["focus", "Sesión de enfoque"],
+      ["shortBreak", "Descanso corto"],
+      ["longBreak", "Descanso largo"],
+    ])("titles the card after the current mode (%s)", (mode, title) => {
+      usePomodoro.mockReturnValue({ ...usePomodoro(), mode });
+      render(<Dashboard />);
+
+      expect(screen.getByRole("heading", { level: 2, name: title })).toBeInTheDocument();
+    });
+
+    it.each([
+      ["focus", "● Enfoque"],
+      ["shortBreak", "● Descanso"],
+      ["longBreak", "● Descanso"],
+    ])("shows the running chip for %s as %s", (mode, chip) => {
+      usePomodoro.mockReturnValue({ ...usePomodoro(), mode, isRunning: true });
+      render(<Dashboard />);
+
+      expect(screen.getByText(chip)).toBeInTheDocument();
+    });
+
+    it("keeps ○ Pausado when the timer is not running, whatever the mode", () => {
+      usePomodoro.mockReturnValue({ ...usePomodoro(), mode: "shortBreak", isRunning: false });
+      render(<Dashboard />);
+
+      expect(screen.getByText("○ Pausado")).toBeInTheDocument();
+    });
   });
 
   it("renders controlled checkboxes reflecting the task status", () => {

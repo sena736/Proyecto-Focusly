@@ -8,10 +8,17 @@ import useAuth from "../../hooks/useAuth";
 import useTask from "../../hooks/useTask";
 import usePomodoro from "../../hooks/usePomodoro";
 import { usePhrase } from "../../hooks/usePhrase";
+import { getPomodoroDurations } from "../../services/storage.service";
 import { getToken } from "../../services/token.services";
 import { TASK_STATUS } from "../../utils/constants";
 import { formatDueDate } from "../../utils/date";
 import { getRoleLabel } from "../../utils/roleLabel";
+
+const POMODORO_MODE_TITLES = {
+  focus: "Sesión de enfoque",
+  shortBreak: "Descanso corto",
+  longBreak: "Descanso largo",
+};
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -29,7 +36,11 @@ export default function Dashboard() {
   const [toggleError, setToggleError] = useState("");
   const latestToggleRef = useRef(0);
 
+  // Same persisted durations as the Pomodoro page (a separate timer instance).
+  const [durations] = useState(getPomodoroDurations);
+
   const {
+    mode: pomodoroMode,
     formattedTime,
     remainingSeconds,
     durationMinutes,
@@ -37,7 +48,7 @@ export default function Dashboard() {
     start: startPomodoro,
     pause: pausePomodoro,
     reset: resetPomodoro,
-  } = usePomodoro();
+  } = usePomodoro(durations);
 
   const {
     data: phrase,
@@ -126,11 +137,18 @@ export default function Dashboard() {
               <div>
                 <span className="focusly-kicker">POMODORO</span>
 
-                <h2>Sesión de enfoque</h2>
+                <h2>
+                  {POMODORO_MODE_TITLES[pomodoroMode] ??
+                    POMODORO_MODE_TITLES.focus}
+                </h2>
               </div>
 
               <span className="focusly-status-dot">
-                {isRunning ? "● Enfoque" : "○ Pausado"}
+                {!isRunning
+                  ? "○ Pausado"
+                  : pomodoroMode === "focus" || !pomodoroMode
+                    ? "● Enfoque"
+                    : "● Descanso"}
               </span>
             </div>
 
