@@ -102,8 +102,13 @@ export const POMODORO_TYPES = {
 ========================================================= */
 
 export const POMODORO_DEFAULTS = {
-  WORK_MINUTES: 25,
+  FOCUS_MINUTES: 25,
   SHORT_BREAK_MINUTES: 5,
+  LONG_BREAK_MINUTES: 15,
+  // A long break replaces the short one after this many completed focus sessions.
+  LONG_BREAK_EVERY: 4,
+  MIN_MINUTES: 1,
+  MAX_MINUTES: 90,
 };
 
 /* =========================================================
@@ -122,6 +127,7 @@ export const THEMES = {
 export const STORAGE_KEYS = {
   AUTH_TOKEN: "focusly_token",
   THEME: "focusly_theme",
+  POMODORO_DURATIONS: "focusly_pomodoro_durations",
 };
 
 /* =========================================================
