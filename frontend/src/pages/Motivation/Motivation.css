@@ -1,3 +1,19 @@
+/*
+  Motivation page palette (`--motivpage-*`, unique across the bundle).
+  Light values are the original literals; the dark block maps to global tokens.
+  Colour literals are allowed ONLY here.
+*/
+:root {
+  --motivpage-border: #e5e7eb;
+  --motivpage-muted: #6b7280;
+}
+
+:root[data-theme="dark"] {
+  --motivpage-border: var(--border-color);
+  --motivpage-muted: var(--text-secondary);
+}
+
+/* Same page rhythm as Pomodoro / Profile / Tasks. */
 .motivation-page {
   width: 100%;
   min-height: 100vh;
@@ -5,89 +21,40 @@
   box-sizing: border-box;
 }
 
-.motivation-page__container {
+/* Header, card and state messages share the same centered column. */
+.motivation-page > * {
   width: 100%;
-  max-width: 1000px;
-  margin: 0 auto;
-  box-sizing: border-box;
-}
-
-/* Header */
-
-.motivation-page__header {
-  margin-bottom: 32px;
-}
-
-.motivation-page__header h1 {
-  margin: 0 0 8px;
-  font-size: 32px;
-  line-height: 1.2;
-  overflow-wrap: break-word;
-  word-break: normal;
-}
-
-.motivation-page__header p {
-  margin: 0;
-  font-size: 16px;
-  line-height: 1.5;
-  overflow-wrap: break-word;
-}
-
-/* Contenido */
-
-.motivation-page__content {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  box-sizing: border-box;
-}
-
-.motivation-page__card {
-  width: 100%;
-  max-width: 700px;
-  min-width: 0;
-  box-sizing: border-box;
-}
-
-/*
- * Evita que el contenido interno de la tarjeta
- * genere scroll horizontal.
- */
-.motivation-page__card > * {
-  max-width: 100%;
-  min-width: 0;
+  max-width: 1100px;
+  margin-inline: auto;
   box-sizing: border-box;
 }
 
 /* Loader */
 
 .motivation-page__loader {
-  width: 100%;
   min-height: 220px;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  box-sizing: border-box;
+  color: var(--motivpage-muted);
 }
 
 .motivation-page__loader span {
   font-size: 16px;
 }
 
-/* Mensajes */
+/* Error / empty messages */
 
-.motivation-page__message {
-  width: 100%;
-  max-width: 700px;
+.motivation-page__error {
   padding: 24px;
   border-radius: 12px;
-  border: 1px solid #e5e7eb;
-  box-sizing: border-box;
+  border: 1px solid var(--motivpage-border);
+  color: var(--motivpage-muted);
   text-align: center;
 }
 
-.motivation-page__message p {
+.motivation-page__error p {
   margin: 0;
   line-height: 1.5;
   overflow-wrap: anywhere;
@@ -101,18 +68,6 @@
   .motivation-page {
     padding: 24px;
   }
-
-  .motivation-page__header {
-    margin-bottom: 24px;
-  }
-
-  .motivation-page__header h1 {
-    font-size: 28px;
-  }
-
-  .motivation-page__card {
-    max-width: 100%;
-  }
 }
 
 /* =========================================
@@ -124,38 +79,15 @@
     padding: 16px;
   }
 
-  .motivation-page__header {
-    margin-bottom: 20px;
-  }
-
-  .motivation-page__header h1 {
-    font-size: 24px;
-  }
-
-  .motivation-page__header p {
-    font-size: 14px;
-  }
-
-  .motivation-page__content {
-    width: 100%;
-  }
-
-  .motivation-page__card {
-    width: 100%;
-  }
-
-  .motivation-page__message {
+  .motivation-page__error {
     padding: 18px;
   }
 
   /*
-   * Permite que frases muy largas se ajusten
-   * dentro de la pantalla.
+   * Lets very long phrases wrap inside the screen.
    */
-  .motivation-page__card,
-  .motivation-page__card * {
+  .motivation-page > * {
     overflow-wrap: anywhere;
-    word-break: normal;
   }
 }
 
@@ -168,15 +100,7 @@
     padding: 12px;
   }
 
-  .motivation-page__header h1 {
-    font-size: 22px;
-  }
-
-  .motivation-page__header p {
-    font-size: 13px;
-  }
-
-  .motivation-page__message {
+  .motivation-page__error {
     padding: 16px;
   }
 }
