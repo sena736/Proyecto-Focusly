@@ -5,7 +5,11 @@ vi.mock("./api", () => ({
 }));
 
 import api from "./api";
-import { createPomodoroSession, getPomodoroSessions } from "./pomodoro.api";
+import {
+  createPomodoroSession,
+  getPomodoroSessions,
+  getMyPomodoroSessions,
+} from "./pomodoro.api";
 
 describe("pomodoro.api", () => {
   beforeEach(() => {
@@ -20,6 +24,41 @@ describe("pomodoro.api", () => {
 
       expect(api.post).toHaveBeenCalledWith("/pomodoro-sessions", { duration: 25 });
       expect(result).toEqual({ data: { id: 1 } });
+    });
+  });
+
+  describe("getMyPomodoroSessions (own history)", () => {
+    it("requests GET /pomodoro-sessions/my through the shared client and unwraps { data }", async () => {
+      const sessions = [{ id: 1 }, { id: 2 }];
+      api.get.mockResolvedValue({ data: { data: sessions } });
+
+      await expect(getMyPomodoroSessions()).resolves.toEqual(sessions);
+      expect(api.get).toHaveBeenCalledWith("/pomodoro-sessions/my");
+    });
+
+    it("returns an empty list when the user has no sessions yet", async () => {
+      api.get.mockResolvedValue({ data: { data: [] } });
+
+      await expect(getMyPomodoroSessions()).resolves.toEqual([]);
+    });
+
+    it.each([
+      ["no body", { data: undefined }],
+      ["a body without data", { data: {} }],
+      ["a non-array payload", { data: { data: "oops" } }],
+    ])("rejects instead of returning a fake empty list when the response has %s", async (_label, response) => {
+      api.get.mockResolvedValue(response);
+
+      await expect(getMyPomodoroSessions()).rejects.toThrow(/sesiones pomodoro/i);
+    });
+
+    it("propagates network / auth errors untouched", async () => {
+      const failure = Object.assign(new Error("Request failed with status code 401"), {
+        response: { status: 401 },
+      });
+      api.get.mockRejectedValue(failure);
+
+      await expect(getMyPomodoroSessions()).rejects.toBe(failure);
     });
   });
 

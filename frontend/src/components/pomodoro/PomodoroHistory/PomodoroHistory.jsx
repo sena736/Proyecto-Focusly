@@ -7,47 +7,96 @@ import {
 } from "lucide-react";
 import "./PomodoroHistory.css";
 
-const PomodoroHistory = ({ sessions = [] }) => {
-  const defaultSessions = [
-    {
-      id: 1,
-      date: "Hoy",
-      time: "10:30 AM",
-      duration: 25,
-      type: "focus",
-      task: "Estudiar matemáticas",
-      completed: true,
-    },
-    {
-      id: 2,
-      date: "Hoy",
-      time: "11:05 AM",
-      duration: 25,
-      type: "focus",
-      task: "Realizar proyecto",
-      completed: true,
-    },
-    {
-      id: 3,
-      date: "Ayer",
-      time: "4:20 PM",
-      duration: 15,
-      type: "break",
-      task: "Descanso",
-      completed: true,
-    },
-    {
-      id: 4,
-      date: "Ayer",
-      time: "5:00 PM",
-      duration: 25,
-      type: "focus",
-      task: "Leer capítulo 3",
-      completed: true,
-    },
-  ];
+import Loader from "../../ui/Loader/Loader";
+import Alert from "../../ui/Alert/Alert";
+import EmptyState from "../../ui/EmptyState/EmptyState";
 
-  const history = sessions.length > 0 ? sessions : defaultSessions;
+import { POMODORO_TYPES } from "../../../utils/constants";
+import { formatDateTime, sortByDateDescending } from "../../../utils/date";
+
+const MAX_SESSIONS = 10;
+
+const PomodoroHistory = ({
+  sessions = [],
+  isLoading = false,
+  isError = false,
+}) => {
+  // Las sesiones tienen marcas de tiempo reales: se muestran en hora local.
+  const history = sortByDateDescending(sessions ?? [], "startedAt").slice(
+    0,
+    MAX_SESSIONS
+  );
+
+  const renderContent = () => {
+    if (isLoading) {
+      return <Loader text="Cargando historial..." />;
+    }
+
+    if (isError) {
+      return (
+        <Alert
+          type="error"
+          message="No pudimos cargar tu historial. Inténtalo de nuevo más tarde."
+          showClose={false}
+        />
+      );
+    }
+
+    if (history.length === 0) {
+      return (
+        <EmptyState
+          icon="⏱️"
+          title="Todavía no completaste ninguna sesión"
+          message="Completa un ciclo Pomodoro para verlo aquí."
+        />
+      );
+    }
+
+    return history.map((session) => {
+      const isBreak = session.type === POMODORO_TYPES.BREAK;
+
+      return (
+        <div
+          className="pomodoro-history__item"
+          key={session.id}
+        >
+          <div
+            className={`pomodoro-history__icon ${
+              isBreak
+                ? "pomodoro-history__icon--break"
+                : "pomodoro-history__icon--focus"
+            }`}
+          >
+            {isBreak ? (
+              <Coffee size={20} />
+            ) : (
+              <Clock size={20} />
+            )}
+          </div>
+
+          <div className="pomodoro-history__info">
+            <h3 className="pomodoro-history__task">
+              {isBreak ? "Descanso" : "Enfoque"}
+            </h3>
+
+            <div className="pomodoro-history__details">
+              <span>{formatDateTime(session.startedAt)}</span>
+            </div>
+          </div>
+
+          <div className="pomodoro-history__duration">
+            <strong>{session.durationMinutes}</strong>
+            <span>min</span>
+          </div>
+
+          <CheckCircle2
+            className="pomodoro-history__completed"
+            size={19}
+          />
+        </div>
+      );
+    });
+  };
 
   return (
     <section className="pomodoro-history">
@@ -68,66 +117,7 @@ const PomodoroHistory = ({ sessions = [] }) => {
       </div>
 
       <div className="pomodoro-history__list">
-        {history.length > 0 ? (
-          history.map((session) => {
-            const isBreak = session.type === "break";
-
-            return (
-              <div
-                className="pomodoro-history__item"
-                key={session.id}
-              >
-                <div
-                  className={`pomodoro-history__icon ${
-                    isBreak
-                      ? "pomodoro-history__icon--break"
-                      : "pomodoro-history__icon--focus"
-                  }`}
-                >
-                  {isBreak ? (
-                    <Coffee size={20} />
-                  ) : (
-                    <Clock size={20} />
-                  )}
-                </div>
-
-                <div className="pomodoro-history__info">
-                  <h3 className="pomodoro-history__task">
-                    {session.task}
-                  </h3>
-
-                  <div className="pomodoro-history__details">
-                    <span>{session.date}</span>
-                    <span>•</span>
-                    <span>{session.time}</span>
-                  </div>
-                </div>
-
-                <div className="pomodoro-history__duration">
-                  <strong>{session.duration}</strong>
-                  <span>min</span>
-                </div>
-
-                {session.completed && (
-                  <CheckCircle2
-                    className="pomodoro-history__completed"
-                    size={19}
-                  />
-                )}
-              </div>
-            );
-          })
-        ) : (
-          <div className="pomodoro-history__empty">
-            <Clock size={36} />
-
-            <h3>No hay sesiones todavía</h3>
-
-            <p>
-              Completa una sesión Pomodoro para verla aquí.
-            </p>
-          </div>
-        )}
+        {renderContent()}
       </div>
     </section>
   );

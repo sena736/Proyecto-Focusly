@@ -1,7 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Pomodoro.css";
 
 import usePomodoro from "../../hooks/usePomodoro";
+import useMyPomodoroSessions from "../../hooks/useMyPomodoroSessions";
+import {
+  getPomodoroDurations,
+  savePomodoroDurations,
+} from "../../services/storage.service";
+import { clampMinutes } from "../../utils/pomodoro";
 
 import PageHeader from "../../components/layout/PageHeader/PageHeader";
 import PomodoroTimer from "../../components/pomodoro/PomodoroTimer/PomodoroTimer";
@@ -10,20 +16,39 @@ import PomodoroHistory from "../../components/pomodoro/PomodoroHistory/PomodoroH
 import PomodoroSettings from "../../components/pomodoro/PomodoroSettings/PomodoroSettings";
 
 const Pomodoro = () => {
+  // Chosen durations: the page owns them, the hook runs with them and
+  // they are remembered across reloads.
+  const [durations, setDurations] = useState(getPomodoroDurations);
+
   const {
     mode,
-    remainingSeconds,
     formattedTime,
     isRunning,
+    isPaused,
+    hasActiveCycle,
     isFinished,
     isLoading,
     error,
-    durationMinutes,
+    completedPomodoros,
     start,
     pause,
     reset,
+    skip,
     changeMode,
-  } = usePomodoro();
+  } = usePomodoro(durations);
+
+  const {
+    sessions,
+    isLoading: isHistoryLoading,
+    isError: isHistoryError,
+  } = useMyPomodoroSessions();
+
+  const handleChangeDuration = (key, minutes) => {
+    const next = { ...durations, [key]: clampMinutes(minutes) };
+
+    setDurations(next);
+    savePomodoroDurations(next);
+  };
 
   return (
     <main className="pomodoro-page">
@@ -57,27 +82,35 @@ const Pomodoro = () => {
       <section className="pomodoro-page__main">
         <PomodoroTimer
           mode={mode}
-          remainingSeconds={remainingSeconds}
           formattedTime={formattedTime}
-          isRunning={isRunning}
-          durationMinutes={durationMinutes}
+          completedPomodoros={completedPomodoros}
+          onChangeMode={changeMode}
         />
 
         <PomodoroControls
           isRunning={isRunning}
+          isPaused={isPaused}
           onStart={start}
           onPause={pause}
           onReset={reset}
+          onSkip={skip}
         />
 
         <PomodoroSettings
-          mode={mode}
-          onChangeMode={changeMode}
+          focusMinutes={durations.focusMinutes}
+          shortBreakMinutes={durations.shortBreakMinutes}
+          longBreakMinutes={durations.longBreakMinutes}
+          onChange={handleChangeDuration}
+          disabled={isRunning || hasActiveCycle}
         />
       </section>
 
       <section className="pomodoro-page__history">
-        <PomodoroHistory />
+        <PomodoroHistory
+          sessions={sessions}
+          isLoading={isHistoryLoading}
+          isError={isHistoryError}
+        />
       </section>
 
       {isLoading && (
