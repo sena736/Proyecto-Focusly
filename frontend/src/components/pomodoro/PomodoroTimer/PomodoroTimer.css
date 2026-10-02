@@ -102,41 +102,6 @@
   margin: 25px 0;
 }
 
-.pomodoro-controls {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-}
-
-.pomodoro-main-button,
-.pomodoro-reset-button {
-  border: none;
-  padding: 13px 28px;
-  border-radius: 12px;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.2s ease;
-}
-
-.pomodoro-main-button {
-  background: var(--pomot-accent-fill);
-  color: var(--on-primary);
-}
-
-.pomodoro-main-button:hover {
-  transform: translateY(-2px);
-}
-
-.pomodoro-reset-button {
-  background: var(--pomot-chip-bg);
-  color: var(--pomot-chip-text);
-}
-
-.pomodoro-reset-button:hover {
-  background: var(--pomot-chip-hover);
-}
-
 .pomodoro-progress {
   margin-top: 30px;
   padding: 16px;
@@ -180,14 +145,5 @@
   .pomodoro-modes button {
     font-size: 13px;
     padding: 9px 12px;
-  }
-
-  .pomodoro-controls {
-    flex-direction: column;
-  }
-
-  .pomodoro-main-button,
-  .pomodoro-reset-button {
-    width: 100%;
   }
 }

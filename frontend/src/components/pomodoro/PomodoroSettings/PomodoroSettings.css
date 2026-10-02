@@ -160,7 +160,7 @@
    BUTTON HOVER
    ========================================= */
 
-.pomodoro-setting__button:hover {
+.pomodoro-setting__button:hover:not(:disabled) {
   background: var(--pomos-btn-hover);
 
   border-color: var(--pomos-accent);
@@ -172,7 +172,12 @@
    BUTTON ACTIVE
    ========================================= */
 
-.pomodoro-setting__button:active {
+.pomodoro-setting__button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pomodoro-setting__button:active:not(:disabled) {
   transform: translateY(0);
 }
 

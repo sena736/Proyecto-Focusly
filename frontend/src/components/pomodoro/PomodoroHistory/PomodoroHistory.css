@@ -17,8 +17,6 @@
   --pomoh-focus-bg: #e5f0ef;
   --pomoh-break-bg: #f1f3f3;
   --pomoh-break-text: #7d8d90;
-  --pomoh-empty-text: #9aa8aa;
-  --pomoh-empty-title: #526b6f;
 }
 
 :root[data-theme="dark"] {
@@ -35,8 +33,6 @@
   --pomoh-focus-bg: #22373b;
   --pomoh-break-bg: var(--surface-secondary);
   --pomoh-break-text: var(--text-secondary);
-  --pomoh-empty-text: var(--text-muted);
-  --pomoh-empty-title: var(--text-secondary);
 }
 
 .pomodoro-history {
@@ -203,43 +199,6 @@
 .pomodoro-history__completed {
   color: var(--pomoh-accent);
   flex-shrink: 0;
-}
-
-/* =========================================
-   EMPTY STATE
-========================================= */
-
-.pomodoro-history__empty {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  padding: 45px 20px;
-
-  color: var(--pomoh-empty-text);
-  text-align: center;
-}
-
-.pomodoro-history__empty svg {
-  margin-bottom: 12px;
-  color: var(--pomoh-accent);
-}
-
-.pomodoro-history__empty h3 {
-  margin: 0 0 6px;
-
-  color: var(--pomoh-empty-title);
-  font-size: 15px;
-}
-
-.pomodoro-history__empty p {
-  margin: 0;
-
-  max-width: 280px;
-
-  font-size: 12px;
-  line-height: 1.5;
 }
 
 /* =========================================

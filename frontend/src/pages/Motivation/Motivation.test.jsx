@@ -37,6 +37,15 @@ describe("Motivation page", () => {
     expect(screen.getByTestId("motivation-card")).toBeInTheDocument();
   });
 
+  it("renders the page root with the page class (its stylesheet gives the spacing)", () => {
+    usePhrase.mockReturnValue(baseState);
+
+    const { container } = render(<Motivation />);
+
+    expect(container.firstElementChild).toHaveClass("motivation-page");
+    expect(container.firstElementChild.tagName).toBe("MAIN");
+  });
+
   it("shows the empty message under the header when there is no phrase", () => {
     usePhrase.mockReturnValue({ ...baseState, data: undefined });
 

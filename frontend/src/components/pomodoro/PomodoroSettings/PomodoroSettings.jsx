@@ -1,160 +1,102 @@
 import React from "react";
 import "./PomodoroSettings.css";
 
+import { POMODORO_DEFAULTS } from "../../../utils/constants";
+
+const { MIN_MINUTES, MAX_MINUTES } = POMODORO_DEFAULTS;
+
+// Each row: the duration key it controls plus its copy and accessible labels.
+const SETTINGS = [
+  {
+    key: "focusMinutes",
+    title: "Trabajo",
+    description: "Tiempo de concentración",
+    decreaseLabel: "Disminuir tiempo de trabajo",
+    increaseLabel: "Aumentar tiempo de trabajo",
+  },
+  {
+    key: "shortBreakMinutes",
+    title: "Descanso corto",
+    description: "Pausa entre sesiones",
+    decreaseLabel: "Disminuir descanso corto",
+    increaseLabel: "Aumentar descanso corto",
+  },
+  {
+    key: "longBreakMinutes",
+    title: "Descanso largo",
+    description: "Pausa después de varias sesiones",
+    decreaseLabel: "Disminuir descanso largo",
+    increaseLabel: "Aumentar descanso largo",
+  },
+];
+
+// Controlled by the page: it owns the values, this only asks for +1 / -1.
 const PomodoroSettings = ({
-  workTime = 25,
-  shortBreak = 5,
-  longBreak = 15,
-  onChange = () => {},
+  focusMinutes,
+  shortBreakMinutes,
+  longBreakMinutes,
+  onChange,
+  disabled = false,
 }) => {
-  // =========================================
-  // CAMBIAR VALOR
-  // =========================================
+  const values = { focusMinutes, shortBreakMinutes, longBreakMinutes };
 
-  const handleChange = (type, operation) => {
-    let currentValue;
+  const handleChange = (key, step) => {
+    if (disabled) return;
 
-    switch (type) {
-      case "workTime":
-        currentValue = workTime;
-        break;
+    const newValue = values[key] + step;
 
-      case "shortBreak":
-        currentValue = shortBreak;
-        break;
-
-      case "longBreak":
-        currentValue = longBreak;
-        break;
-
-      default:
-        return;
-    }
-
-    const newValue =
-      operation === "increase" ? currentValue + 1 : currentValue - 1;
-
-    // Evitar valores menores a 1 minuto
-    if (newValue < 1) {
+    if (newValue < MIN_MINUTES || newValue > MAX_MINUTES) {
       return;
     }
 
-    onChange(type, newValue);
+    onChange?.(key, newValue);
   };
-
-  // =========================================
-  // RENDER
-  // =========================================
 
   return (
     <div className="pomodoro-settings">
-      {/* =====================================
-          TRABAJO
-          ===================================== */}
+      {SETTINGS.map((setting) => (
+        <div className="pomodoro-setting" key={setting.key}>
+          <div className="pomodoro-setting__info">
+            <span className="pomodoro-setting__title">{setting.title}</span>
 
-      <div className="pomodoro-setting">
-        <div className="pomodoro-setting__info">
-          <span className="pomodoro-setting__title">Trabajo</span>
+            <span className="pomodoro-setting__description">
+              {setting.description}
+            </span>
+          </div>
 
-          <span className="pomodoro-setting__description">
-            Tiempo de concentración
-          </span>
+          <div className="pomodoro-setting__controls">
+            <button
+              type="button"
+              className="pomodoro-setting__button"
+              onClick={() => handleChange(setting.key, -1)}
+              disabled={disabled || values[setting.key] <= MIN_MINUTES}
+              aria-label={setting.decreaseLabel}
+            >
+              −
+            </button>
+
+            <span className="pomodoro-setting__value">
+              {values[setting.key]}
+            </span>
+
+            <button
+              type="button"
+              className="pomodoro-setting__button"
+              onClick={() => handleChange(setting.key, 1)}
+              disabled={disabled || values[setting.key] >= MAX_MINUTES}
+              aria-label={setting.increaseLabel}
+            >
+              +
+            </button>
+          </div>
         </div>
+      ))}
 
-        <div className="pomodoro-setting__controls">
-          <button
-            type="button"
-            className="pomodoro-setting__button"
-            onClick={() => handleChange("workTime", "decrease")}
-            aria-label="Disminuir tiempo de trabajo"
-          >
-            −
-          </button>
-
-          <span className="pomodoro-setting__value">{workTime}</span>
-
-          <button
-            type="button"
-            className="pomodoro-setting__button"
-            onClick={() => handleChange("workTime", "increase")}
-            aria-label="Aumentar tiempo de trabajo"
-          >
-            +
-          </button>
-        </div>
-      </div>
-
-      {/* =====================================
-          DESCANSO CORTO
-          ===================================== */}
-
-      <div className="pomodoro-setting">
-        <div className="pomodoro-setting__info">
-          <span className="pomodoro-setting__title">Descanso corto</span>
-
-          <span className="pomodoro-setting__description">
-            Pausa entre sesiones
-          </span>
-        </div>
-
-        <div className="pomodoro-setting__controls">
-          <button
-            type="button"
-            className="pomodoro-setting__button"
-            onClick={() => handleChange("shortBreak", "decrease")}
-            aria-label="Disminuir descanso corto"
-          >
-            −
-          </button>
-
-          <span className="pomodoro-setting__value">{shortBreak}</span>
-
-          <button
-            type="button"
-            className="pomodoro-setting__button"
-            onClick={() => handleChange("shortBreak", "increase")}
-            aria-label="Aumentar descanso corto"
-          >
-            +
-          </button>
-        </div>
-      </div>
-
-      {/* =====================================
-          DESCANSO LARGO
-          ===================================== */}
-
-      <div className="pomodoro-setting">
-        <div className="pomodoro-setting__info">
-          <span className="pomodoro-setting__title">Descanso largo</span>
-
-          <span className="pomodoro-setting__description">
-            Pausa después de varias sesiones
-          </span>
-        </div>
-
-        <div className="pomodoro-setting__controls">
-          <button
-            type="button"
-            className="pomodoro-setting__button"
-            onClick={() => handleChange("longBreak", "decrease")}
-            aria-label="Disminuir descanso largo"
-          >
-            −
-          </button>
-
-          <span className="pomodoro-setting__value">{longBreak}</span>
-
-          <button
-            type="button"
-            className="pomodoro-setting__button"
-            onClick={() => handleChange("longBreak", "increase")}
-            aria-label="Aumentar descanso largo"
-          >
-            +
-          </button>
-        </div>
-      </div>
+      {disabled && (
+        <p className="pomodoro-setting__description">
+          Reiniciá el ciclo para cambiar las duraciones.
+        </p>
+      )}
     </div>
   );
 };

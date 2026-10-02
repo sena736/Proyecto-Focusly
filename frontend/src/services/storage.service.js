@@ -4,6 +4,7 @@ import {
   STORAGE_KEYS,
   THEMES,
 } from "../utils/constants";
+import { sanitizeDurations } from "../utils/pomodoro";
 
 
 /* =========================================================
@@ -317,4 +318,46 @@ export const getInitialTheme = () => {
   }
 
   return getSystemTheme();
+};
+
+
+/* =========================================================
+   12. DURACIONES DEL POMODORO
+========================================================= */
+
+/**
+ * Guarda las duraciones elegidas (en minutos).
+ * No guarda valores inválidos.
+ *
+ * @param {{focusMinutes: number, shortBreakMinutes: number, longBreakMinutes: number}} durations
+ * @returns {boolean}
+ */
+export const savePomodoroDurations = (durations) => {
+  const valid = sanitizeDurations(durations);
+
+  const isValid = Object.keys(valid).every(
+    (key) => valid[key] === durations?.[key]
+  );
+
+  if (!isValid) {
+    return false;
+  }
+
+  return setStorageItem(
+    STORAGE_KEYS.POMODORO_DURATIONS,
+    valid
+  );
+};
+
+
+/**
+ * Recupera las duraciones guardadas. Cada valor inválido,
+ * o la ausencia de datos, vuelve al predeterminado (25 / 5 / 15).
+ *
+ * @returns {{focusMinutes: number, shortBreakMinutes: number, longBreakMinutes: number}}
+ */
+export const getPomodoroDurations = () => {
+  return sanitizeDurations(
+    getStorageItem(STORAGE_KEYS.POMODORO_DURATIONS)
+  );
 };

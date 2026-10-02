@@ -1,38 +1,61 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { createPomodoroSession } from "../api/pomodoro.api";
+import { useQueryClient } from "@tanstack/react-query";
 
-const DEFAULT_WORK_MINUTES = 25;
-const DEFAULT_BREAK_MINUTES = 5;
+import { createPomodoroSession } from "../api/pomodoro.api";
+import { POMODORO_DEFAULTS, QUERY_KEYS } from "../utils/constants";
+import {
+  POMODORO_MODES,
+  nextModeAfterFocus,
+  sessionTypeForMode,
+} from "../utils/pomodoro";
+
+const VALID_MODES = Object.values(POMODORO_MODES);
 
 const usePomodoro = ({
-  workMinutes = DEFAULT_WORK_MINUTES,
-  breakMinutes = DEFAULT_BREAK_MINUTES,
+  focusMinutes = POMODORO_DEFAULTS.FOCUS_MINUTES,
+  shortBreakMinutes = POMODORO_DEFAULTS.SHORT_BREAK_MINUTES,
+  longBreakMinutes = POMODORO_DEFAULTS.LONG_BREAK_MINUTES,
 } = {}) => {
-  const [mode, setMode] = useState("work");
-  const [remainingSeconds, setRemainingSeconds] = useState(
-    workMinutes * 60
-  );
+  const queryClient = useQueryClient();
 
-  const [isRunning, setIsRunning] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isFinished, setIsFinished] = useState(false);
-  const [error, setError] = useState(null);
+  // Latest configured durations (read from timers and callbacks).
+  const minutesRef = useRef({
+    [POMODORO_MODES.FOCUS]: focusMinutes,
+    [POMODORO_MODES.SHORT_BREAK]: shortBreakMinutes,
+    [POMODORO_MODES.LONG_BREAK]: longBreakMinutes,
+  });
+
+  const modeRef = useRef(POMODORO_MODES.FOCUS);
+  const completedRef = useRef(0);
+  const isRunningRef = useRef(false);
+
+  // Minutes that the idle display was last synchronised with.
+  const appliedMinutesRef = useRef(focusMinutes);
 
   // Momento en que comenzó el ciclo actual.
   const startedAtRef = useRef(null);
+
+  // Duración (en minutos) con la que comenzó el ciclo actual.
+  const cycleMinutesRef = useRef(focusMinutes);
 
   // Timestamp exacto en el que debería terminar.
   const targetTimeRef = useRef(null);
 
   // Tiempo restante justo antes de pausar.
-  const pausedRemainingRef = useRef(workMinutes * 60);
+  const pausedRemainingRef = useRef(focusMinutes * 60);
 
   const intervalRef = useRef(null);
 
-  const durationSeconds =
-    mode === "work"
-      ? workMinutes * 60
-      : breakMinutes * 60;
+  const [mode, setMode] = useState(POMODORO_MODES.FOCUS);
+  const [remainingSeconds, setRemainingSeconds] = useState(focusMinutes * 60);
+  const [completedPomodoros, setCompletedPomodoros] = useState(0);
+
+  const [isRunning, setIsRunning] = useState(false);
+  // True from the first start of a cycle until it finishes or is discarded.
+  const [hasActiveCycle, setHasActiveCycle] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isFinished, setIsFinished] = useState(false);
+  const [error, setError] = useState(null);
 
   const formatTime = useCallback((seconds) => {
     const minutes = Math.floor(seconds / 60);
@@ -43,6 +66,11 @@ const usePomodoro = ({
     ).padStart(2, "0")}`;
   }, []);
 
+  const setRunning = useCallback((value) => {
+    isRunningRef.current = value;
+    setIsRunning(value);
+  }, []);
+
   const clearTimer = useCallback(() => {
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
@@ -50,75 +78,97 @@ const usePomodoro = ({
     }
   }, []);
 
-  const saveSession = useCallback(async (endedAt) => {
-    if (!startedAtRef.current) return;
+  // Deja un modo parado, con su duración completa y sin ciclo en curso.
+  const enterMode = useCallback(
+    (nextMode) => {
+      clearTimer();
 
-    const startedAt = startedAtRef.current;
+      const minutes = minutesRef.current[nextMode];
+      const duration = minutes * 60;
 
-    const sessionData = {
-      type: mode,
-      startedAt: new Date(startedAt).toISOString(),
-      endedAt: new Date(endedAt).toISOString(),
-      durationMinutes:
-        mode === "work" ? workMinutes : breakMinutes,
-    };
+      modeRef.current = nextMode;
+      appliedMinutesRef.current = minutes;
 
-    try {
-      setIsLoading(true);
-      setError(null);
+      setMode(nextMode);
+      setRemainingSeconds(duration);
+      setRunning(false);
+      setHasActiveCycle(false);
 
-      await createPomodoroSession(sessionData);
-    } catch (err) {
-      setError(
-        err.response?.data?.message ||
-          "No se pudo guardar la sesión Pomodoro."
-      );
-    } finally {
-      setIsLoading(false);
-    }
-  }, [mode, workMinutes, breakMinutes]);
+      pausedRemainingRef.current = duration;
+      startedAtRef.current = null;
+      targetTimeRef.current = null;
+    },
+    [clearTimer, setRunning]
+  );
+
+  const saveSession = useCallback(
+    async ({ sessionMode, startedAt, endedAt, minutes }) => {
+      try {
+        setIsLoading(true);
+        setError(null);
+
+        await createPomodoroSession({
+          type: sessionTypeForMode(sessionMode),
+          startedAt: new Date(startedAt).toISOString(),
+          endedAt: new Date(endedAt).toISOString(),
+          durationMinutes: minutes,
+        });
+
+        // El historial debe mostrar la sesión recién guardada.
+        queryClient.invalidateQueries({
+          queryKey: QUERY_KEYS.POMODORO_SESSIONS,
+        });
+      } catch (err) {
+        setError(
+          err.response?.data?.message ||
+            "No se pudo guardar la sesión Pomodoro."
+        );
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [queryClient]
+  );
 
   const finishCycle = useCallback(async () => {
     clearTimer();
 
-    const endedAt = Date.now();
+    // The target is when the cycle really ended; a throttled or slept tab
+    // only notices later, so never stamp a time past it.
+    const endedAt = Math.min(Date.now(), targetTimeRef.current ?? Date.now());
+    const finishedMode = modeRef.current;
+    const startedAt = startedAtRef.current;
+    const minutes = cycleMinutesRef.current;
 
-    setRemainingSeconds(0);
-    setIsRunning(false);
-    setIsFinished(true);
+    let nextMode = POMODORO_MODES.FOCUS;
 
-    await saveSession(endedAt);
+    if (finishedMode === POMODORO_MODES.FOCUS) {
+      completedRef.current += 1;
+      setCompletedPomodoros(completedRef.current);
+
+      nextMode = nextModeAfterFocus(completedRef.current);
+    }
 
     // Cambiar automáticamente al siguiente ciclo.
-    const nextMode = mode === "work" ? "break" : "work";
+    setIsFinished(true);
+    enterMode(nextMode);
 
-    setMode(nextMode);
-
-    const nextDuration =
-      nextMode === "work"
-        ? workMinutes * 60
-        : breakMinutes * 60;
-
-    setRemainingSeconds(nextDuration);
-    pausedRemainingRef.current = nextDuration;
-    startedAtRef.current = null;
-    targetTimeRef.current = null;
-  }, [
-    clearTimer,
-    saveSession,
-    mode,
-    workMinutes,
-    breakMinutes,
-  ]);
+    if (startedAt) {
+      await saveSession({
+        sessionMode: finishedMode,
+        startedAt,
+        endedAt,
+        minutes,
+      });
+    }
+  }, [clearTimer, enterMode, saveSession]);
 
   const tick = useCallback(() => {
     if (!targetTimeRef.current) return;
 
-    const now = Date.now();
-    const difference = targetTimeRef.current - now;
+    const difference = targetTimeRef.current - Date.now();
 
     if (difference <= 0) {
-      setRemainingSeconds(0);
       finishCycle();
       return;
     }
@@ -127,7 +177,7 @@ const usePomodoro = ({
   }, [finishCycle]);
 
   const start = useCallback(() => {
-    if (isRunning) return;
+    if (isRunningRef.current) return;
 
     setIsFinished(false);
     setError(null);
@@ -139,89 +189,86 @@ const usePomodoro = ({
 
     if (!startedAtRef.current) {
       startedAtRef.current = now;
+      cycleMinutesRef.current = minutesRef.current[modeRef.current];
+      setHasActiveCycle(true);
     }
 
-    targetTimeRef.current =
-      now + secondsToRun * 1000;
+    targetTimeRef.current = now + secondsToRun * 1000;
 
-    setIsRunning(true);
+    setRunning(true);
 
     clearTimer();
 
     intervalRef.current = setInterval(tick, 250);
 
     tick();
-  }, [isRunning, clearTimer, tick]);
+  }, [clearTimer, setRunning, tick]);
 
   const pause = useCallback(() => {
-    if (!isRunning || !targetTimeRef.current) {
+    if (!isRunningRef.current || !targetTimeRef.current) {
       return;
     }
 
-    const now = Date.now();
-
-    const difference =
-      targetTimeRef.current - now;
-
     const secondsRemaining = Math.max(
       0,
-      Math.ceil(difference / 1000)
+      Math.ceil((targetTimeRef.current - Date.now()) / 1000)
     );
 
     pausedRemainingRef.current = secondsRemaining;
 
     setRemainingSeconds(secondsRemaining);
-    setIsRunning(false);
+    setRunning(false);
 
     clearTimer();
-  }, [isRunning, clearTimer]);
+  }, [clearTimer, setRunning]);
 
   const reset = useCallback(() => {
-    clearTimer();
+    enterMode(modeRef.current);
 
-    const duration =
-      mode === "work"
-        ? workMinutes * 60
-        : breakMinutes * 60;
-
-    setRemainingSeconds(duration);
-    pausedRemainingRef.current = duration;
-
-    setIsRunning(false);
     setIsFinished(false);
     setError(null);
+  }, [enterMode]);
 
-    startedAtRef.current = null;
-    targetTimeRef.current = null;
-  }, [
-    clearTimer,
-    mode,
-    workMinutes,
-    breakMinutes,
-  ]);
+  // "Siguiente": avanza de fase SIN guardar ni contar la sesión.
+  const skip = useCallback(() => {
+    enterMode(
+      modeRef.current === POMODORO_MODES.FOCUS
+        ? POMODORO_MODES.SHORT_BREAK
+        : POMODORO_MODES.FOCUS
+    );
+
+    setIsFinished(false);
+    setError(null);
+  }, [enterMode]);
 
   const changeMode = useCallback(
     (newMode) => {
-      clearTimer();
+      if (!VALID_MODES.includes(newMode)) return;
 
-      const duration =
-        newMode === "work"
-          ? workMinutes * 60
-          : breakMinutes * 60;
+      enterMode(newMode);
 
-      setMode(newMode);
-      setRemainingSeconds(duration);
-      pausedRemainingRef.current = duration;
-
-      setIsRunning(false);
       setIsFinished(false);
       setError(null);
-
-      startedAtRef.current = null;
-      targetTimeRef.current = null;
     },
-    [clearTimer, workMinutes, breakMinutes]
+    [enterMode]
   );
+
+  // Sincroniza las duraciones configuradas. Mientras hay un ciclo en curso
+  // (corriendo o en pausa) se ignora el cambio visible; se aplica en la
+  // siguiente fase.
+  useEffect(() => {
+    minutesRef.current = {
+      [POMODORO_MODES.FOCUS]: focusMinutes,
+      [POMODORO_MODES.SHORT_BREAK]: shortBreakMinutes,
+      [POMODORO_MODES.LONG_BREAK]: longBreakMinutes,
+    };
+
+    if (isRunningRef.current || startedAtRef.current) return;
+
+    if (minutesRef.current[modeRef.current] !== appliedMinutesRef.current) {
+      enterMode(modeRef.current);
+    }
+  }, [focusMinutes, shortBreakMinutes, longBreakMinutes, enterMode]);
 
   useEffect(() => {
     return () => {
@@ -235,18 +282,24 @@ const usePomodoro = ({
     formattedTime: formatTime(remainingSeconds),
 
     isRunning,
+    hasActiveCycle,
+    isPaused: hasActiveCycle && !isRunning,
     isFinished,
     isLoading,
     error,
 
-    durationMinutes:
-      mode === "work"
-        ? workMinutes
-        : breakMinutes,
+    completedPomodoros,
+
+    durationMinutes: {
+      [POMODORO_MODES.FOCUS]: focusMinutes,
+      [POMODORO_MODES.SHORT_BREAK]: shortBreakMinutes,
+      [POMODORO_MODES.LONG_BREAK]: longBreakMinutes,
+    }[mode],
 
     start,
     pause,
     reset,
+    skip,
     changeMode,
   };
 };

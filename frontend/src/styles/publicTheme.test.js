@@ -669,7 +669,8 @@ const THEMED_APP_STYLESHEETS = [
   "components/pomodoro/PomodoroControls/PomodoroControls.css",
   "components/pomodoro/PomodoroHistory/PomodoroHistory.css",
   "components/pomodoro/PomodoroSettings/PomodoroSettings.css",
-  // Motivation page (pages/Motivation/Motivation.css is an orphan: nothing imports it)
+  // Motivation page
+  "pages/Motivation/Motivation.css",
   "components/motivation/MotivationCard/MotivationCard.css",
   // Profile page
   "pages/Profile/Profile.css",

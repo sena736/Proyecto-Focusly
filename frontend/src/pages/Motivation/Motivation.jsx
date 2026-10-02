@@ -1,4 +1,5 @@
 import React from "react";
+import "./Motivation.css";
 import { usePhrase } from "../../hooks/usePhrase";
 import PageHeader from "../../components/layout/PageHeader/PageHeader";
 import MotivationCard from "../../components/motivation/MotivationCard/MotivationCard";
