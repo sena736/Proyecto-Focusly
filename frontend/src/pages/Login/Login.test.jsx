@@ -80,12 +80,14 @@ describe("Login", () => {
       expect(password).toHaveAttribute("type", "password");
     });
 
-    it("keeps the forgot-password link next to the password label", () => {
+    it("does not offer a forgot-password link (there is no recovery flow yet)", () => {
       setup();
 
       expect(
-        screen.getByRole("link", { name: "¿Olvidaste tu contraseña?" }),
-      ).toHaveAttribute("href", "/forgot-password");
+        screen.queryByRole("link", { name: /olvidaste tu contraseña/i }),
+      ).not.toBeInTheDocument();
+      expect(document.querySelector('a[href="/forgot-password"]')).toBeNull();
+      expect(document.querySelector(".login__forgot")).toBeNull();
     });
 
     it("submits with a primary full-width Button", () => {

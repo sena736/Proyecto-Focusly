@@ -23,11 +23,16 @@ const TestConsumer = () => {
     establishSession,
     logout,
     loginWithGoogle,
+    updateUser,
   } = React.useContext(AuthContext);
 
   return (
     <div>
       {" "}
+      <span data-testid="email">{user ? user.email : "null"}</span>
+      <button type="button" onClick={() => updateUser({ name: "Nombre nuevo" })}>
+        Rename
+      </button>
       <span data-testid="loading">{loading ? "loading" : "ready"} </span>
       <span data-testid="authenticated">
         {isAuthenticated ? "authenticated" : "unauthenticated"}
@@ -236,6 +241,51 @@ describe("AuthContext", () => {
         value: originalLocation,
       });
     }
+  });
+
+  it("updateUser fusiona los datos nuevos en el usuario sin tocar el token ni la sesión", async () => {
+    api.get.mockResolvedValueOnce({
+      data: {
+        data: {
+          id: 1,
+          name: "Usuario de prueba",
+          email: "usuario@test.com",
+          role: "USER",
+        },
+      },
+    });
+
+    const userEventInstance = userEvent.setup();
+
+    renderAuthContext();
+
+    await userEventInstance.click(screen.getByRole("button", { name: "Login" }));
+
+    await waitFor(() => {
+      expect(screen.getByTestId("user")).toHaveTextContent("Usuario de prueba");
+    });
+
+    tokenService.setToken.mockClear();
+    tokenService.removeToken.mockClear();
+
+    await userEventInstance.click(screen.getByRole("button", { name: "Rename" }));
+
+    expect(screen.getByTestId("user")).toHaveTextContent("Nombre nuevo");
+    expect(screen.getByTestId("email")).toHaveTextContent("usuario@test.com");
+    expect(screen.getByTestId("authenticated")).toHaveTextContent("authenticated");
+    expect(tokenService.setToken).not.toHaveBeenCalled();
+    expect(tokenService.removeToken).not.toHaveBeenCalled();
+  });
+
+  it("updateUser no crea una sesión cuando no hay usuario", async () => {
+    const userEventInstance = userEvent.setup();
+
+    renderAuthContext();
+
+    await userEventInstance.click(screen.getByRole("button", { name: "Rename" }));
+
+    expect(screen.getByTestId("user")).toHaveTextContent("null");
+    expect(screen.getByTestId("authenticated")).toHaveTextContent("unauthenticated");
   });
 
   it("no utiliza localStorage ni sessionStorage para guardar el token", async () => {

@@ -11,7 +11,11 @@ const useProfile = () => {
 
   const updateProfileMutation = useMutation({
     mutationFn: updateProfile,
-    onSuccess: () => {
+    onSuccess: (updated) => {
+      // The PATCH response is the user without password: merge it so every
+      // field the GET returned is kept and the new name shows up right away.
+      queryClient.setQueryData(["profile"], (old) => ({ ...old, ...updated }));
+
       queryClient.invalidateQueries({
         queryKey: ["profile"],
       });
