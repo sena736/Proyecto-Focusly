@@ -56,6 +56,20 @@ const userRepository = {
   },
 
   /**
+   * Actualizar el nombre de un usuario
+   */
+  async updateName(id, name) {
+    return prisma.user.update({
+      where: {
+        id,
+      },
+      data: {
+        name,
+      },
+    });
+  },
+
+  /**
    * Crear nuevo usuario
    */
   async create(userData) {

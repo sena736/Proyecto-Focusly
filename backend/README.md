@@ -97,8 +97,8 @@ completar y eliminar las tareas del
 usuario autenticado.
 
 `/api/v1/profile` Permite consultar el perfil y
-actualizar los datos editables,
-como apodo y preferencias.
+actualizar el nombre del usuario
+(`PATCH`, solo el campo `name`).
 
 `/api/v1/pomodoro-sessions` Registra sesiones Pomodoro
 completadas y permite consultar el
