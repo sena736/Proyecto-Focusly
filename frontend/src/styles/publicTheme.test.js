@@ -706,7 +706,11 @@ const THEMED_APP_STYLESHEETS = [
  * get the same literal / undefined-token / dark-differs checks as the palette
  * stylesheets, without requiring their own dark block.
  */
-const TOKEN_ONLY_STYLESHEETS = ["pages/Tasks/Tasks.css", "pages/admin/Users/Users.css"];
+const TOKEN_ONLY_STYLESHEETS = [
+  "pages/Tasks/Tasks.css",
+  "pages/admin/Users/Users.css",
+  "components/profile/ProfileEditForm/ProfileEditForm.css",
+];
 
 /**
  * Extra colour tokens that are allowed NOT to change in dark mode, per

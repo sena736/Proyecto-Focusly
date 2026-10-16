@@ -48,6 +48,10 @@
   width: 100%;
 }
 
+.profile-content__notice {
+  margin-bottom: var(--space-lg);
+}
+
 .profile-state {
   display: flex;
   justify-content: center;

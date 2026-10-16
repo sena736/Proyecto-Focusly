@@ -128,6 +128,16 @@
   background: var(--pcard-tint);
 }
 
+.profile-card__edit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.profile-card__edit:disabled:hover {
+  border-color: var(--pcard-btn-border);
+  background: var(--pcard-surface);
+}
+
 .profile-card__edit svg {
   width: 15px;
   height: 15px;

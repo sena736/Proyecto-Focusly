@@ -1,0 +1,43 @@
+/*
+  Token-only stylesheet: layout and spacing from global tokens, no colour
+  literals and no palette of its own. The visuals of the fields and buttons
+  come from the shared <Input>, <Button> and <Alert>.
+*/
+
+.profile-edit-form {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+
+  gap: var(--space-lg);
+}
+
+.profile-edit-form__actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: var(--space-sm);
+
+  padding-top: var(--space-lg);
+
+  border-top: 1px solid var(--border-color);
+}
+
+.profile-edit-form .profile-edit-form__submit {
+  min-width: 150px;
+}
+
+@media (max-width: 520px) {
+  .profile-edit-form__actions {
+    flex-direction: column-reverse;
+
+    align-items: stretch;
+  }
+
+  .profile-edit-form__cancel,
+  .profile-edit-form__submit {
+    width: 100%;
+  }
+}

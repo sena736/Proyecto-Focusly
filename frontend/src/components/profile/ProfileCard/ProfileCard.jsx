@@ -6,6 +6,7 @@ const ProfileCard = ({
   avatar,
   role = "Usuario",
   onEdit,
+  loading = false,
 }) => {
   const getInitials = (value) => {
     return value
@@ -40,6 +41,7 @@ const ProfileCard = ({
         type="button"
         className="profile-card__edit"
         onClick={onEdit}
+        disabled={loading}
         aria-label="Editar perfil"
       >
         <svg viewBox="0 0 24 24" aria-hidden="true">
