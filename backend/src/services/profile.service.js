@@ -1,5 +1,15 @@
 const userRepository = require("../repositories/user.repository");
 
+/**
+ * The repository returns every column of User, including the password hash.
+ * Nothing in the profile responses may carry it.
+ */
+const sanitizeUser = (user) => {
+  const { password, ...safeUser } = user;
+
+  return safeUser;
+};
+
 const getProfile = async (userId) => {
   const user = await userRepository.getUserById(userId);
 
@@ -9,7 +19,7 @@ const getProfile = async (userId) => {
     throw error;
   }
 
-  return user;
+  return sanitizeUser(user);
 };
 
 const MAX_NAME_LENGTH = 100;
@@ -87,9 +97,7 @@ const updateProfile = async (userId, body) => {
     throw error;
   }
 
-  const { password, ...safeUser } = updated;
-
-  return safeUser;
+  return sanitizeUser(updated);
 };
 
 module.exports = {

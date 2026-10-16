@@ -218,6 +218,22 @@ describe("PROFILE API - PATCH /api/v1/profile", () => {
     expect(response.body).toEqual({ message: "Usuario no encontrado" });
   });
 
+  test("GET /profile never returns the password hash and keeps the fields the client uses", async () => {
+    const response = await request(app)
+      .get("/api/v1/profile")
+      .set("Authorization", `Bearer ${token()}`);
+
+    expect(response.statusCode).toBe(200);
+    expect(response.body).not.toHaveProperty("password");
+    expect(JSON.stringify(response.body)).not.toContain(STORED_USER.password);
+    expect(response.body).toMatchObject({
+      id: STORED_USER.id,
+      email: STORED_USER.email,
+      name: STORED_USER.name,
+      role: STORED_USER.role,
+    });
+  });
+
   test.each([
     ["only zero-width characters", "​‌‍﻿", "El nombre es obligatorio."],
     ["a NUL character", "Ana\u0000", "El nombre contiene caracteres no válidos."],
