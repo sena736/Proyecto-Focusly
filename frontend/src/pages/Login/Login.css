@@ -159,19 +159,6 @@
   gap: var(--space-lg);
 }
 
-/* Secondary action rendered next to the password label (Input labelAction) */
-.login__forgot {
-  color: var(--primary-text);
-  font-size: 12px;
-  font-weight: 600;
-  text-decoration: none;
-}
-
-.login__forgot:hover {
-  color: var(--primary-text-hover);
-  text-decoration: underline;
-}
-
 /* ========================================
    ERROR
 ======================================== */

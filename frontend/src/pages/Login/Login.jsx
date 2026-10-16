@@ -230,11 +230,6 @@ const Login = () => {
             placeholder="Ingresa tu contraseña"
             autoComplete="current-password"
             icon={<FiLock aria-hidden="true" />}
-            labelAction={
-              <Link className="login__forgot" to="/forgot-password">
-                ¿Olvidaste tu contraseña?
-              </Link>
-            }
             endAdornment={
               <IconButton
                 size="small"
