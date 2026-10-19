@@ -8,6 +8,9 @@ const googleClient = new OAuth2Client(
   process.env.GOOGLE_CLIENT_ID
 );
 
+// Single algorithm used to sign and accepted when verifying (no algorithm confusion).
+const JWT_ALGORITHM = "HS256";
+
 /**
  * Generar JWT de la aplicación
  */
@@ -20,6 +23,7 @@ const generateToken = (user) => {
     },
     process.env.JWT_SECRET,
     {
+      algorithm: JWT_ALGORITHM,
       expiresIn: process.env.JWT_EXPIRES_IN || "1d",
     }
   );
@@ -178,7 +182,10 @@ const getProfile = async (token) => {
 
   const decoded = jwt.verify(
     token,
-    process.env.JWT_SECRET
+    process.env.JWT_SECRET,
+    {
+      algorithms: [JWT_ALGORITHM],
+    }
   );
 
   const user = await userRepository.getUserById(
@@ -204,7 +211,7 @@ const refreshToken = async (token) => {
     token,
     process.env.JWT_SECRET,
     {
-      ignoreExpiration: true,
+      algorithms: [JWT_ALGORITHM],
     }
   );
 
