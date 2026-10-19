@@ -6,9 +6,13 @@ const create = async (data) => {
   });
 };
 
-const findById = async (id) => {
-  return prisma.pomodoroSession.findUnique({
-    where: { id },
+/**
+ * Find a session only if it belongs to the given user.
+ * Returns null both when it does not exist and when it is someone else's.
+ */
+const findOwnedById = async (id, userId) => {
+  return prisma.pomodoroSession.findFirst({
+    where: { id, userId },
   });
 };
 
@@ -31,24 +35,42 @@ const findAll = async () => {
   });
 };
 
-const update = async (id, data) => {
-  return prisma.pomodoroSession.update({
-    where: { id },
+/**
+ * Update a session only if it belongs to the given user.
+ * updateMany never throws P2025; returns null when nothing matched.
+ */
+const updateOwned = async (id, userId, data) => {
+  const { count } = await prisma.pomodoroSession.updateMany({
+    where: { id, userId },
     data,
+  });
+
+  if (count === 0) {
+    return null;
+  }
+
+  return prisma.pomodoroSession.findFirst({
+    where: { id, userId },
   });
 };
 
-const remove = async (id) => {
-  return prisma.pomodoroSession.delete({
-    where: { id },
+/**
+ * Delete a session only if it belongs to the given user.
+ * Returns true when a row was deleted.
+ */
+const removeOwned = async (id, userId) => {
+  const { count } = await prisma.pomodoroSession.deleteMany({
+    where: { id, userId },
   });
+
+  return count > 0;
 };
 
 module.exports = {
   create,
-  findById,
+  findOwnedById,
   findByUserId,
   findAll,
-  update,
-  remove,
+  updateOwned,
+  removeOwned,
 };
