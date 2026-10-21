@@ -69,6 +69,22 @@ Si necesitás generar el cliente de Prisma:
 npx prisma generate
 ```
 
+## Datos de demostración
+
+Para mostrar el proyecto con datos de ejemplo (usuarios, tareas y sesiones
+Pomodoro), ejecutá desde `backend`:
+
+```bash
+npm run seed        # frases motivacionales (REEMPLAZA las frases existentes)
+npm run seed:demo   # cuentas, tareas y sesiones de demostración
+```
+
+`npm run seed:demo` es idempotente y solo toca los usuarios con correo
+`@focusly.demo`; se niega a correr en producción o contra una base remota.
+Para ver el destino sin escribir nada: `npm run seed:demo -- --check`.
+
+La guía completa de la presentación está en `docs/DEMO.md`.
+
 ## Levantar el servidor
 
 Para iniciar el backend en desarrollo:

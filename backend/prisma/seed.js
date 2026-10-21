@@ -1,7 +1,3 @@
-require("dotenv").config();
-
-const prisma = require("../src/config/prisma");
-
 const motivationalPhrases = [
   {
     text: "Cada pequeño paso te acerca a tu objetivo.",
@@ -86,26 +82,43 @@ const motivationalPhrases = [
 ];
 
 async function main() {
-  console.log("Iniciando seed de frases motivacionales...");
+  let prisma;
 
-  // Eliminar frases existentes para evitar duplicados
-  await prisma.motivationalPhrase.deleteMany();
+  try {
+    // Loaded here (not at import time) so requiring this file for its phrases
+    // list never builds a database client.
+    require("dotenv").config();
 
-  // Insertar las frases iniciales
-  await prisma.motivationalPhrase.createMany({
-    data: motivationalPhrases,
-  });
+    prisma = require("../src/config/prisma");
 
-  console.log(
-    `Se insertaron ${motivationalPhrases.length} frases motivacionales.`
-  );
+    console.log("Iniciando seed de frases motivacionales...");
+
+    // Eliminar frases existentes para evitar duplicados
+    await prisma.motivationalPhrase.deleteMany();
+
+    // Insertar las frases iniciales
+    await prisma.motivationalPhrase.createMany({
+      data: motivationalPhrases,
+    });
+
+    console.log(
+      `Se insertaron ${motivationalPhrases.length} frases motivacionales.`
+    );
+  } catch (error) {
+    console.error("Error ejecutando el seed:", error);
+    process.exitCode = 1;
+  } finally {
+    if (prisma) {
+      await prisma.$disconnect();
+    }
+  }
 }
 
-main()
-  .catch((error) => {
-    console.error("Error ejecutando el seed:", error);
-    process.exit(1);
-  })
-  .finally(async () => {
-    await prisma.$disconnect();
+module.exports = { motivationalPhrases };
+
+// Only run when executed directly (node prisma/seed.js), not when imported.
+if (require.main === module) {
+  main().then(() => {
+    if (process.exitCode) process.exit(process.exitCode);
   });
+}
